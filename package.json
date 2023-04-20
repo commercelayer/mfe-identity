@@ -1,0 +1,34 @@
+{
+  "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "pnpm --filter '*' dev",
+    "build": "pnpm --filter '*' build",
+    "preview": "pnpm --filter '*' preview",
+    "lint": "pnpm --filter '*' lint",
+    "lint:fix": "pnpm --filter '*' lint:fix",
+    "test": "pnpm --filter '*' test",
+    "test:watch": "pnpm --filter '*' test:watch"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Pier Francesco Ferrari",
+    "email": "pierfrancesco@commercelayer.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/commercelayer/mfe-identity.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^6.1.0"
+  },
+  "packageManager": "pnpm@8.0.0"
+}

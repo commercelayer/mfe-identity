@@ -1,0 +1,8 @@
+/*
+ * This is our global css include, imported once in _app file
+ * Don't add extra css here, since this is being used only to global import tailwind Preflight styles
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
