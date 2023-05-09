@@ -1,7 +1,7 @@
 {
   "name": "mfe-identity",
   "description": "A Commerce Layer Single Page Application to provide login and signup.",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1-beta.1",
   "private": true,
   "author": {
     "name": "Pier Francesco Ferrari",
