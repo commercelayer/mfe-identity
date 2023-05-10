@@ -1,7 +1,21 @@
 declare module 'App' {
   export interface Settings {
+    /**
+     * Commerce Layer Oauth applications' unique identifier used to identify the client during the authentication flow.
+     * Read more at {@link https://docs.commercelayer.io/core/applications} and {@link https://docs.commercelayer.io/core/authentication}
+     */
     clientId: string
+    /**
+     * String specified during the authentication flow to restrict the scope of obtained access token to a market and/or to a stock location.
+     * Example: `market:1234` or `stock_location:4567` or `market:1234 stock_location:4567`
+     * Read more at {@link https://docs.commercelayer.io/core/authentication#authorization-scopes}
+     */
     scope: string
+    /**
+     * Base endpoint URL to be used for API requests by `@commercelayer/react-components` library.
+     * Example: `https://yourdomain.commercelayer.io`
+     * Read more at {@link https://docs.commercelayer.io/core/api-specification#base-endpoint}.
+     */
     endpoint: string
     /**
      * Access Token for a sales channel API credentials to be used to authenticate all Commerce Layer API requests.
@@ -9,7 +23,7 @@ declare module 'App' {
      */
     accessToken?: string
     /**
-     * Access Token for sales channel API credentials obtained using login password flow.
+     * Access Token for a sales channel API credentials obtained using login password flow.
      * Read more at {@link https://docs.commercelayer.io/core/authentication/client-credentials#password}, {@link https://docs.commercelayer.io/core/authentication/password}
      */
     customerAccessToken?: string
