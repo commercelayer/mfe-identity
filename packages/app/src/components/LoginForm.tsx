@@ -1,40 +1,30 @@
-import { useForm, Resolver } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 import { useIdentityContext } from '#providers/provider'
 
+import type { UseFormReturn, UseFormProps } from 'react-hook-form'
 import type { LoginFormValues } from '#providers/types'
 
-const resolver: Resolver<LoginFormValues> = async (values) => {
-  const hasCustomerEmail = values.customerEmail !== ''
-  const hasCustomerPassword = values.customerPassword !== ''
-  const errors: any = {}
-  if (!hasCustomerEmail)
-    errors.customerEmail = {
-      type: 'required',
-      message: 'Email is required'
-    }
-  if (!hasCustomerPassword)
-    errors.customerPassword = {
-      type: 'required',
-      message: 'Password is required'
-    }
-
-  return {
-    values: hasCustomerEmail && hasCustomerPassword ? values : {},
-    errors
-  }
-}
+export const validationSchema = yup.object().shape({
+  customerEmail: yup
+    .string()
+    .email('Email is invalid')
+    .required('Email is required'),
+  customerPassword: yup.string().required('Password is required')
+})
 
 export const LoginForm: React.FC = () => {
   const { state, customerLogin } = useIdentityContext()
   const { isLoginOnError } = state
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<LoginFormValues>({ resolver })
-  const onSubmit = handleSubmit(async (formData) => {
+  const form: UseFormReturn<LoginFormValues, UseFormProps> =
+    useForm<LoginFormValues>({
+      resolver: yupResolver(validationSchema)
+    })
+
+  const onSubmit = form.handleSubmit(async (formData) => {
     void customerLogin({
       customerEmail: formData.customerEmail,
       customerPassword: formData.customerPassword
@@ -57,13 +47,13 @@ export const LoginForm: React.FC = () => {
             </label>
           </div>
           <input
-            {...register('customerEmail', { required: true })}
+            {...form.register('customerEmail')}
             className='block w-full px-4 mt-2 h-[44px] rounded ring-inset outline-0 focus:border-primary focus:ring-primary border-gray-200 text-md'
             type='email'
           />
-          {errors?.customerEmail != null && (
+          {form.formState.errors?.customerEmail != null && (
             <p className='text-sm text-red-400 mt-2'>
-              {errors.customerEmail.message}
+              {form.formState.errors.customerEmail.message}
             </p>
           )}
         </div>
@@ -74,13 +64,13 @@ export const LoginForm: React.FC = () => {
             </label>
           </div>
           <input
-            {...register('customerPassword', { required: true })}
+            {...form.register('customerPassword')}
             className='block w-full px-4 mt-2 h-[44px] rounded ring-inset outline-0 focus:border-primary focus:ring-primary border-gray-200 text-md'
             type='password'
           />
-          {errors?.customerPassword != null && (
+          {form.formState.errors?.customerPassword != null && (
             <p className='text-sm text-red-400 mt-2'>
-              {errors.customerPassword.message}
+              {form.formState.errors.customerPassword.message}
             </p>
           )}
         </div>
