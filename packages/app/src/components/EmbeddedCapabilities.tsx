@@ -55,7 +55,7 @@ const IframeResizerInit: FC = () => {
     <Helmet>
       <script
         src='https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.contentWindow.js'
-        data-test-id='iframe-resizer-script'
+        data-testid='iframe-resizer-script'
         type='text/javascript'
       />
     </Helmet>
