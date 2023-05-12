@@ -37,7 +37,9 @@ export const retryCall = async <T>(
         // sdk return sa structured object in case of api error
         // we assume we hit a not-retriable error when the error object returned has no keys
         const isNotRetryiable =
-          error.status === 401 || Object.keys(error).length === 0
+          error.status === 401 ||
+          error.status === 422 ||
+          Object.keys(error).length === 0
         if (isNotRetryiable) {
           return {
             object: undefined,
