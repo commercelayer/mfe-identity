@@ -7,26 +7,26 @@ import { IdentityProvider } from '#providers/provider'
 import { EmbeddedCapabilities } from '#components/EmbeddedCapabilities'
 import { PageErrorLayout } from '#components/PageErrorLayout'
 import LoginPage from '#pages/LoginPage'
+import SignUpPage from '#pages/SignUpPage'
+import { getBasePath } from '#utils/getBasePath'
 
 function App(): JSX.Element {
-  const basePath =
-    import.meta.env.PUBLIC_PROJECT_PATH != null
-      ? `/${import.meta.env.PUBLIC_PROJECT_PATH}`
-      : undefined
-
   return (
     <HelmetProvider>
       <EmbeddedCapabilities.IframeResizerInit />
       <IdentityProvider config={window.clAppConfig}>
         {({ state }) => (
           <GlobalStylesProvider primaryColor={state.settings.primaryColor}>
-            <Router base={basePath}>
+            <Router base={getBasePath()}>
               <Switch>
                 <Route path='/'>
                   <Redirect to={`/login${window.location.search ?? ''}`} />
                 </Route>
                 <Route path={appRoutes.login.path}>
                   <LoginPage />
+                </Route>
+                <Route path={appRoutes.signUp.path}>
+                  <SignUpPage />
                 </Route>
                 <Route>
                   <PageErrorLayout statusCode={404} message='Page not found' />

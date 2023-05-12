@@ -59,6 +59,8 @@ declare module 'App' {
     | 'clientId'
     | 'scope'
     | 'endpoint'
+    | 'accessToken'
+    | 'customerAccessToken'
     | 'primaryColor'
     | 'companyName'
     | 'logoUrl'

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
+import { useLocation } from 'wouter'
 
 import { PageErrorLayout } from '#components/PageErrorLayout'
 
@@ -6,9 +7,11 @@ import type { ChildrenElement } from 'App'
 import type {
   IdentityProviderState,
   IdentityProviderValue,
-  LoginFormValues
+  LoginFormValues,
+  SignUpFormValues
 } from '#providers/types'
 
+import { appRoutes } from '#data/routes'
 import { reducer } from '#providers/reducer'
 
 import {
@@ -18,6 +21,8 @@ import {
 } from '#utils/getParamsFromUrl'
 import { defaultSettings, getSettings } from '#utils/getSettings'
 import { isEmbedded } from '#utils/isEmbedded'
+import { createCustomer } from '#utils/createCustomer'
+import { getBasePath } from '#utils/getBasePath'
 import { getCustomerToken } from '#utils/oauthRequests'
 
 interface IdentityProviderProps {
@@ -42,12 +47,15 @@ export const initialState: IdentityProviderState = {
   isLoading: true,
   isOnError: false,
   isLoginLoading: false,
-  isLoginOnError: false
+  isLoginOnError: false,
+  isSignUpLoading: false,
+  isSignUpOnError: false
 }
 
 export const initialValues: IdentityProviderValue = {
   state: initialState,
-  customerLogin: async () => {}
+  customerLogin: async () => {},
+  customerSignUp: async () => {}
 }
 
 const IdentityContext = createContext<IdentityProviderValue>(initialValues)
@@ -59,6 +67,7 @@ export function IdentityProvider({
   children
 }: IdentityProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [, setLocation] = useLocation()
 
   const clientId = getClientIdFromUrl()
   const scope = getScopeFromUrl()
@@ -74,9 +83,9 @@ export function IdentityProvider({
 
     if (clientId != null && scope != null) {
       getSettings({ clientId, scope, config })
-        .then((settings) =>
+        .then((settings) => {
           dispatch({ type: 'settings/loaded', payload: settings })
-        )
+        })
         .catch(() => dispatch({ type: 'identity/onError' }))
     }
   }, [clientId, scope])
@@ -100,7 +109,6 @@ export function IdentityProvider({
         type: 'login/logged',
         payload: {
           ...state.settings,
-          isValid: true,
           customerAccessToken: customerTokenResponse.access_token
         }
       })
@@ -119,7 +127,41 @@ export function IdentityProvider({
     }
   }
 
-  const value: IdentityProviderValue = { state, customerLogin }
+  const customerSignUp = async ({
+    customerEmail,
+    customerPassword
+  }: SignUpFormValues): Promise<void> => {
+    dispatch({ type: 'signup/onLoad' })
+
+    const customerSignUpResponse = await Promise.resolve(
+      createCustomer({
+        config,
+        accessToken: state.settings.accessToken,
+        customerEmail,
+        customerPassword
+      })
+    )
+
+    if (customerSignUpResponse?.object?.id != null) {
+      dispatch({
+        type: 'signup/created'
+      })
+
+      localStorage.setItem('cLayer-identity-signUpStatus', 'success')
+
+      const urlSearchParams = new URLSearchParams(window?.location.search ?? '')
+      urlSearchParams.set('customerEmail', customerEmail)
+      const routerBasePath = getBasePath() ?? ''
+
+      setLocation(
+        `${routerBasePath}${appRoutes.login.makePath()}?${urlSearchParams.toString()}`
+      )
+    } else {
+      dispatch({ type: 'signup/onError' })
+    }
+  }
+
+  const value: IdentityProviderValue = { state, customerLogin, customerSignUp }
   return (
     <IdentityContext.Provider value={value}>
       {typeof children === 'function' ? children(value) : children}

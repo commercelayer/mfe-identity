@@ -6,8 +6,11 @@ type Action =
   | { type: 'identity/onError' }
   | { type: 'settings/loaded'; payload: Settings | InvalidSettings }
   | { type: 'login/onLoad' }
-  | { type: 'login/logged'; payload: Settings }
+  | { type: 'login/logged'; payload: Settings | InvalidSettings }
   | { type: 'login/onError' }
+  | { type: 'signup/onLoad' }
+  | { type: 'signup/created' }
+  | { type: 'signup/onError' }
 
 export const reducer = (
   state: IdentityProviderState,
@@ -50,6 +53,24 @@ export const reducer = (
         ...state,
         isLoginLoading: false,
         isLoginOnError: true
+      }
+    case 'signup/onLoad':
+      return {
+        ...state,
+        isSignUpLoading: true,
+        isSignUpOnError: false
+      }
+    case 'signup/created':
+      return {
+        ...state,
+        isSignUpLoading: true,
+        isSignUpOnError: false
+      }
+    case 'signup/onError':
+      return {
+        ...state,
+        isSignUpLoading: false,
+        isSignUpOnError: true
       }
     default:
       return state

@@ -8,5 +8,9 @@ export const appRoutes = {
   login: {
     path: '/login',
     makePath: () => '/login'
+  },
+  signUp: {
+    path: '/sign-up',
+    makePath: () => '/sign-up'
   }
 }

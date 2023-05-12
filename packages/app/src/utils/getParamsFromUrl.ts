@@ -27,3 +27,13 @@ export const getReturnUrlFromUrl = (): string | null | undefined => {
     return params.get('returnUrl')
   }
 }
+
+/**
+ * @returns the value of `customerEmail` query string parameter or `undefined` if it's not present.
+ */
+export const getCustomerEmailFromUrl = (): string | null | undefined => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search)
+    return params.get('customerEmail')
+  }
+}
