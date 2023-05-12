@@ -11,10 +11,13 @@ const resources = {
   }
 }
 
-use(initReactI18next).init({
-  resources,
-  lng: languages[0],
-  fallbackLng: languages
-})
+use(initReactI18next)
+  .init({
+    resources,
+    lng: languages[0],
+    fallbackLng: languages
+  })
+  .then(() => {})
+  .catch(() => {})
 
 export default i18n
