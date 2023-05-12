@@ -1,8 +1,10 @@
 import cn from 'classnames'
+import { useTranslation } from 'react-i18next'
 
 import { useIdentityContext } from '#providers/provider'
 import { Header } from '#components/Header'
 import { Footer } from '#components/Footer'
+import { PageHead } from '#components/PageHead'
 import {
   SkeletonTemplate,
   withSkeletonTemplate
@@ -30,6 +32,7 @@ interface Props {
 
 export function LayoutDefault({ children }: Props): JSX.Element {
   const { state } = useIdentityContext()
+  const { t } = useTranslation()
   const { isLoading } = state
 
   const wrapperCss = cn([
@@ -38,18 +41,26 @@ export function LayoutDefault({ children }: Props): JSX.Element {
   ])
 
   return (
-    <div className='container antialiased'>
-      <div className={wrapperCss}>
-        {!isEmbedded() ? <Header /> : null}
-        {isLoading ? (
-          <SkeletonTemplate isLoading={isLoading} delayMs={0}>
-            <DefaultSkeleton />
-          </SkeletonTemplate>
-        ) : (
-          children
-        )}
-        {!isEmbedded() ? <Footer /> : null}
+    <>
+      <PageHead
+        title={t('general.title', {
+          companyName: state.settings.companyName
+        }).toString()}
+        faviconUrl={state.settings.faviconUrl}
+      />
+      <div className='container antialiased'>
+        <div className={wrapperCss}>
+          {!isEmbedded() ? <Header /> : null}
+          {isLoading ? (
+            <SkeletonTemplate isLoading={isLoading} delayMs={0}>
+              <DefaultSkeleton />
+            </SkeletonTemplate>
+          ) : (
+            children
+          )}
+          {!isEmbedded() ? <Footer /> : null}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
