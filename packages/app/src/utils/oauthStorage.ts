@@ -12,7 +12,7 @@ type StoredOauthResponse = Pick<
   | 'error'
   | 'error_description'
 > & {
-  cliend_id?: string
+  client_id?: string
   expires?: number
 }
 
@@ -64,7 +64,7 @@ const isValidStoredTokenData = ({
 }: IsValidStoreTokenDataConfig): boolean => {
   return (
     tokenData != null &&
-    clientId === tokenData?.cliend_id &&
+    clientId === tokenData?.client_id &&
     !isTokenExpired({ expires: tokenData?.expires })
     // TODO: Check also if token is not about to expire in XXX seconds (TBD)
   )
@@ -93,7 +93,7 @@ export const getStoredSalesChannelToken = async ({
       getSalesChannelToken({ clientId, endpoint, scope })
     )
     if (accessTokenResponse?.access_token != null) {
-      const tokenData = {
+      const tokenData: StoredOauthResponse = {
         client_id: clientId,
         access_token: accessTokenResponse?.access_token,
         scope,
