@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
 import { useLocation } from 'wouter'
 
-import { PageErrorLayout } from '#components/PageErrorLayout'
+import { PageErrorLayout } from '#components/layouts/PageErrorLayout'
 
 import type { ChildrenElement } from 'App'
 import type {

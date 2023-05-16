@@ -2,10 +2,10 @@ import cn from 'classnames'
 import { useTranslation } from 'react-i18next'
 
 import { useIdentityContext } from '#providers/provider'
-import { Header } from '#components/Header'
-import { Footer } from '#components/Footer'
+import { Header } from '#components/composite/Header'
+import { Footer } from '#components/composite/Footer'
 import { PageHead } from '#components/PageHead'
-import { PageErrorLayout } from '#components/PageErrorLayout'
+import { PageErrorLayout } from '#components/layouts/PageErrorLayout'
 import {
   SkeletonTemplate,
   withSkeletonTemplate

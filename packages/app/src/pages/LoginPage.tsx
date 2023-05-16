@@ -1,6 +1,6 @@
 import { PageHeading } from '#components/atoms/PageHeading'
-import { LayoutDefault } from '#components/LayoutDefault'
-import { LoginForm } from '#components/LoginForm'
+import { LayoutDefault } from '#components/layouts/LayoutDefault'
+import { LoginForm } from '#components/forms/LoginForm'
 
 export default function LoginPage(): JSX.Element {
   return (

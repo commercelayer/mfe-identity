@@ -1,4 +1,4 @@
-import { Logo } from '#components/Logo'
+import { Logo } from '#components/atoms/Logo'
 import { useIdentityContext } from '#providers/provider'
 
 export const Header: React.FC = () => {
