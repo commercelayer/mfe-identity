@@ -5,6 +5,7 @@ import { useIdentityContext } from '#providers/provider'
 import { Header } from '#components/Header'
 import { Footer } from '#components/Footer'
 import { PageHead } from '#components/PageHead'
+import { PageErrorLayout } from '#components/PageErrorLayout'
 import {
   SkeletonTemplate,
   withSkeletonTemplate
@@ -33,7 +34,11 @@ interface Props {
 export function LayoutDefault({ children }: Props): JSX.Element {
   const { state } = useIdentityContext()
   const { t } = useTranslation()
-  const { isLoading } = state
+  const { isLoading, isOnError } = state
+
+  if (isOnError) {
+    return <PageErrorLayout statusCode={500} message='Application error.' />
+  }
 
   const wrapperCss = cn([
     'relative w-full md:w-[420px] mx-auto px-8 md:px-0',
