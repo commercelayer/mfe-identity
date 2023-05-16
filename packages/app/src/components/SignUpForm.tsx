@@ -5,6 +5,7 @@ import { useRouter } from 'wouter'
 
 import { appRoutes } from '#data/routes'
 import { Alert } from '#components/atoms/Alert'
+import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
 import { useIdentityContext } from '#providers/provider'
 import { getCustomerEmailFromUrl } from '#utils/getParamsFromUrl'
@@ -77,13 +78,9 @@ export const SignUpForm: React.FC = () => {
             type='password'
           />
           <div className='flex pt-4'>
-            <button
-              disabled={state.isSignUpLoading}
-              type='submit'
-              className='inline-flex items-center justify-center font-bold rounded text-sm leading-6 whitespace-nowrap transition duration-700 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-0 active:outline-none active:ring-2 active:ring-offset-0 border-primary text-white bg-primary hover:opacity-80 focus:ring-gray-300 active:ring-primary active:bg-primary py-2.5 px-12 w-full disabled:bg-gray-100 disabled:text-gray-300'
-            >
+            <Button disabled={state.isSignUpLoading} type='submit'>
               {state.isSignUpLoading ? '...' : 'Sign up'}
-            </button>
+            </Button>
           </div>
           {isSignUpOnError && (
             <div className='pt-4'>
