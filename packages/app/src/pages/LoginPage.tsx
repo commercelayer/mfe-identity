@@ -1,5 +1,6 @@
 import { useIdentityContext } from '#providers/provider'
 
+import { PageHeading } from '#components/atoms/PageHeading'
 import { PageErrorLayout } from '#components/PageErrorLayout'
 import { LayoutDefault } from '#components/LayoutDefault'
 import { LoginForm } from '#components/LoginForm'
@@ -14,15 +15,11 @@ export default function LoginPage(): JSX.Element {
 
   return (
     <LayoutDefault>
-      <div className='flex flex-col w-full'>
-        <h1 className='text-[32px] leading-[38px] text-black font-semibold'>
-          Login
-        </h1>
-        <p className='pt-2 text-sm text-gray-500 font-medium'>
-          Welcome back! Please enter your details.
-        </p>
-        <LoginForm />
-      </div>
+      <PageHeading
+        title='Login'
+        description='Welcome back! Please enter your details.'
+      />
+      <LoginForm />
     </LayoutDefault>
   )
 }

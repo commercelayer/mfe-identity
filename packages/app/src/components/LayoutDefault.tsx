@@ -56,7 +56,7 @@ export function LayoutDefault({ children }: Props): JSX.Element {
               <DefaultSkeleton />
             </SkeletonTemplate>
           ) : (
-            children
+            <div className='flex flex-col w-full'>{children}</div>
           )}
           {!isEmbedded() ? <Footer /> : null}
         </div>
