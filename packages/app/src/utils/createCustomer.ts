@@ -1,34 +1,22 @@
 import CommerceLayer from '@commercelayer/sdk'
 
-import type { CommerceLayerClient, Customer } from '@commercelayer/sdk'
+import type { Customer } from '@commercelayer/sdk'
+import type { SignUpFormValues } from 'Forms'
 
-import { SignUpFormValues } from '#providers/types'
-
-import { getSubdomain } from '#utils/getSubdomain'
-import { retryCall } from '#utils/retryCall'
-
-import type { FetchResource } from '#utils/retryCall'
 import { Settings } from 'App'
 
-type CreateCustomerConfig = Pick<
+export type CreateCustomerConfig = Pick<
   SignUpFormValues,
   'customerEmail' | 'customerPassword'
 > & {
-  config: CommerceLayerAppConfig
+  endpoint: Settings['endpoint']
   accessToken: Settings['accessToken']
-}
-
-type CreateAsyncCustomerConfig = Pick<
-  SignUpFormValues,
-  'customerEmail' | 'customerPassword'
-> & {
-  client: CommerceLayerClient
 }
 
 /**
  * Create requested customer with auto-retries in case of network or timeout errors.
  *
- * @param config - Commerce Layer app configuration available from global window object
+ * @param endpoint - Base endpoint URL to be used for API requests by Commerce Layer libraries.
  * @param accessToken - Access Token for a sales channel API credentials obtained using login password flow
  * @param customerEmail - Customer email address
  * @param customerPassword - Customer password
@@ -36,38 +24,24 @@ type CreateAsyncCustomerConfig = Pick<
  */
 
 export const createCustomer = async ({
-  config,
+  endpoint,
   accessToken,
   customerEmail,
   customerPassword
-}: CreateCustomerConfig): Promise<FetchResource<Customer> | undefined> =>
-  await retryCall(async () => {
-    const hostname = window !== undefined ? window.location.hostname : ''
-    const slug = getSubdomain({
-      hostname,
-      selfHostedSlug: config.selfHostedSlug
-    })
-    const domain = config.domain
+}: CreateCustomerConfig): Promise<Customer | undefined> => {
+  if (customerEmail.length === 0 || customerPassword.length === 0)
+    return undefined
 
-    const client = CommerceLayer({
-      organization: slug,
-      accessToken: accessToken ?? '',
-      domain
-    })
+  const slugAndDomain = endpoint.replace('https://', '').split(/\.(.*)/s)
 
-    return await createAsyncCustomer({
-      client,
-      customerEmail,
-      customerPassword
-    })
+  const client = CommerceLayer({
+    organization: slugAndDomain[0] ?? '',
+    accessToken: accessToken ?? '',
+    domain: slugAndDomain[1] ?? ''
   })
 
-const createAsyncCustomer = async ({
-  client,
-  customerEmail,
-  customerPassword
-}: CreateAsyncCustomerConfig): Promise<Customer> =>
-  await client.customers.create({
+  return await client.customers.create({
     email: customerEmail,
     password: customerPassword
   })
+}

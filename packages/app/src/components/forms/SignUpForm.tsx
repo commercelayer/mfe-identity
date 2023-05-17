@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { useRouter } from 'wouter'
+import { useRouter, useLocation } from 'wouter'
 
 import { appRoutes } from '#data/routes'
 import { Alert } from '#components/atoms/Alert'
@@ -9,11 +9,12 @@ import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
 import { useIdentityContext } from '#providers/provider'
 import { getCustomerEmailFromUrl } from '#utils/getParamsFromUrl'
+import { createCustomer } from '#utils/createCustomer'
 
 import type { UseFormReturn, UseFormProps } from 'react-hook-form'
-import type { SignUpFormValues } from '#providers/types'
+import type { SignUpFormValues } from 'Forms'
 
-export const validationSchema = yup.object().shape({
+const validationSchema = yup.object().shape({
   customerEmail: yup
     .string()
     .email('Email is invalid')
@@ -25,10 +26,10 @@ export const validationSchema = yup.object().shape({
     .oneOf([yup.ref('customerPassword'), ''], 'Passwords must match')
 })
 
-export const SignUpForm: React.FC = () => {
-  const { state, customerSignUp } = useIdentityContext()
+export const SignUpForm = (): JSX.Element => {
+  const { state } = useIdentityContext()
   const router = useRouter()
-  const { isSignUpOnError } = state
+  const [, setLocation] = useLocation()
   const customerEmail = getCustomerEmailFromUrl()
 
   const form: UseFormReturn<SignUpFormValues, UseFormProps> =
@@ -37,13 +38,38 @@ export const SignUpForm: React.FC = () => {
       defaultValues: { customerEmail: customerEmail ?? '' }
     })
 
+  const isSubmitting = form.formState.isSubmitting
   const onSubmit = form.handleSubmit(async (formData) => {
-    void customerSignUp({
-      customerEmail: formData.customerEmail,
-      customerPassword: formData.customerPassword,
-      customerConfirmPassword: formData.customerConfirmPassword
-    })
+    try {
+      const createCustomerResponse = await Promise.resolve(
+        createCustomer({
+          endpoint: state.settings.endpoint,
+          accessToken: state.settings.accessToken,
+          customerEmail: formData.customerEmail,
+          customerPassword: formData.customerPassword
+        })
+      )
+
+      if (createCustomerResponse?.id != null) {
+        localStorage.setItem('cLayer-identity-signUpStatus', 'success')
+
+        const urlSearchParams = new URLSearchParams(
+          window?.location.search ?? ''
+        )
+        urlSearchParams.set('customerEmail', formData.customerEmail)
+
+        setLocation(
+          `${appRoutes.login.makePath()}?${urlSearchParams.toString()}`
+        )
+      }
+    } catch (e) {
+      form.setError('root', {
+        type: 'custom',
+        message: 'Sign up error'
+      })
+    }
   })
+
   return (
     <>
       <form
@@ -78,11 +104,11 @@ export const SignUpForm: React.FC = () => {
             type='password'
           />
           <div className='flex pt-4'>
-            <Button disabled={state.isSignUpLoading} type='submit'>
-              {state.isSignUpLoading ? '...' : 'Sign up'}
+            <Button disabled={isSubmitting} type='submit'>
+              {isSubmitting ? '...' : 'Sign up'}
             </Button>
           </div>
-          {isSignUpOnError && (
+          {form.formState.errors?.root != null && (
             <div className='pt-4'>
               <Alert variant='danger' title='Sign up error' />
             </div>

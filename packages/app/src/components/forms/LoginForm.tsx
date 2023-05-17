@@ -9,12 +9,19 @@ import { Alert } from '#components/atoms/Alert'
 import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
 import { useIdentityContext } from '#providers/provider'
-import { getCustomerEmailFromUrl } from '#utils/getParamsFromUrl'
+import { isEmbedded } from '#utils/isEmbedded'
+import { getCustomerToken } from '#utils/oauthRequests'
+import {
+  getClientIdFromUrl,
+  getCustomerEmailFromUrl,
+  getScopeFromUrl,
+  getReturnUrlFromUrl
+} from '#utils/getParamsFromUrl'
 
 import type { UseFormReturn, UseFormProps } from 'react-hook-form'
-import type { LoginFormValues } from '#providers/types'
+import type { LoginFormValues } from 'Forms'
 
-export const validationSchema = yup.object().shape({
+const validationSchema = yup.object().shape({
   customerEmail: yup
     .string()
     .email('Email is invalid')
@@ -22,15 +29,15 @@ export const validationSchema = yup.object().shape({
   customerPassword: yup.string().required('Password is required')
 })
 
-export const LoginForm: React.FC = () => {
-  const { state, customerLogin } = useIdentityContext()
+export const LoginForm = (): JSX.Element => {
+  const { state } = useIdentityContext()
+  const router = useRouter()
   const signUpSuccess =
     localStorage.getItem('cLayer-identity-signUpStatus') === 'success'
   const [showSignUpSuccess, setShowSignUpSuccess] = useState(
     Boolean(signUpSuccess)
   )
-  const { isLoginOnError } = state
-  const router = useRouter()
+
   const customerEmail = getCustomerEmailFromUrl()
 
   const form: UseFormReturn<LoginFormValues, UseFormProps> =
@@ -39,11 +46,39 @@ export const LoginForm: React.FC = () => {
       defaultValues: { customerEmail: customerEmail ?? '' }
     })
 
+  const isSubmitting = form.formState.isSubmitting
   const onSubmit = form.handleSubmit(async (formData) => {
-    void customerLogin({
-      customerEmail: formData.customerEmail,
-      customerPassword: formData.customerPassword
-    })
+    try {
+      const clientId = getClientIdFromUrl() ?? ''
+      const scope = getScopeFromUrl() ?? ''
+      const customerTokenResponse = await getCustomerToken({
+        clientId,
+        endpoint: state.settings.endpoint,
+        scope,
+        username: formData.customerEmail,
+        password: formData.customerPassword
+      })
+
+      if (customerTokenResponse.access_token != null) {
+        const returnUrl = getReturnUrlFromUrl()
+        if (returnUrl != null && window !== undefined) {
+          const topWindow = isEmbedded() ? window.parent : window
+          const customerAccessTokenUrlParam = `accessToken=${customerTokenResponse.access_token}`
+          const customerScopeUrlParam = `&scope=${scope}`
+          topWindow.location.href = `${returnUrl}?${customerAccessTokenUrlParam}${customerScopeUrlParam}`
+        }
+      } else {
+        form.setError('root', {
+          type: 'custom',
+          message: 'Invalid credentials'
+        })
+      }
+    } catch (e) {
+      form.setError('root', {
+        type: 'custom',
+        message: 'Invalid credentials'
+      })
+    }
   })
 
   useEffect(() => {
@@ -80,11 +115,11 @@ export const LoginForm: React.FC = () => {
             type='password'
           />
           <div className='flex pt-4'>
-            <Button disabled={state.isLoginLoading} type='submit'>
-              {state.isLoginLoading ? '...' : 'Login'}
+            <Button disabled={isSubmitting} type='submit'>
+              {isSubmitting ? '...' : 'Login'}
             </Button>
           </div>
-          {isLoginOnError && (
+          {form.formState.errors?.root != null && (
             <div className='pt-4'>
               <Alert variant='danger' title='Invalid credentials' />
             </div>
