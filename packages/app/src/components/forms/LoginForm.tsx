@@ -63,9 +63,13 @@ export const LoginForm = (): JSX.Element => {
         const returnUrl = getReturnUrlFromUrl()
         if (returnUrl != null && window !== undefined) {
           const topWindow = isEmbedded() ? window.parent : window
-          const customerAccessTokenUrlParam = `accessToken=${customerTokenResponse.access_token}`
-          const customerScopeUrlParam = `&scope=${scope}`
-          topWindow.location.href = `${returnUrl}?${customerAccessTokenUrlParam}${customerScopeUrlParam}`
+          const url = new URL(returnUrl)
+          url.searchParams.append(
+            'accessToken',
+            customerTokenResponse.access_token
+          )
+          url.searchParams.append('scope', scope)
+          topWindow.location.href = url.href
         }
       } else {
         form.setError('root', {
