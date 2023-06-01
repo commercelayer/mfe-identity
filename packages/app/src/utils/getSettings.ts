@@ -68,14 +68,13 @@ export const getSettings = async ({
     domain
   })
 
-  const organizationResponse = await Promise.resolve(
+  const organization = await Promise.resolve(
     getOrganization({
       client
     })
   )
 
   // validating organization
-  const organization = organizationResponse?.object
   if (organization == null) {
     return makeInvalidSettings()
   }

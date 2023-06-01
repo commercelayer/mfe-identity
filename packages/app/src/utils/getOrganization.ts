@@ -1,8 +1,5 @@
 import type { CommerceLayerClient, Organization } from '@commercelayer/sdk'
 
-import { retryCall } from '#utils/retryCall'
-import type { FetchResource } from '#utils/retryCall'
-
 interface GetOrganizationConfig {
   /**
    * The signed Commerce Layer SDK client
@@ -19,8 +16,8 @@ interface GetOrganizationConfig {
 
 export const getOrganization = async ({
   client
-}: GetOrganizationConfig): Promise<FetchResource<Organization> | undefined> =>
-  await retryCall(async () => await getAsyncOrganization(client))
+}: GetOrganizationConfig): Promise<Organization> =>
+  await getAsyncOrganization(client)
 
 const getAsyncOrganization = async (
   client: CommerceLayerClient
