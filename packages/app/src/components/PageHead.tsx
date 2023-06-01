@@ -13,7 +13,7 @@ type Props = Partial<Pick<Settings, 'faviconUrl'>> & {
 }
 
 export const PageHead: FC<Props> = ({
-  title = '',
+  title,
   faviconUrl = defaultSettings.faviconUrl
 }) => {
   const { t } = useTranslation()
