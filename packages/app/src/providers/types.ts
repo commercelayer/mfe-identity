@@ -7,4 +7,5 @@ export interface IdentityProviderState {
 
 export interface IdentityProviderValue {
   settings: Settings
+  config: CommerceLayerAppConfig
 }

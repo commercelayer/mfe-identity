@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { authentication } from '@commercelayer/js-auth'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { useRouter } from 'wouter'
 
@@ -9,14 +9,9 @@ import { Alert } from '#components/atoms/Alert'
 import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
 import { useIdentityContext } from '#providers/provider'
-import { isEmbedded } from '#utils/isEmbedded'
-import { getCustomerToken } from '#utils/oauthRequests'
-import {
-  getClientIdFromUrl,
-  getCustomerEmailFromUrl,
-  getScopeFromUrl,
-  getReturnUrlFromUrl
-} from '#utils/getParamsFromUrl'
+
+import { getCustomerEmailFromUrl } from '#utils/getParamsFromUrl'
+import { redirectToReturnUrl } from '#utils/redirectToReturnUrl'
 
 import type { UseFormReturn, UseFormProps } from 'react-hook-form'
 import type { LoginFormValues } from 'Forms'
@@ -30,13 +25,8 @@ const validationSchema = yup.object().shape({
 })
 
 export const LoginForm = (): JSX.Element => {
-  const { settings } = useIdentityContext()
+  const { settings, config } = useIdentityContext()
   const router = useRouter()
-  const signUpSuccess =
-    localStorage.getItem('cLayer-identity-signUpStatus') === 'success'
-  const [showSignUpSuccess, setShowSignUpSuccess] = useState(
-    Boolean(signUpSuccess)
-  )
 
   const customerEmail = getCustomerEmailFromUrl()
 
@@ -48,51 +38,29 @@ export const LoginForm = (): JSX.Element => {
 
   const isSubmitting = form.formState.isSubmitting
   const onSubmit = form.handleSubmit(async (formData) => {
-    try {
-      const clientId = getClientIdFromUrl() ?? ''
-      const scope = getScopeFromUrl() ?? ''
-      const customerTokenResponse = await getCustomerToken({
-        clientId,
-        endpoint: settings.endpoint,
-        scope,
-        username: formData.customerEmail,
-        password: formData.customerPassword
-      })
-
-      if (customerTokenResponse.access_token != null) {
-        const returnUrl = getReturnUrlFromUrl()
-        if (returnUrl != null && window !== undefined) {
-          const topWindow = isEmbedded() ? window.parent : window
-          const url = new URL(returnUrl)
-          url.searchParams.append(
-            'accessToken',
-            customerTokenResponse.access_token
-          )
-          url.searchParams.append('scope', scope)
-          topWindow.location.href = url.href
+    await authentication('password', {
+      clientId: settings.clientId,
+      slug: settings.companySlug,
+      domain: config.domain,
+      scope: settings.scope,
+      username: formData.customerEmail,
+      password: formData.customerPassword
+    })
+      .then((tokenData) => {
+        if (tokenData.accessToken != null) {
+          redirectToReturnUrl({
+            accessToken: tokenData.accessToken,
+            scope: tokenData.scope
+          })
         }
-      } else {
+      })
+      .catch(() => {
         form.setError('root', {
           type: 'custom',
           message: 'Invalid credentials'
         })
-      }
-    } catch (e) {
-      form.setError('root', {
-        type: 'custom',
-        message: 'Invalid credentials'
       })
-    }
   })
-
-  useEffect(() => {
-    if (showSignUpSuccess) {
-      setTimeout(() => {
-        setShowSignUpSuccess(false)
-        localStorage.removeItem('cLayer-identity-signUpStatus')
-      }, 2000)
-    }
-  }, [showSignUpSuccess])
 
   return (
     <>
@@ -126,11 +94,6 @@ export const LoginForm = (): JSX.Element => {
           {form.formState.errors?.root != null && (
             <div className='pt-4'>
               <Alert variant='danger' title='Invalid credentials' />
-            </div>
-          )}
-          {showSignUpSuccess && (
-            <div className='pt-4'>
-              <Alert variant='success' title='Sign up successful' />
             </div>
           )}
         </div>

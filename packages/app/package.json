@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@commercelayer/eslint-config-ts-react": "^0.1.4",
-    "@commercelayer/js-auth": "^3.0.0",
+    "@commercelayer/js-auth": "4.1.1",
     "@commercelayer/react-utils": "1.0.0-beta.3",
     "@commercelayer/sdk": "4.20.0",
     "@headlessui/react": "^1.6.4",

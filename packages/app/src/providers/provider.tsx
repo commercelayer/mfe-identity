@@ -95,7 +95,8 @@ export function IdentityProvider({
   }
 
   const value: IdentityProviderValue = {
-    settings: state.settings
+    settings: state.settings,
+    config
   }
   return (
     <IdentityContext.Provider value={value}>

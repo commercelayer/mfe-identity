@@ -1,7 +1,9 @@
-import { useForm } from 'react-hook-form'
+import { authentication } from '@commercelayer/js-auth'
+import CommerceLayer from '@commercelayer/sdk'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import { useRouter, useLocation } from 'wouter'
+import { useRouter } from 'wouter'
 
 import { appRoutes } from '#data/routes'
 import { Alert } from '#components/atoms/Alert'
@@ -9,7 +11,7 @@ import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
 import { useIdentityContext } from '#providers/provider'
 import { getCustomerEmailFromUrl } from '#utils/getParamsFromUrl'
-import { createCustomer } from '#utils/createCustomer'
+import { redirectToReturnUrl } from '#utils/redirectToReturnUrl'
 
 import type { UseFormReturn, UseFormProps } from 'react-hook-form'
 import type { SignUpFormValues } from 'Forms'
@@ -27,9 +29,8 @@ const validationSchema = yup.object().shape({
 })
 
 export const SignUpForm = (): JSX.Element => {
-  const { state } = useIdentityContext()
+  const { settings, config } = useIdentityContext()
   const router = useRouter()
-  const [, setLocation] = useLocation()
   const customerEmail = getCustomerEmailFromUrl()
 
   const form: UseFormReturn<SignUpFormValues, UseFormProps> =
@@ -39,34 +40,46 @@ export const SignUpForm = (): JSX.Element => {
     })
 
   const isSubmitting = form.formState.isSubmitting
+
   const onSubmit = form.handleSubmit(async (formData) => {
-    try {
-      const createCustomerResponse = await Promise.resolve(
-        createCustomer({
-          endpoint: state.settings.endpoint,
-          accessToken: state.settings.accessToken,
-          customerEmail: formData.customerEmail,
-          customerPassword: formData.customerPassword
-        })
-      )
+    const client = CommerceLayer({
+      organization: settings.companySlug,
+      accessToken: settings.accessToken,
+      domain: config.domain
+    })
 
-      if (createCustomerResponse?.id != null) {
-        localStorage.setItem('cLayer-identity-signUpStatus', 'success')
-
-        const urlSearchParams = new URLSearchParams(
-          window?.location.search ?? ''
-        )
-        urlSearchParams.set('customerEmail', formData.customerEmail)
-
-        setLocation(
-          `${appRoutes.login.makePath()}?${urlSearchParams.toString()}`
-        )
-      }
-    } catch (e) {
-      form.setError('root', {
-        type: 'custom',
-        message: 'Sign up error'
+    const createCustomerResponse = await client.customers
+      .create({
+        email: formData.customerEmail,
+        password: formData.customerPassword
       })
+      .catch((e) => {
+        console.log(e)
+      })
+
+    if (createCustomerResponse?.id != null) {
+      await authentication('password', {
+        clientId: settings.clientId,
+        slug: settings.companySlug,
+        domain: config.domain,
+        scope: settings.scope,
+        username: formData.customerEmail,
+        password: formData.customerPassword
+      })
+        .then((tokenData) => {
+          if (tokenData.accessToken != null) {
+            redirectToReturnUrl({
+              accessToken: tokenData.accessToken,
+              scope: tokenData.scope
+            })
+          }
+        })
+        .catch(() => {
+          form.setError('root', {
+            type: 'custom',
+            message: 'Invalid credentials'
+          })
+        })
     }
   })
 
