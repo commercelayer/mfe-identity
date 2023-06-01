@@ -10,7 +10,7 @@ import { Alert } from '#components/atoms/Alert'
 import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
 import { useIdentityContext } from '#providers/provider'
-import { getCustomerEmailFromUrl } from '#utils/getParamsFromUrl'
+import { getParamFromUrl } from '#utils/getParamFromUrl'
 import { redirectToReturnUrl } from '#utils/redirectToReturnUrl'
 
 import type { UseFormReturn, UseFormProps } from 'react-hook-form'
@@ -31,7 +31,7 @@ const validationSchema = yup.object().shape({
 export const SignUpForm = (): JSX.Element => {
   const { settings, config } = useIdentityContext()
   const router = useRouter()
-  const customerEmail = getCustomerEmailFromUrl()
+  const customerEmail = getParamFromUrl('customerEmail')
 
   const form: UseFormReturn<SignUpFormValues, UseFormProps> =
     useForm<SignUpFormValues>({

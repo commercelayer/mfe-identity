@@ -10,7 +10,7 @@ import type {
 
 import { reducer } from '#providers/reducer'
 
-import { getClientIdFromUrl, getScopeFromUrl } from '#utils/getParamsFromUrl'
+import { getParamFromUrl } from '#utils/getParamFromUrl'
 import { getSettings } from '#utils/getSettings'
 
 import { DefaultSkeleton as DefaultSkeletonFC } from '#components/DefaultSkeleton'
@@ -53,8 +53,8 @@ export function IdentityProvider({
     isLoading: true
   } as IdentityProviderState)
 
-  const clientId = getClientIdFromUrl()
-  const scope = getScopeFromUrl()
+  const clientId = getParamFromUrl('clientId')
+  const scope = getParamFromUrl('scope')
 
   useEffect(() => {
     dispatch({ type: 'identity/onLoad' })

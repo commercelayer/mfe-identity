@@ -1,5 +1,5 @@
 import { isEmbedded } from '#utils/isEmbedded'
-import { getReturnUrlFromUrl } from '#utils/getParamsFromUrl'
+import { getParamFromUrl } from '#utils/getParamFromUrl'
 
 import type { Settings } from 'App'
 
@@ -18,7 +18,7 @@ export const redirectToReturnUrl = ({
   accessToken,
   scope
 }: RedirectToReturnUrlConfig): void => {
-  const returnUrl = getReturnUrlFromUrl()
+  const returnUrl = getParamFromUrl('returnUrl')
   if (returnUrl != null && window !== undefined) {
     const topWindow = isEmbedded() ? window.parent : window
     const url = new URL(returnUrl)
