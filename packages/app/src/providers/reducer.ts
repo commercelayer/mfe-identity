@@ -1,10 +1,10 @@
-import type { Settings, InvalidSettings } from 'App'
+import type { Settings } from 'App'
 import type { IdentityProviderState } from './types'
 
 type Action =
   | { type: 'identity/onLoad' }
   | { type: 'identity/onError' }
-  | { type: 'identity/loaded'; payload: Settings | InvalidSettings }
+  | { type: 'identity/loaded'; payload: Settings }
 
 export const reducer = (
   state: IdentityProviderState,
@@ -19,8 +19,7 @@ export const reducer = (
     case 'identity/onError':
       return {
         ...state,
-        isLoading: false,
-        isOnError: true
+        isLoading: false
       }
     case 'identity/loaded':
       return {

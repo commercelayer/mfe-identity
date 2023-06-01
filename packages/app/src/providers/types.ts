@@ -1,11 +1,10 @@
-import type { Settings, InvalidSettings } from 'App'
+import type { Settings } from 'App'
 
 export interface IdentityProviderState {
-  settings: Settings | InvalidSettings
+  settings: Settings
   isLoading: boolean
-  isOnError: boolean
 }
 
 export interface IdentityProviderValue {
-  state: IdentityProviderState
+  settings: Settings
 }

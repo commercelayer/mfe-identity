@@ -11,7 +11,14 @@ import type {
 import { reducer } from '#providers/reducer'
 
 import { getClientIdFromUrl, getScopeFromUrl } from '#utils/getParamsFromUrl'
-import { defaultSettings, getSettings } from '#utils/getSettings'
+import { getSettings } from '#utils/getSettings'
+
+import { DefaultSkeleton as DefaultSkeletonFC } from '#components/DefaultSkeleton'
+
+import {
+  SkeletonTemplate,
+  withSkeletonTemplate
+} from '#components/SkeletonTemplate'
 
 interface IdentityProviderProps {
   /**
@@ -30,17 +37,10 @@ interface IdentityProviderProps {
   config: CommerceLayerAppConfig
 }
 
-export const initialState: IdentityProviderState = {
-  settings: defaultSettings,
-  isLoading: true,
-  isOnError: false
-}
-
-export const initialValues: IdentityProviderValue = {
-  state: initialState
-}
-
-const IdentityContext = createContext<IdentityProviderValue>(initialValues)
+const IdentityContext = createContext<IdentityProviderValue>(
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  {} as IdentityProviderValue
+)
 export const useIdentityContext = (): IdentityProviderValue =>
   useContext(IdentityContext)
 
@@ -48,16 +48,13 @@ export function IdentityProvider({
   config,
   children
 }: IdentityProviderProps): JSX.Element {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  const [state, dispatch] = useReducer(reducer, {
+    isLoading: true
+  } as IdentityProviderState)
 
   const clientId = getClientIdFromUrl()
   const scope = getScopeFromUrl()
-
-  if (clientId == null || scope == null) {
-    return (
-      <PageErrorLayout statusCode={500} message='Missing required parameter.' />
-    )
-  }
 
   useEffect(() => {
     dispatch({ type: 'identity/onLoad' })
@@ -65,13 +62,41 @@ export function IdentityProvider({
     if (clientId != null && scope != null) {
       getSettings({ clientId, scope, config })
         .then((settings) => {
-          dispatch({ type: 'identity/loaded', payload: settings })
+          if (settings.isValid) {
+            dispatch({ type: 'identity/loaded', payload: settings })
+          } else {
+            dispatch({ type: 'identity/onError' })
+          }
         })
-        .catch(() => dispatch({ type: 'identity/onError' }))
+        .catch(() => {
+          dispatch({ type: 'identity/onError' })
+        })
     }
   }, [clientId, scope])
 
-  const value: IdentityProviderValue = { state }
+  if (clientId == null || scope == null) {
+    return (
+      <PageErrorLayout statusCode={500} message='Missing required parameter.' />
+    )
+  }
+
+  if (state.isLoading) {
+    // Skeleton loader
+    const DefaultSkeleton = withSkeletonTemplate(DefaultSkeletonFC)
+    return (
+      <SkeletonTemplate isLoading delayMs={0}>
+        <DefaultSkeleton />
+      </SkeletonTemplate>
+    )
+  }
+
+  if (state.settings === undefined || !state.settings?.isValid) {
+    return <PageErrorLayout statusCode={500} message='Application error.' />
+  }
+
+  const value: IdentityProviderValue = {
+    settings: state.settings
+  }
   return (
     <IdentityContext.Provider value={value}>
       {typeof children === 'function' ? children(value) : children}

@@ -56,15 +56,7 @@ declare module 'App' {
 
   type InvalidSettings = Pick<
     Settings,
-    | 'clientId'
-    | 'scope'
-    | 'endpoint'
-    | 'accessToken'
-    | 'customerAccessToken'
-    | 'primaryColor'
-    | 'companyName'
-    | 'logoUrl'
-    | 'faviconUrl'
+    'primaryColor' | 'companyName' | 'logoUrl' | 'faviconUrl'
   > & {
     /**
      * This flag allows TypeScript to discriminate between `Settings` and `InvalidSettings` union type.

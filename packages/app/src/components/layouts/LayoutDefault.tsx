@@ -5,40 +5,18 @@ import { useIdentityContext } from '#providers/provider'
 import { Header } from '#components/composite/Header'
 import { Footer } from '#components/composite/Footer'
 import { PageHead } from '#components/PageHead'
-import { PageErrorLayout } from '#components/layouts/PageErrorLayout'
-import {
-  SkeletonTemplate,
-  withSkeletonTemplate
-} from '#components/SkeletonTemplate'
+
 import { isEmbedded } from '#utils/isEmbedded'
 
 import type { ChildrenElement } from 'App'
-
-const DefaultSkeletonFC: React.FC = () => (
-  <div className='flex flex-col w-full'>
-    <h1 className='text-[32px] leading-[38px] text-black font-semibold'>
-      Title
-    </h1>
-    <p className='pt-2 text-sm text-gray-500 font-medium'>
-      Lorem ipsum dolor sit amnet
-    </p>
-  </div>
-)
-
-const DefaultSkeleton = withSkeletonTemplate(DefaultSkeletonFC)
 
 interface Props {
   children: ChildrenElement
 }
 
 export function LayoutDefault({ children }: Props): JSX.Element {
-  const { state } = useIdentityContext()
+  const { settings } = useIdentityContext()
   const { t } = useTranslation()
-  const { isLoading, isOnError } = state
-
-  if (isOnError) {
-    return <PageErrorLayout statusCode={500} message='Application error.' />
-  }
 
   const wrapperCss = cn([
     'relative w-full md:w-[420px] mx-auto px-8 md:px-0',
@@ -49,20 +27,14 @@ export function LayoutDefault({ children }: Props): JSX.Element {
     <>
       <PageHead
         title={t('general.title', {
-          companyName: state.settings.companyName
+          companyName: settings.companyName
         }).toString()}
-        faviconUrl={state.settings.faviconUrl}
+        faviconUrl={settings.faviconUrl}
       />
       <div className='container antialiased'>
         <div className={wrapperCss}>
           {!isEmbedded() ? <Header /> : null}
-          {isLoading ? (
-            <SkeletonTemplate isLoading={isLoading} delayMs={0}>
-              <DefaultSkeleton />
-            </SkeletonTemplate>
-          ) : (
-            <div className='flex flex-col w-full'>{children}</div>
-          )}
+          <div className='flex flex-col w-full'>{children}</div>
           {!isEmbedded() ? <Footer /> : null}
         </div>
       </div>

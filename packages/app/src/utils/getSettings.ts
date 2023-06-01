@@ -8,14 +8,12 @@ import { getStoredSalesChannelToken } from '#utils/oauthStorage'
 // default settings are by their nature not valid to show My Account data
 // they will be used as fallback for errors or 404 page
 export const defaultSettings: InvalidSettings = {
-  clientId: '',
-  endpoint: '',
-  scope: '',
-  isValid: false,
   primaryColor: '#000000',
+  logoUrl: '',
   faviconUrl:
     'https://data.commercelayer.app/assets/images/favicons/favicon-32x32.png',
   companyName: 'Commerce Layer',
+  isValid: false,
   retryable: false
 }
 

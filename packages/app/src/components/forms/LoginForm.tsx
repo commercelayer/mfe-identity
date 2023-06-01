@@ -30,7 +30,7 @@ const validationSchema = yup.object().shape({
 })
 
 export const LoginForm = (): JSX.Element => {
-  const { state } = useIdentityContext()
+  const { settings } = useIdentityContext()
   const router = useRouter()
   const signUpSuccess =
     localStorage.getItem('cLayer-identity-signUpStatus') === 'success'
@@ -53,7 +53,7 @@ export const LoginForm = (): JSX.Element => {
       const scope = getScopeFromUrl() ?? ''
       const customerTokenResponse = await getCustomerToken({
         clientId,
-        endpoint: state.settings.endpoint,
+        endpoint: settings.endpoint,
         scope,
         username: formData.customerEmail,
         password: formData.customerPassword

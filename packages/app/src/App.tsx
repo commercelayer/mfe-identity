@@ -15,8 +15,8 @@ function App(): JSX.Element {
     <HelmetProvider>
       <EmbeddedCapabilities.IframeResizerInit />
       <IdentityProvider config={window.clAppConfig}>
-        {({ state }) => (
-          <GlobalStylesProvider primaryColor={state.settings.primaryColor}>
+        {({ settings }) => (
+          <GlobalStylesProvider primaryColor={settings.primaryColor}>
             <Router base={getBasePath()}>
               <Switch>
                 <Route path='/'>
