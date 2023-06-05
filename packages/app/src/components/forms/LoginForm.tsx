@@ -1,6 +1,6 @@
 import { authentication } from '@commercelayer/js-auth'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import * as yup from 'yup'
 import { useRouter } from 'wouter'
 
@@ -63,29 +63,16 @@ export const LoginForm = (): JSX.Element => {
   })
 
   return (
-    <>
+    <FormProvider {...form}>
       <form
         className='mt-8 mb-0'
         onSubmit={(e) => {
-          e.preventDefault()
-          void onSubmit()
+          void onSubmit(e)
         }}
       >
         <div className='space-y-4'>
-          <Input
-            {...form.register('customerEmail')}
-            label='Email'
-            hasError={form.formState.errors?.customerEmail != null}
-            errorMessage={form.formState.errors.customerEmail?.message}
-            type='email'
-          />
-          <Input
-            {...form.register('customerPassword')}
-            label='Password'
-            hasError={form.formState.errors?.customerPassword != null}
-            errorMessage={form.formState.errors.customerPassword?.message}
-            type='password'
-          />
+          <Input name='customerEmail' label='Email' type='email' />
+          <Input name='customerPassword' label='Password' type='password' />
           <div className='flex pt-4'>
             <Button disabled={isSubmitting} type='submit'>
               {isSubmitting ? '...' : 'Login'}
@@ -112,6 +99,6 @@ export const LoginForm = (): JSX.Element => {
           .
         </p>
       </div>
-    </>
+    </FormProvider>
   )
 }

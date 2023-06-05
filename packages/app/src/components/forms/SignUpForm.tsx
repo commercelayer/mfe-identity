@@ -1,12 +1,11 @@
 import { authentication } from '@commercelayer/js-auth'
 import CommerceLayer from '@commercelayer/sdk'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import * as yup from 'yup'
 import { useRouter } from 'wouter'
 
 import { appRoutes } from '#data/routes'
-import { Alert } from '#components/atoms/Alert'
 import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
 import { useIdentityContext } from '#providers/provider'
@@ -15,6 +14,8 @@ import { redirectToReturnUrl } from '#utils/redirectToReturnUrl'
 
 import type { UseFormReturn, UseFormProps } from 'react-hook-form'
 import type { SignUpFormValues } from 'Forms'
+import { ValidationApiError } from './ValidationApiError'
+import { useState } from 'react'
 
 const validationSchema = yup.object().shape({
   customerEmail: yup
@@ -30,6 +31,7 @@ const validationSchema = yup.object().shape({
 
 export const SignUpForm = (): JSX.Element => {
   const { settings, config } = useIdentityContext()
+  const [apiError, setApiError] = useState({})
   const router = useRouter()
   const customerEmail = getParamFromUrl('customerEmail')
 
@@ -54,7 +56,8 @@ export const SignUpForm = (): JSX.Element => {
         password: formData.customerPassword
       })
       .catch((e) => {
-        console.log(e)
+        const apiError = { errors: e.errors }
+        setApiError(apiError)
       })
 
     if (createCustomerResponse?.id != null) {
@@ -84,36 +87,19 @@ export const SignUpForm = (): JSX.Element => {
   })
 
   return (
-    <>
+    <FormProvider {...form}>
       <form
         className='mt-8 mb-0'
         onSubmit={(e) => {
-          e.preventDefault()
-          void onSubmit()
+          void onSubmit(e)
         }}
       >
         <div className='space-y-4'>
+          <Input name='customerEmail' label='Email' type='email' />
+          <Input name='customerPassword' label='Password' type='password' />
           <Input
-            {...form.register('customerEmail')}
-            label='Email'
-            hasError={form.formState.errors?.customerEmail != null}
-            errorMessage={form.formState.errors.customerEmail?.message}
-            type='email'
-          />
-          <Input
-            {...form.register('customerPassword')}
-            label='Password'
-            hasError={form.formState.errors?.customerPassword != null}
-            errorMessage={form.formState.errors.customerPassword?.message}
-            type='password'
-          />
-          <Input
-            {...form.register('customerConfirmPassword')}
+            name='customerConfirmPassword'
             label='Confirm password'
-            hasError={form.formState.errors?.customerConfirmPassword != null}
-            errorMessage={
-              form.formState.errors.customerConfirmPassword?.message
-            }
             type='password'
           />
           <div className='flex pt-4'>
@@ -121,11 +107,13 @@ export const SignUpForm = (): JSX.Element => {
               {isSubmitting ? '...' : 'Sign up'}
             </Button>
           </div>
-          {form.formState.errors?.root != null && (
-            <div className='pt-4'>
-              <Alert variant='danger' title='Sign up error' />
-            </div>
-          )}
+          <ValidationApiError
+            apiError={apiError}
+            fieldMap={{
+              email: 'customerEmail',
+              password: 'customerPassword'
+            }}
+          />
         </div>
       </form>
       <div>
@@ -142,6 +130,6 @@ export const SignUpForm = (): JSX.Element => {
           .
         </p>
       </div>
-    </>
+    </FormProvider>
   )
 }
