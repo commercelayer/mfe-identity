@@ -17,9 +17,7 @@ export const Input = ({
   ...props
 }: Props): JSX.Element => {
   const form = useFormContext()
-  const errorMessage = useValidationFeedback(name)
-  const hasError = errorMessage != null && errorMessage.length > 0
-
+  const { hasError, errorMessage } = useValidationFeedback(name)
   const inputCss = cn([
     'block w-full px-4 py-2.5 mt-2 rounded outline-0 ring-1 ring-gray-200 border border-transparent focus:ring-primary focus:border-primary',
     hasError ? '!border-red-400 !ring-red-400 ring-1 border-1' : ''

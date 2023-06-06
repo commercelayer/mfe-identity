@@ -38,12 +38,11 @@ function ValidationApiError({
     }
   }, [apiError, apiError?.errors])
 
-  const validationMessage = useValidationFeedback(API_ERROR_FIELD_NAME)
-  if (validationMessage === undefined || validationMessage.length === 0)
-    return <></>
+  const { hasError, errorMessage } = useValidationFeedback(API_ERROR_FIELD_NAME)
+  if (!hasError) return <></>
   return (
     <div className='pt-4'>
-      <Alert variant='danger' title={validationMessage ?? ''} />
+      <Alert variant='danger' title={errorMessage ?? ''} />
     </div>
   )
 }
