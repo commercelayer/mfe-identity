@@ -1,8 +1,10 @@
 import cn from 'classnames'
 import { InputHTMLAttributes } from 'react'
+import { useFormContext } from 'react-hook-form'
+
 import { InputLabel } from '#components/atoms/InputLabel'
 import { InputValidationError } from '#components/atoms/InputValidationError'
-import { useFormContext } from 'react-hook-form'
+import { useValidationFeedback } from '#components/forms/useValidationFeedback'
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -15,8 +17,8 @@ export const Input = ({
   ...props
 }: Props): JSX.Element => {
   const form = useFormContext()
-  const hasError = form?.formState?.errors[name] != null
-  const errorMessage = form?.formState?.errors[name]?.message as string
+  const errorMessage = useValidationFeedback(name)
+  const hasError = errorMessage != null && errorMessage.length > 0
 
   const inputCss = cn([
     'block w-full px-4 py-2.5 mt-2 rounded outline-0 ring-1 ring-gray-200 border border-transparent focus:ring-primary focus:border-primary',
