@@ -5,8 +5,9 @@ import { Router, Route, Switch, Redirect } from 'wouter'
 import { appRoutes } from '#data/routes'
 import { IdentityProvider } from '#providers/provider'
 import { EmbeddedCapabilities } from '#components/EmbeddedCapabilities'
-import { PageErrorLayout } from '#components/PageErrorLayout'
+import { PageErrorLayout } from '#components/layouts/PageErrorLayout'
 import LoginPage from '#pages/LoginPage'
+import SignUpPage from '#pages/SignUpPage'
 
 function App(): JSX.Element {
   const basePath =
@@ -18,8 +19,8 @@ function App(): JSX.Element {
     <HelmetProvider>
       <EmbeddedCapabilities.IframeResizerInit />
       <IdentityProvider config={window.clAppConfig}>
-        {({ state }) => (
-          <GlobalStylesProvider primaryColor={state.settings.primaryColor}>
+        {({ settings }) => (
+          <GlobalStylesProvider primaryColor={settings.primaryColor}>
             <Router base={basePath}>
               <Switch>
                 <Route path='/'>
@@ -27,6 +28,9 @@ function App(): JSX.Element {
                 </Route>
                 <Route path={appRoutes.login.path}>
                   <LoginPage />
+                </Route>
+                <Route path={appRoutes.signUp.path}>
+                  <SignUpPage />
                 </Route>
                 <Route>
                   <PageErrorLayout statusCode={404} message='Page not found' />

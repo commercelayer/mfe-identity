@@ -1,24 +1,24 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
 
-import { PageErrorLayout } from '#components/PageErrorLayout'
+import { PageErrorLayout } from '#components/layouts/PageErrorLayout'
 
 import type { ChildrenElement } from 'App'
 import type {
   IdentityProviderState,
-  IdentityProviderValue,
-  LoginFormValues
+  IdentityProviderValue
 } from '#providers/types'
 
 import { reducer } from '#providers/reducer'
 
+import { getParamFromUrl } from '#utils/getParamFromUrl'
+import { getSettings } from '#utils/getSettings'
+
+import { DefaultSkeleton as DefaultSkeletonFC } from '#components/DefaultSkeleton'
+
 import {
-  getClientIdFromUrl,
-  getScopeFromUrl,
-  getReturnUrlFromUrl
-} from '#utils/getParamsFromUrl'
-import { defaultSettings, getSettings } from '#utils/getSettings'
-import { isEmbedded } from '#utils/isEmbedded'
-import { getCustomerToken } from '#utils/oauthRequests'
+  SkeletonTemplate,
+  withSkeletonTemplate
+} from '#components/SkeletonTemplate'
 
 interface IdentityProviderProps {
   /**
@@ -37,20 +37,10 @@ interface IdentityProviderProps {
   config: CommerceLayerAppConfig
 }
 
-export const initialState: IdentityProviderState = {
-  settings: defaultSettings,
-  isLoading: true,
-  isOnError: false,
-  isLoginLoading: false,
-  isLoginOnError: false
-}
-
-export const initialValues: IdentityProviderValue = {
-  state: initialState,
-  customerLogin: async () => {}
-}
-
-const IdentityContext = createContext<IdentityProviderValue>(initialValues)
+const IdentityContext = createContext<IdentityProviderValue>(
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  {} as IdentityProviderValue
+)
 export const useIdentityContext = (): IdentityProviderValue =>
   useContext(IdentityContext)
 
@@ -58,10 +48,31 @@ export function IdentityProvider({
   config,
   children
 }: IdentityProviderProps): JSX.Element {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  const [state, dispatch] = useReducer(reducer, {
+    isLoading: true
+  } as IdentityProviderState)
 
-  const clientId = getClientIdFromUrl()
-  const scope = getScopeFromUrl()
+  const clientId = getParamFromUrl('clientId')
+  const scope = getParamFromUrl('scope')
+
+  useEffect(() => {
+    dispatch({ type: 'identity/onLoad' })
+
+    if (clientId != null && scope != null) {
+      getSettings({ clientId, scope, config })
+        .then((settings) => {
+          if (settings.isValid) {
+            dispatch({ type: 'identity/loaded', payload: settings })
+          } else {
+            dispatch({ type: 'identity/onError' })
+          }
+        })
+        .catch(() => {
+          dispatch({ type: 'identity/onError' })
+        })
+    }
+  }, [clientId, scope])
 
   if (clientId == null || scope == null) {
     return (
@@ -69,57 +80,24 @@ export function IdentityProvider({
     )
   }
 
-  useEffect(() => {
-    dispatch({ type: 'identity/onLoad' })
-
-    if (clientId != null && scope != null) {
-      getSettings({ clientId, scope, config })
-        .then((settings) =>
-          dispatch({ type: 'settings/loaded', payload: settings })
-        )
-        .catch(() => dispatch({ type: 'identity/onError' }))
-    }
-  }, [clientId, scope])
-
-  const customerLogin = async ({
-    customerEmail,
-    customerPassword
-  }: LoginFormValues): Promise<void> => {
-    dispatch({ type: 'login/onLoad' })
-    const customerTokenResponse = await Promise.resolve(
-      getCustomerToken({
-        clientId,
-        endpoint: state.settings.endpoint,
-        scope,
-        username: customerEmail,
-        password: customerPassword
-      })
+  if (state.isLoading) {
+    // Skeleton loader
+    const DefaultSkeleton = withSkeletonTemplate(DefaultSkeletonFC)
+    return (
+      <SkeletonTemplate isLoading delayMs={0}>
+        <DefaultSkeleton />
+      </SkeletonTemplate>
     )
-    if (customerTokenResponse.access_token != null) {
-      dispatch({
-        type: 'login/logged',
-        payload: {
-          ...state.settings,
-          isValid: true,
-          customerAccessToken: customerTokenResponse.access_token
-        }
-      })
-
-      const returnUrl = getReturnUrlFromUrl()
-      if (returnUrl != null && window !== undefined) {
-        const topWindow = isEmbedded() ? window.parent : window
-        const customerAccessTokenUrlParam = `accessToken=${customerTokenResponse.access_token}`
-        const customerScopeUrlParam = `&scope=${scope}`
-        topWindow.location.href = `${returnUrl}?${customerAccessTokenUrlParam}${customerScopeUrlParam}`
-      } else {
-        // TODO: Window not defined. Should we console.log something to be shown in tests?
-      }
-    } else {
-      dispatch({ type: 'login/onError' })
-    }
   }
 
-  const value: IdentityProviderValue = { state, customerLogin }
+  if (state.settings === undefined || !state.settings?.isValid) {
+    return <PageErrorLayout statusCode={500} message='Application error.' />
+  }
+
+  const value: IdentityProviderValue = {
+    settings: state.settings,
+    config
+  }
   return (
     <IdentityContext.Provider value={value}>
       {typeof children === 'function' ? children(value) : children}

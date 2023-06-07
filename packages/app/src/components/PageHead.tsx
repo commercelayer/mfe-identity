@@ -12,13 +12,19 @@ type Props = Partial<Pick<Settings, 'faviconUrl'>> & {
   title?: string
 }
 
-export const PageHead: FC<Props> = ({ faviconUrl = '', title }) => {
-  const { t } = useTranslation('common')
+export const PageHead: FC<Props> = ({
+  title,
+  faviconUrl = defaultSettings.faviconUrl
+}) => {
+  const { t } = useTranslation()
 
   return (
     <Helmet>
-      <title>{title ?? t('general.title')}</title>
-      <link rel='icon' href={faviconUrl ?? defaultSettings.faviconUrl} />
+      <title>
+        {title ??
+          t('general.title', { companyName: defaultSettings.companyName })}
+      </title>
+      <link rel='icon' href={faviconUrl} />
     </Helmet>
   )
 }

@@ -1,15 +1,15 @@
 import { PageHeading } from '#components/atoms/PageHeading'
 import { LayoutDefault } from '#components/layouts/LayoutDefault'
-import { LoginForm } from '#components/forms/LoginForm'
+import { SignUpForm } from '#components/forms/SignUpForm'
 
-export default function LoginPage(): JSX.Element {
+export default function SignUpPage(): JSX.Element {
   return (
     <LayoutDefault>
       <PageHeading
-        title='Login'
-        description='Welcome back! Please enter your details.'
+        title='Sign up'
+        description='Create your account for free.'
       />
-      <LoginForm />
+      <SignUpForm />
     </LayoutDefault>
   )
 }

@@ -1,22 +1,11 @@
-import type { Settings, InvalidSettings } from 'App'
+import type { Settings } from 'App'
 
 export interface IdentityProviderState {
-  settings: Settings | InvalidSettings
+  settings: Settings
   isLoading: boolean
-  isOnError: boolean
-  isLoginLoading: boolean
-  isLoginOnError: boolean
 }
 
 export interface IdentityProviderValue {
-  state: IdentityProviderState
-  customerLogin: ({
-    customerEmail,
-    customerPassword
-  }: LoginFormValues) => Promise<void>
-}
-
-export interface LoginFormValues {
-  customerEmail: string
-  customerPassword: string
+  settings: Settings
+  config: CommerceLayerAppConfig
 }

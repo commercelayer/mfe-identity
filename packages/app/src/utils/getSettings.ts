@@ -8,14 +8,12 @@ import { getStoredSalesChannelToken } from '#utils/oauthStorage'
 // default settings are by their nature not valid to show My Account data
 // they will be used as fallback for errors or 404 page
 export const defaultSettings: InvalidSettings = {
-  clientId: '',
-  endpoint: '',
-  scope: '',
-  isValid: false,
   primaryColor: '#000000',
+  logoUrl: '',
   faviconUrl:
     'https://data.commercelayer.app/assets/images/favicons/favicon-32x32.png',
   companyName: 'Commerce Layer',
+  isValid: false,
   retryable: false
 }
 
@@ -70,14 +68,13 @@ export const getSettings = async ({
     domain
   })
 
-  const organizationResponse = await Promise.resolve(
+  const organization = await Promise.resolve(
     getOrganization({
       client
     })
   )
 
   // validating organization
-  const organization = organizationResponse?.object
   if (organization == null) {
     return makeInvalidSettings()
   }
@@ -86,8 +83,8 @@ export const getSettings = async ({
     clientId,
     scope,
     accessToken: storedToken?.access_token ?? '',
-    endpoint: `https://${slug}.${domain}`,
     isValid: true,
+    companySlug: slug,
     companyName: organization?.name ?? defaultSettings.companyName,
     primaryColor: organization?.primary_color ?? defaultSettings.primaryColor,
     logoUrl: organization?.logo_url ?? '',

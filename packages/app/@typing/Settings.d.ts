@@ -12,21 +12,20 @@ declare module 'App' {
      */
     scope: string
     /**
-     * Base endpoint URL to be used for API requests by `@commercelayer/react-components` library.
-     * Example: `https://yourdomain.commercelayer.io`
-     * Read more at {@link https://docs.commercelayer.io/core/api-specification#base-endpoint}.
-     */
-    endpoint: string
-    /**
      * Access Token for a sales channel API credentials to be used to authenticate all Commerce Layer API requests.
      * Read more at {@link https://docs.commercelayer.io/core/authentication/client-credentials#sales-channel}, {@link https://docs.commercelayer.io/core/authentication/client-credentials}
      */
-    accessToken?: string
+    accessToken: string
     /**
      * Access Token for a sales channel API credentials obtained using login password flow.
      * Read more at {@link https://docs.commercelayer.io/core/authentication/client-credentials#password}, {@link https://docs.commercelayer.io/core/authentication/password}
      */
     customerAccessToken?: string
+    /**
+     * Organization slug.
+     * Read more at {@link https://docs.commercelayer.io/core/v/api-reference/organization/object}.
+     */
+    companySlug: string
     /**
      * Organization name.
      * Read more at {@link https://docs.commercelayer.io/core/v/api-reference/organization/object}.
@@ -56,13 +55,7 @@ declare module 'App' {
 
   type InvalidSettings = Pick<
     Settings,
-    | 'clientId'
-    | 'scope'
-    | 'endpoint'
-    | 'primaryColor'
-    | 'companyName'
-    | 'logoUrl'
-    | 'faviconUrl'
+    'primaryColor' | 'companyName' | 'logoUrl' | 'faviconUrl'
   > & {
     /**
      * This flag allows TypeScript to discriminate between `Settings` and `InvalidSettings` union type.

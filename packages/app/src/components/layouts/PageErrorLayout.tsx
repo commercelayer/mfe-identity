@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import { LogoCL } from '@commercelayer/react-utils'
 
-import { Footer } from '#components/Footer'
+import { Footer } from '#components/composite/Footer'
 import { PageHead } from '#components/PageHead'
 import { isEmbedded } from '#utils/isEmbedded'
 
@@ -20,11 +20,7 @@ interface Props {
   message: string
 }
 
-export function PageErrorLayout({
-  statusCode,
-  message,
-  title
-}: Props): JSX.Element {
+export function PageErrorLayout({ statusCode, message }: Props): JSX.Element {
   const wrapperCss = cn([
     'relative items-center w-full md:w-[420px] mx-auto px-8 md:px-0',
     !isEmbedded() && 'h-screen'
@@ -32,7 +28,7 @@ export function PageErrorLayout({
 
   return (
     <>
-      <PageHead title={title} />
+      <PageHead />
       <div className='container'>
         <div className={wrapperCss}>
           {!isEmbedded() ? (
