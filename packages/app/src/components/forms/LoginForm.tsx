@@ -52,6 +52,11 @@ export const LoginForm = (): JSX.Element => {
             accessToken: tokenData.accessToken,
             scope: tokenData.scope
           })
+        } else {
+          form.setError('root', {
+            type: 'custom',
+            message: 'Invalid credentials'
+          })
         }
       })
       .catch(() => {
