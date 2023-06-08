@@ -57,7 +57,9 @@ module.exports = {
         inner: '0 0 0 1000px rgba(255, 255, 255, 1) inset',
         'sm-primary': '0 1px 2px 0 var(--primary-light)',
         top: '0px -4px 1px 0px rgb(0, 0, 0, 0.025)',
-        alert: '2px 2px 10px #EDEEEE'
+        alert: '2px 2px 10px #EDEEEE',
+        input: 'inset 0 0 0 1px',
+        'input-focused': 'inset 0 0 0 2px'
       },
       gridTemplateRows: {
         10: 'repeat(10, minmax(0, 1fr))'
