@@ -19,7 +19,7 @@ export const Input = ({
   const form = useFormContext()
   const { hasError, errorMessage } = useValidationFeedback(name)
   const inputCss = cn([
-    'block w-full px-4 py-2.5 mt-2 rounded outline-0 border-0 ring-0 !bg-white transition-shadow duration-500 shadow-input shadow-gray-200 focus:outline-0 focus:ring-0 focus:shadow-input-focused focus:shadow-primary',
+    'block w-full px-4 py-2.5 mt-2 rounded outline-0 border-0 ring-0 !bg-white transition-shadow duration-300 shadow-input shadow-gray-200 focus:outline-0 focus:ring-0 focus:shadow-input-focused focus:shadow-primary',
     hasError ? 'shadow-red-400 shadow-input-focused' : ''
   ])
   return (
