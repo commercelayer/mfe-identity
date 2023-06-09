@@ -5,7 +5,7 @@ export const A = forwardRef<
   AnchorHTMLAttributes<HTMLAnchorElement>
 >(({ children, ...props }, ref): JSX.Element => {
   const linkCss =
-    'text-primary font-bold hover:opacity-80 outline-primary outline-offset-2'
+    'text-primary font-bold hover:opacity-80 outline-transparent focus:outline-primary outline-offset-2 transition-outline duration-300'
 
   return (
     <a {...props} ref={ref} className={linkCss}>
