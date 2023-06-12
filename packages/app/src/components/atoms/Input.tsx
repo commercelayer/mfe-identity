@@ -19,8 +19,8 @@ export const Input = ({
   const form = useFormContext()
   const { hasError, errorMessage } = useValidationFeedback(name)
   const inputCss = cn([
-    'block w-full px-4 py-2.5 mt-2 rounded outline-0 border-0 ring-0 !bg-white transition-shadow duration-300 shadow-input shadow-gray-200 focus:outline-0 focus:ring-0 focus:shadow-input-focused focus:shadow-primary',
-    hasError ? 'shadow-red-400 shadow-input-focused' : ''
+    'w-full autofill:text-base px-4 py-2.5 mt-2 rounded outline-0 border-0 !ring-inset ring-1 ring-gray-200 transition-colors duration-300 !bg-white !shadow-[0_0_0_1000px_white_inset] focus:ring-2 focus:ring-primary',
+    hasError ? 'ring-red-400 ring-2' : ''
   ])
   return (
     <div className='field !mb-8'>
