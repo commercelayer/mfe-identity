@@ -1,2 +1,1 @@
-# mfe-identity
-Commerce Layer Hosted Identity
+./packages/app/README.md
