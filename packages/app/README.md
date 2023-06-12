@@ -1,6 +1,6 @@
 # Commerce Layer Identity
 
-The Commerce Layer Identity micro frontend application (React) provides you with a customer login and sign-up application powered by Commerce Layer APIs. You can fork this repository and deploy it to any hosting service or use it as a reference application to build your own. A hosted version is also available.
+The Commerce Layer Identity micro frontend application (React) provides you an application with customer login and sign-up capabilities powered by Commerce Layer APIs. You can fork this repository and deploy it to any hosting service or use it as a reference application to build your own. A hosted version is also available.
 
 ## What is Commerce Layer?
 
