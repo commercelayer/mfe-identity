@@ -5,6 +5,7 @@ import * as yup from 'yup'
 import { useRouter } from 'wouter'
 
 import { appRoutes } from '#data/routes'
+import { A } from '#components/atoms/A'
 import { Alert } from '#components/atoms/Alert'
 import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
@@ -93,14 +94,13 @@ export const LoginForm = (): JSX.Element => {
       <div>
         <p className='pt-6 text-base text-gray-500 font-medium'>
           Don't have an account?{' '}
-          <a
-            className='text-primary font-bold hover:opacity-80'
+          <A
             href={`${router.base}${appRoutes.signUp.makePath()}${
               window?.location.search ?? ''
             }`}
           >
             Sign up for free
-          </a>
+          </A>
           .
         </p>
       </div>
