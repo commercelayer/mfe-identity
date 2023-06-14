@@ -51,7 +51,7 @@ window.clAppConfig = {
 
 Any Commerce Layer account comes with a hosted version of the Identity application that is automatically enabled. You can customize it by adding your organization logo, favicon and primary color.
 
-You can use the hosted version of the Identity application with the following URL format: `https://<your-organization-subdomain>.commercelayer.app/identity?clientId=<your-client-it>&scope=<your-scope>&returnUrl=<your-return-url>`
+You can use the hosted version of the Identity application with the following URL format: `https://<your-organization-subdomain>.commercelayer.app/identity?clientId=<your-client-id>&scope=<your-scope>&returnUrl=<your-return-url>`
 
 ### Example
 
@@ -76,7 +76,7 @@ pnpm dev
 
 4. (Optional) Set your environment with `.env.local` starting from `.env.local.sample`.
 
-5. Open [http://localhost:5174](http://localhost:5174) with your browser to see the result. You can use the following format to open the login page: `http://localhost:5174/identity/?clientId=<your-client-it>&scope=<your-scope>&returnUrl=<your-return-url>`
+5. Open [http://localhost:5174](http://localhost:5174) with your browser to see the result. You can use the following format to open the login page: `http://localhost:5174/identity/?clientId=<your-client-id>&scope=<your-scope>&returnUrl=<your-return-url>`
 
 6. Make your changes and create a pull request ([learn how to do this](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)).
 
