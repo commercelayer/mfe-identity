@@ -53,8 +53,9 @@ export function IdentityProvider({
     isLoading: true
   } as IdentityProviderState)
 
-  const clientId = getParamFromUrl('clientId')
-  const scope = getParamFromUrl('scope')
+  const clientId = getParamFromUrl('clientId') ?? ''
+  const scope = getParamFromUrl('scope') ?? ''
+  const returnUrl = getParamFromUrl('returnUrl') ?? ''
 
   useEffect(() => {
     dispatch({ type: 'identity/onLoad' })
@@ -74,7 +75,7 @@ export function IdentityProvider({
     }
   }, [clientId, scope])
 
-  if (clientId == null || scope == null) {
+  if (clientId.length === 0 || scope.length === 0 || returnUrl.length === 0) {
     return (
       <PageErrorLayout statusCode={500} message='Missing required parameter.' />
     )

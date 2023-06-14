@@ -5,7 +5,7 @@ export const Button = forwardRef<
   ButtonHTMLAttributes<HTMLButtonElement>
 >(({ children, ...props }, ref): JSX.Element => {
   const buttonCss =
-    'w-full px-6 py-3 rounded text-sm text-center font-bold transition-opacity duration-500 focus:outline-none bg-black text-white hover:opacity-80'
+    'w-full px-6 py-3 rounded !border-0 text-sm text-center font-bold transition-outline duration-300 outline-offset-4 outline-transparent bg-black text-white hover:opacity-80 focus:outline-primary'
 
   return (
     <button {...props} ref={ref} className={buttonCss}>
