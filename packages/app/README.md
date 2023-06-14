@@ -1,6 +1,6 @@
 # Commerce Layer Identity
 
-The Commerce Layer Identity micro frontend application (React) provides you an application with customer login and sign-up capabilities powered by Commerce Layer APIs. You can fork this repository and deploy it to any hosting service or use it as a reference application to build your own. A hosted version is also available.
+The Commerce Layer Identity micro frontend (React) provides you with an application, powered by Commerce Layer APIs, handling customer login and sign-up functionalities. You can fork this repository and deploy it to any hosting service or use it as a reference application to build your own. A hosted version is also available.
 
 ## What is Commerce Layer?
 
@@ -10,7 +10,6 @@ The Commerce Layer Identity micro frontend application (React) provides you an a
 
 - [Getting started](#getting-started)
 - [Hosted version](#hosted-version)
-- [Embedding the cart](#embedding-the-cart)
 - [Contributors guide](#contributors-guide)
 - [Help and support](#need-help)
 - [License](#license)
@@ -34,23 +33,27 @@ window.clAppConfig = {
 
 [<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="35">](https://app.netlify.com/start/deploy?repository=https://github.com/commercelayer/mfe-identity) [<img src="https://vercel.com/button" alt="Deploy to Vercel" height="35">](https://vercel.com/new/clone?repository-url=https://github.com/commercelayer/mfe-identity) [<img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heroku" height="35">](https://heroku.com/deploy?template=https://github.com/commercelayer/mfe-identity) [<img src="https://www.deploytodo.com/do-btn-blue.svg" alt="Deploy to Digital Ocean" height="35">](https://cloud.digitalocean.com/apps/new?repo=https://github.com/commercelayer/mfe-identity/tree/master)
 
-4. Create a `Sales channel` application inside your organization by leveraging our [documentation](https://docs.commercelayer.io/core/applications) and take note of its `client Id` credential.
+4. Create a [sales channel](https://docs.commercelayer.io/core/applications#sales-channel) application inside your organization and take note of its client ID.
 
-5. Setup and/or identify a `scope` containing a market [eg. market:123] as required by `Sales channel` authentication. See [documentation](https://docs.commercelayer.io/core/authentication#putting-a-market-in-scope).
+5. Setup and/or identify a [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) containing a market [e.g. `market:1234`] as required by the sales channel [authentication](https://docs.commercelayer.io/core/authentication/client-credentials#sales-channel).
 
-6. Define a valid `return Url` that will be reached upon a successful login and/or sign-up procedure.
+6. Define a valid return URL that will be reached upon a successful login and/or sign-up procedure.
 
-7. Open the identity app using the URL format: `<your-deployed-identity-url>?clientId=<your-client-it>&scope=<your-scope>&returnUrl=<your-return-url>`.
+7. Open the identity app using the URL format: `<your-deployed-identity-url>?clientId=<your-client-id>&scope=<your-scope>&returnUrl=<your-return-url>`.
 
 ### Example
 
-`https://identity.yourbrand.com?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:123&returnUrl=https://shop.yourbrand.com/`
+`https://identity.yourbrand.com?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/`
 
 ## Hosted version
 
 Any Commerce Layer account comes with a hosted version of the Identity application that is automatically enabled. You can customize it by adding your organization logo, favicon and primary color.
 
 You can use the hosted version of the Identity application with the following URL format: `https://<your-organization-subdomain>.commercelayer.app/identity?clientId=<your-client-it>&scope=<your-scope>&returnUrl=<your-return-url>`
+
+### Example
+
+`https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/`
 
 ## Contributors guide
 
@@ -71,7 +74,7 @@ pnpm dev
 
 4. (Optional) Set your environment with `.env.local` starting from `.env.local.sample`.
 
-5. Open [http://localhost:5174](http://localhost:5174) with your browser to see the result. You can use the following format to open the cart: `http://localhost:5174/identity/?clientId=<your-client-it>&scope=<your-scope>&returnUrl=<your-return-url>`
+5. Open [http://localhost:5174](http://localhost:5174) with your browser to see the result. You can use the following format to open the login page: `http://localhost:5174/identity/?clientId=<your-client-it>&scope=<your-scope>&returnUrl=<your-return-url>`
 
 6. Make your changes and create a pull request ([learn how to do this](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)).
 
