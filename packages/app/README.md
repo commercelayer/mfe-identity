@@ -2,7 +2,7 @@
 
 The Commerce Layer Identity micro frontend (React) provides you with an application, powered by Commerce Layer APIs, handling customer login and sign-up functionalities. You can fork this repository and deploy it to any hosting service or use it as a reference application to build your own. A hosted version is also available.
 
-![mfe-identity-login-signup-py](https://github.com/commercelayer/mfe-identity/assets/55532244/648b8a4c-707b-4505-82a9-f47b4cd0f17c)
+![mfe-identity-login-signup-py](https://github.com/commercelayer/mfe-identity/assets/97170183/5a0ca972-5241-4e16-af33-280d84857dc7)
 
 ## What is Commerce Layer?
 
