@@ -86,7 +86,7 @@ When working with this project on Microsoft Windows, we suggest to use the Power
 
 This is required to install `pnpm` following the instruction [here](https://pnpm.io/installation#on-windows).
 
-Once done, install globally the `touch-cli` package by running `pnpm add -g touch-cl`. In this way you won't get any errors during the `prepare` script.
+Once done, install globally the `touch-cli` package by running `pnpm add -g touch-cli` in order to successfully execute the `prepare` script.
 
 ## Need help?
 
