@@ -82,7 +82,7 @@ pnpm dev
 7. Someone will attend to your pull request and provide some feedback.
 
 ## Running on Windows
-When working with this project on Microsoft Windows, we suggest to use the PowerShell terminal or any alternative shell with the ability to run scripts as admin user.
+When working on Microsoft Windows, we suggest to use the PowerShell terminal or any alternative shell with the ability to run scripts as admin user.
 
 This is required to install `pnpm` following the instruction [here](https://pnpm.io/installation#on-windows).
 
