@@ -73,8 +73,9 @@ export const SignUpForm = (): JSX.Element => {
         .then((tokenData) => {
           if (tokenData.accessToken != null) {
             redirectToReturnUrl({
+              scope: tokenData.scope,
               accessToken: tokenData.accessToken,
-              scope: tokenData.scope
+              expires: tokenData.expires.toISOString()
             })
           }
         })
