@@ -4,8 +4,9 @@ import { getParamFromUrl } from '#utils/getParamFromUrl'
 import type { Settings } from 'App'
 
 interface RedirectToReturnUrlConfig {
-  accessToken: Settings['accessToken']
   scope: Settings['scope']
+  accessToken: Settings['customerAccessToken']
+  expires: Settings['customerAccessTokenExpires']
 }
 
 /**
@@ -15,8 +16,9 @@ interface RedirectToReturnUrlConfig {
  * @param scope - String specified during the authentication flow to restrict the scope of obtained access token to a market and/or to a stock location.
  */
 export const redirectToReturnUrl = ({
+  scope,
   accessToken,
-  scope
+  expires
 }: RedirectToReturnUrlConfig): void => {
   const returnUrl = getParamFromUrl('returnUrl')
   if (returnUrl != null && window !== undefined) {
@@ -24,6 +26,9 @@ export const redirectToReturnUrl = ({
     const url = new URL(returnUrl)
     url.searchParams.append('accessToken', accessToken ?? '')
     url.searchParams.append('scope', scope)
+    if (expires != null) {
+      url.searchParams.append('expires', expires)
+    }
     topWindow.location.href = url.href
   }
 }

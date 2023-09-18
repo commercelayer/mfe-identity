@@ -50,8 +50,9 @@ export const LoginForm = (): JSX.Element => {
       .then((tokenData) => {
         if (tokenData.accessToken != null) {
           redirectToReturnUrl({
+            scope: tokenData.scope,
             accessToken: tokenData.accessToken,
-            scope: tokenData.scope
+            expires: tokenData.expires.toISOString()
           })
         } else {
           form.setError('root', {

@@ -22,6 +22,11 @@ declare module 'App' {
      */
     customerAccessToken?: string
     /**
+     * Access Token expiry date for a sales channel API credentials obtained using login password flow.
+     * Read more at {@link https://docs.commercelayer.io/core/authentication/client-credentials#password}, {@link https://docs.commercelayer.io/core/authentication/password}
+     */
+    customerAccessTokenExpires?: string
+    /**
      * Organization slug.
      * Read more at {@link https://docs.commercelayer.io/core/v/api-reference/organization/object}.
      */
