@@ -8,7 +8,11 @@
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r lint:fix",
     "test": "pnpm -r test",
-    "test:watch": "pnpm -r test:watch"
+    "test:watch": "pnpm -r test:watch",
+    "dep:upgrade:major": "pnpm -r exec npm-check-updates -u",
+    "dep:upgrade:minor": "pnpm dep:upgrade:major -t minor",
+    "dep:self-upgrade:major": "pnpm exec npm-check-updates -u",
+    "dep:self-upgrade:minor": "pnpm dep:self-upgrade:major -t minor"
   },
   "keywords": [],
   "author": {
