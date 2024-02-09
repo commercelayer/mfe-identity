@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes, forwardRef } from 'react'
+import { forwardRef, type AnchorHTMLAttributes } from 'react'
 
 export const A = forwardRef<
   HTMLAnchorElement,

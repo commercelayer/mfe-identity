@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import { InputHTMLAttributes } from 'react'
+import { type InputHTMLAttributes } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { InputLabel } from '#components/atoms/InputLabel'

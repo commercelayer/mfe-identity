@@ -1,16 +1,16 @@
+import { useDelayShow } from '#hooks/useDelayShow'
 import { isFunctionComponent } from '#utils/children'
 import cn from 'classnames'
 import {
   Children,
   cloneElement,
+  isValidElement,
   type FC,
   type FunctionComponent,
-  isValidElement,
   type ReactNode,
   type ReactPortal
 } from 'react'
 import { type Simplify } from 'type-fest'
-import { useDelayShow } from '#hooks/useDelayShow'
 
 type ReactNodeNoPortal = Exclude<ReactNode, ReactPortal>
 
@@ -59,7 +59,11 @@ function childRecursiveMap(
     if (child.props.children != null) {
       return fn(
         cloneElement(child, {
-          children: childrenRecursiveMap(child.props.children, options, fn)
+          children: childrenRecursiveMap(
+            child.props.children as JSX.Element,
+            options,
+            fn
+          )
         })
       )
     }
@@ -143,19 +147,21 @@ const SkeletonTemplate: SkeletonTemplateComponent<
           }
 
           const props = Object.fromEntries(
-            Object.entries(child.props).map(([key, value]) => {
-              if (key !== 'children' && isValidElement(value)) {
-                const newValue = (
-                  <SkeletonTemplate delayMs={0} isLoading>
-                    {value}
-                  </SkeletonTemplate>
-                )
+            Object.entries(child.props as Record<string, unknown>).map(
+              ([key, value]) => {
+                if (key !== 'children' && isValidElement(value)) {
+                  const newValue = (
+                    <SkeletonTemplate delayMs={0} isLoading>
+                      {value}
+                    </SkeletonTemplate>
+                  )
 
-                return [key, newValue]
+                  return [key, newValue]
+                }
+
+                return [key, value]
               }
-
-              return [key, value]
-            })
+            )
           )
 
           if (child.type === 'input' || child.type === 'button') {

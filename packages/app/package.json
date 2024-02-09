@@ -22,8 +22,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "test": "pnpm run lint && vitest run",
     "test:watch": "vitest",
     "prepare": "touch ./public/config.local.js"

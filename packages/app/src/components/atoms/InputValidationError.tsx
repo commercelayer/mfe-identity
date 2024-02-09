@@ -1,5 +1,5 @@
-import { HTMLAttributes, forwardRef } from 'react'
 import { WarningCircle } from '@phosphor-icons/react'
+import { forwardRef, type HTMLAttributes } from 'react'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   errorMessage?: string

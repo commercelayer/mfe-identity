@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { forwardRef, type ButtonHTMLAttributes } from 'react'
 
 export const Button = forwardRef<
   HTMLButtonElement,

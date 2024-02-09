@@ -2,11 +2,11 @@ import { createContext, useContext, useEffect, useReducer } from 'react'
 
 import { PageErrorLayout } from '#components/layouts/PageErrorLayout'
 
-import type { ChildrenElement } from 'App'
 import type {
   IdentityProviderState,
   IdentityProviderValue
 } from '#providers/types'
+import type { ChildrenElement } from 'App'
 
 import { reducer } from '#providers/reducer'
 
@@ -91,7 +91,7 @@ export function IdentityProvider({
     )
   }
 
-  if (state.settings === undefined || !state.settings?.isValid) {
+  if (!state.settings?.isValid) {
     return <PageErrorLayout statusCode={500} message='Application error.' />
   }
 

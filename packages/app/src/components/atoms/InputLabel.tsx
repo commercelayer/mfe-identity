@@ -1,4 +1,4 @@
-import { HTMLAttributes, forwardRef } from 'react'
+import { forwardRef, type HTMLAttributes } from 'react'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   label?: string
