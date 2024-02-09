@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect } from 'react'
+import { type FC, useEffect, useLayoutEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 
 import { isEmbedded } from '#utils/isEmbedded'

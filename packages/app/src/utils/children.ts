@@ -1,8 +1,8 @@
-import { isValidElement, type ReactNode } from 'react'
+import { isValidElement, type ReactElement, type ReactNode } from 'react'
 
 export function isFunctionComponent(
-  child: any
-): child is { type: React.FunctionComponent<any> } {
+  child: ReactNode
+): child is ReactElement<any, React.FunctionComponent<any>> {
   return (
     isValidElement(child) &&
     typeof child.type === 'function' &&

@@ -32,7 +32,11 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^6.1.0"
+    "lerna": "^6.1.0",
+    "npm-check-updates": "^16.14.6"
   },
-  "packageManager": "pnpm@8.0.0"
+  "packageManager": "pnpm@8.0.0",
+  "resolutions": {
+    "@babel/traverse": "^7.23.2"
+  }
 }
