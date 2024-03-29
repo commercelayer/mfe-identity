@@ -1,21 +1,21 @@
-import { authentication } from '@commercelayer/js-auth'
+import { authenticate } from '@commercelayer/js-auth'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm, FormProvider } from 'react-hook-form'
-import * as yup from 'yup'
+import { FormProvider, useForm } from 'react-hook-form'
 import { useRouter } from 'wouter'
+import * as yup from 'yup'
 
-import { appRoutes } from '#data/routes'
 import { A } from '#components/atoms/A'
 import { Alert } from '#components/atoms/Alert'
 import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
+import { appRoutes } from '#data/routes'
 import { useIdentityContext } from '#providers/provider'
 
 import { getParamFromUrl } from '#utils/getParamFromUrl'
 import { redirectToReturnUrl } from '#utils/redirectToReturnUrl'
 
-import type { UseFormReturn, UseFormProps } from 'react-hook-form'
 import type { LoginFormValues } from 'Forms'
+import type { UseFormProps, UseFormReturn } from 'react-hook-form'
 
 const validationSchema = yup.object().shape({
   customerEmail: yup
@@ -39,9 +39,8 @@ export const LoginForm = (): JSX.Element => {
 
   const isSubmitting = form.formState.isSubmitting
   const onSubmit = form.handleSubmit(async (formData) => {
-    await authentication('password', {
+    await authenticate('password', {
       clientId: settings.clientId,
-      slug: settings.companySlug,
       domain: config.domain,
       scope: settings.scope,
       username: formData.customerEmail,

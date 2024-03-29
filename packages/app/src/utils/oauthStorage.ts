@@ -1,17 +1,16 @@
-import { getSalesChannelToken } from '#utils/oauthRequests'
-import { getInfoFromJwt } from '#utils/getInfoFromJwt'
+import {
+  authenticate,
+  jwtDecode,
+  jwtIsSalesChannel
+} from '@commercelayer/js-auth'
 
-import type { OauthResponse } from '#utils/oauthRequests'
-
-type StoredOauthResponse = Pick<
-  OauthResponse,
-  | 'access_token'
-  | 'scope'
-  | 'token_type'
-  | 'refresh_token'
-  | 'error'
-  | 'error_description'
-> & {
+interface StoredOauthResponse {
+  access_token?: string
+  scope?: string
+  token_type?: string
+  refresh_token?: string
+  error?: string
+  error_description?: string
   client_id?: string
   expires?: number
 }
@@ -88,24 +87,29 @@ export const getStoredSalesChannelToken = async ({
 }: GetStoredSalesChannelTokenConfig): Promise<StoredOauthResponse | null> => {
   const tokenData = getStoredTokenData({ app, slug, scope })
   if (!isValidStoredTokenData({ tokenData, clientId })) {
-    const endpoint = `https://${slug}.${domain}`
-    const accessTokenResponse = await Promise.resolve(
-      getSalesChannelToken({ clientId, endpoint, scope })
-    )
-    if (accessTokenResponse?.access_token != null) {
+    const auth = await authenticate('client_credentials', {
+      domain,
+      clientId,
+      scope
+    })
+    if (auth.accessToken != null) {
+      const decodedJWT = jwtDecode(auth.accessToken)
+      const slug = jwtIsSalesChannel(decodedJWT.payload)
+        ? decodedJWT.payload.organization.slug
+        : ''
+
       const tokenData: StoredOauthResponse = {
         client_id: clientId,
-        access_token: accessTokenResponse?.access_token,
+        access_token: auth.accessToken,
         scope,
-        token_type: accessTokenResponse?.token_type,
-        refresh_token: accessTokenResponse?.refresh_token,
-        expires: getInfoFromJwt(accessTokenResponse?.access_token)?.exp
+        token_type: auth.tokenType,
+        expires: decodedJWT.payload.exp
       }
       const storageKey = getStoredTokenKey({ app, slug, scope })
       localStorage.setItem(storageKey, JSON.stringify(tokenData))
       return tokenData
     } else {
-      return accessTokenResponse
+      return null
     }
   } else {
     return tokenData
