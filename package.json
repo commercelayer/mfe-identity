@@ -32,11 +32,15 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^6.1.0",
-    "npm-check-updates": "^16.14.6"
+    "lerna": "^8.1.2",
+    "npm-check-updates": "^16.14.18"
   },
   "packageManager": "pnpm@8.0.0",
   "resolutions": {
-    "@babel/traverse": "^7.23.2"
+    "@babel/traverse": "^7.23.2",
+    "follow-redirects": "^1.15.6",
+    "semver": "^7.5.2",
+    "socks": "^2.7.3",
+    "word-wrap": "^1.2.4"
   }
 }
