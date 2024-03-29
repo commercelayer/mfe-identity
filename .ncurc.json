@@ -1,6 +1,0 @@
-{
-  "reject": [
-    "stylelint",
-    "stylelint-config-standard"
-  ]
-}
