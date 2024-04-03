@@ -1,22 +1,22 @@
-import { authentication } from '@commercelayer/js-auth'
+import { authenticate } from '@commercelayer/js-auth'
 import CommerceLayer from '@commercelayer/sdk'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm, FormProvider } from 'react-hook-form'
-import * as yup from 'yup'
+import { FormProvider, useForm } from 'react-hook-form'
 import { useRouter } from 'wouter'
+import * as yup from 'yup'
 
-import { appRoutes } from '#data/routes'
 import { A } from '#components/atoms/A'
 import { Button } from '#components/atoms/Button'
 import { Input } from '#components/atoms/Input'
+import { appRoutes } from '#data/routes'
 import { useIdentityContext } from '#providers/provider'
 import { getParamFromUrl } from '#utils/getParamFromUrl'
 import { redirectToReturnUrl } from '#utils/redirectToReturnUrl'
 
-import type { UseFormReturn, UseFormProps } from 'react-hook-form'
 import type { SignUpFormValues } from 'Forms'
-import { ValidationApiError } from './ValidationApiError'
 import { useState } from 'react'
+import type { UseFormProps, UseFormReturn } from 'react-hook-form'
+import { ValidationApiError } from './ValidationApiError'
 
 const validationSchema = yup.object().shape({
   customerEmail: yup
@@ -62,9 +62,8 @@ export const SignUpForm = (): JSX.Element => {
       })
 
     if (createCustomerResponse?.id != null) {
-      await authentication('password', {
+      await authenticate('password', {
         clientId: settings.clientId,
-        slug: settings.companySlug,
         domain: config.domain,
         scope: settings.scope,
         username: formData.customerEmail,

@@ -1,4 +1,4 @@
-import { getInfoFromJwt } from '#utils/getInfoFromJwt'
+import { jwtDecode, jwtIsSalesChannel } from '@commercelayer/js-auth'
 import { getSubdomain } from './getSubdomain'
 
 const isProduction = (forceProductionEnv?: boolean): boolean =>
@@ -26,13 +26,13 @@ export const isValidHost = ({
   forceProductionEnv?: boolean
   selfHostedSlug?: string | null
 }): boolean => {
-  const { slug, kind } = getInfoFromJwt(accessToken)
+  const decodedJWT = jwtDecode(accessToken)
 
-  const isInvalidChannel = kind !== 'sales_channel'
-  if (isInvalidChannel) {
+  if (!jwtIsSalesChannel(decodedJWT.payload)) {
     return false
   }
 
+  const slug = decodedJWT.payload.organization.slug
   const subdomain = getSubdomain({ hostname, selfHostedSlug })
 
   const isInvalidSubdomain = subdomain !== slug

@@ -1,4 +1,4 @@
-import { getInfoFromJwt } from './getInfoFromJwt'
+import { jwtDecode } from '@commercelayer/js-auth'
 
 export function isTokenExpired({
   accessToken,
@@ -7,8 +7,8 @@ export function isTokenExpired({
   accessToken: string
   compareTo: Date
 }): boolean {
-  const { exp } = getInfoFromJwt(accessToken)
-
+  const decodedJWT = jwtDecode(accessToken)
+  const exp = decodedJWT.payload.exp
   if (exp == null) {
     return true
   }

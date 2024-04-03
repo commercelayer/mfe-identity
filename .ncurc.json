@@ -1,9 +1,0 @@
-{
-  "reject": [
-    "jwt-decode",
-    "@commercelayer/js-auth",
-    "@types/async-retry",
-    "stylelint",
-    "stylelint-config-standard"
-  ]
-}
