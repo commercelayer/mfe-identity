@@ -1,7 +1,7 @@
 {
   "name": "mfe-identity",
   "description": "A Commerce Layer Single Page Application to provide login and signup.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "author": {
     "name": "Pier Francesco Ferrari",
@@ -72,9 +72,9 @@
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
     "typescript": "5.4.3",
-    "vitest": "^1.4.0",
     "vite": "^5.2.7",
-    "vite-tsconfig-paths": "^4.3.2"
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^1.4.0"
   },
   "engines": {
     "node": ">=18",
