@@ -27,14 +27,12 @@ export const isValidHost = ({
   selfHostedSlug?: string | null
 }): boolean => {
   const decodedJWT = jwtDecode(accessToken)
-  const slug = jwtIsSalesChannel(decodedJWT.payload)
-    ? decodedJWT.payload.organization.slug
-    : ''
 
   if (!jwtIsSalesChannel(decodedJWT.payload)) {
     return false
   }
 
+  const slug = decodedJWT.payload.organization.slug
   const subdomain = getSubdomain({ hostname, selfHostedSlug })
 
   const isInvalidSubdomain = subdomain !== slug
