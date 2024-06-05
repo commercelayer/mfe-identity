@@ -82,6 +82,5 @@
   },
   "msw": {
     "workerDirectory": "public"
-  },
-  "packageManager": "pnpm@8.0.0"
+  }
 }
