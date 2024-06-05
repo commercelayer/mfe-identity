@@ -1,4 +1,9 @@
-type UrlParam = 'clientId' | 'scope' | 'returnUrl' | 'customerEmail'
+type UrlParam =
+  | 'clientId'
+  | 'scope'
+  | 'returnUrl'
+  | 'resetPasswordUrl'
+  | 'customerEmail'
 
 /**
  * @returns the value of specified query string parameter or `undefined` if it's not present.

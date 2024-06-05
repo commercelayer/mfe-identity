@@ -30,6 +30,7 @@ export const LoginForm = (): JSX.Element => {
   const router = useRouter()
 
   const customerEmail = getParamFromUrl('customerEmail')
+  const resetPasswordUrl = getParamFromUrl('resetPasswordUrl') ?? ''
 
   const form: UseFormReturn<LoginFormValues, UseFormProps> =
     useForm<LoginFormValues>({
@@ -79,6 +80,13 @@ export const LoginForm = (): JSX.Element => {
         <div className='space-y-4'>
           <Input name='customerEmail' label='Email' type='email' />
           <Input name='customerPassword' label='Password' type='password' />
+          {resetPasswordUrl.length > 0 && (
+            <div className='text-right'>
+              <A href={`${resetPasswordUrl}`} target='_blank'>
+                Forgot password?
+              </A>
+            </div>
+          )}
           <div className='flex pt-4'>
             <Button disabled={isSubmitting} type='submit'>
               {isSubmitting ? '...' : 'Login'}
