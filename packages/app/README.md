@@ -68,7 +68,7 @@ In addition to the previously defined GET parameters required for correctly gene
 ### Example
 
 ```http
-https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/&resetPasswordUrl=https://resetpwd.yourbrand.com
+https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/&resetPasswordUrl=https://www.yourbrand.com/customer/reset-password
 ```
 
 ## Contributors guide
