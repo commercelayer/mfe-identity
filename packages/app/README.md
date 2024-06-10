@@ -12,6 +12,7 @@ The Commerce Layer Identity micro frontend (React) provides you with an applicat
 
 - [Getting started](#getting-started)
 - [Hosted version](#hosted-version)
+- [Custom reset password flow](#custom-reset-password-flow)
 - [Contributors guide](#contributors-guide)
 - [Running on Windows](#running-on-windows)
 - [Help and support](#need-help)
@@ -44,7 +45,9 @@ window.clAppConfig = {
 
 ### Example
 
-`https://identity.yourbrand.com?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/`
+```http
+https://identity.yourbrand.com?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/
+```
 
 ## Hosted version
 
@@ -54,15 +57,19 @@ You can use the hosted version of the Identity application with the following UR
 
 ### Example
 
-`https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/`
+```http
+https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/
+```
 
-### Optional: Custom reset password flow
+## Custom reset password flow
 
-In addition to the previously defined GET parameters suitable for the hosted app link, you could add the `resetPasswordUrl` GET parameter to enable a custom reset password link visible on the login form page.
+In addition to the previously defined GET parameters required for correctly generating the hosted app link, you can optionally add the `resetPasswordUrl` one to enable a custom reset password link visible on the login form page. If that parameter is set a *Forgot password?* link will be shown on the right below the *Password* field.
 
-If the parameter is set a `Forgot password?` link will be shown on the right below the Password field.
+### Example
 
-<img src="https://github.com/commercelayer/mfe-identity/assets/105653649/869aa30a-d872-4f48-a4b9-e3348adaeb59" width="400" />
+```http
+https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/&resetPasswordUrl=https://resetpwd.yourbrand.com
+```
 
 ## Contributors guide
 
