@@ -56,6 +56,14 @@ You can use the hosted version of the Identity application with the following UR
 
 `https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/`
 
+### Optional: Custom reset password flow
+
+In addition to the previously defined GET parameters suitable for the hosted app link, you could add the `resetPasswordUrl` GET parameter to enable a custom reset password link visible on the login form page.
+
+If the parameter is set a `Forgot password?` link will be shown on the right below the Password field.
+
+<img src="https://github.com/commercelayer/mfe-identity/assets/105653649/869aa30a-d872-4f48-a4b9-e3348adaeb59" width="400" />
+
 ## Contributors guide
 
 1. Fork [this repository](https://github.com/commercelayer/mfe-identity) (you can learn how to do this [here](https://help.github.com/articles/fork-a-repo)).
