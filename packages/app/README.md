@@ -2,7 +2,7 @@
 
 The Commerce Layer Identity micro frontend (React) provides you with an application, powered by Commerce Layer APIs, handling customer login and sign-up functionalities. You can fork this repository and deploy it to any hosting service or use it as a reference application to build your own. A hosted version is also available.
 
-![mfe-identity-login-signup-py](https://github.com/commercelayer/mfe-identity/assets/97170183/5a0ca972-5241-4e16-af33-280d84857dc7)
+![mfe-identity-login-signup-forgetpwd-py](https://github.com/commercelayer/mfe-identity/assets/55532244/3c03aff6-f95e-44ad-be83-1b4a7da16c8a)
 
 ## What is Commerce Layer?
 
@@ -12,6 +12,7 @@ The Commerce Layer Identity micro frontend (React) provides you with an applicat
 
 - [Getting started](#getting-started)
 - [Hosted version](#hosted-version)
+- [Custom reset password flow](#custom-reset-password-flow)
 - [Contributors guide](#contributors-guide)
 - [Running on Windows](#running-on-windows)
 - [Help and support](#need-help)
@@ -44,7 +45,9 @@ window.clAppConfig = {
 
 ### Example
 
-`https://identity.yourbrand.com?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/`
+```http
+https://identity.yourbrand.com?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/
+```
 
 ## Hosted version
 
@@ -54,7 +57,19 @@ You can use the hosted version of the Identity application with the following UR
 
 ### Example
 
-`https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/`
+```http
+https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/
+```
+
+## Custom reset password flow
+
+In addition to the previously defined GET parameters required for correctly generating the hosted app link, you can optionally add the `resetPasswordUrl` one to enable a custom reset password link visible on the login form page. If that parameter is set a *Forgot password?* link will be shown on the right below the *Password* field.
+
+### Example
+
+```http
+https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/&resetPasswordUrl=https://www.yourbrand.com/customer/reset-password
+```
 
 ## Contributors guide
 
