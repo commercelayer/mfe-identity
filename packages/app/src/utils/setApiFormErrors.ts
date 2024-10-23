@@ -110,7 +110,7 @@ export function setApiFormErrors({
       const guessedField = guessField(item)
       const field =
         guessedField != null
-          ? fieldMap?.[guessedField] ?? guessedField
+          ? (fieldMap?.[guessedField] ?? guessedField)
           : undefined
 
       // Once we have a field name we check if it's part of the form fields, otherwise we cannot
