@@ -10,7 +10,8 @@
     "test": "pnpm -r test",
     "test:watch": "pnpm -r test:watch",
     "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
-    "dep:minor": "pnpm dep:major -t minor"
+    "dep:minor": "pnpm dep:major -t minor",
+    "clean": "pnpx rimraf --glob **/node_modules **/pnpm-lock.yaml"
   },
   "keywords": [],
   "author": {
@@ -23,15 +24,15 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=18",
-    "pnpm": ">=8"
+    "node": ">=20",
+    "pnpm": ">=9"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^8.1.8",
-    "npm-check-updates": "^17.1.4"
+    "lerna": "^8.1.9",
+    "npm-check-updates": "^17.1.11"
   },
   "resolutions": {
     "@babel/traverse": "^7.23.2",

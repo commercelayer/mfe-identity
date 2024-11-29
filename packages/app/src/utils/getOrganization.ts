@@ -24,7 +24,6 @@ const getAsyncOrganization = async (
 ): Promise<Organization> =>
   await client.organization.retrieve({
     fields: {
-      // @ts-expect-error SDK now uses singular fields selection name for singletons but it should stay plural to work properly
       organizations: [
         'id',
         'logo_url',
