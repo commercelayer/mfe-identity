@@ -1,5 +1,10 @@
 {
   "reject": [
-    "eslint"
+    "eslint",
+    "react",
+    "react-dom",
+    "@types/react",
+    "@types/react-dom",
+    "tailwindcss"
   ]
 }
