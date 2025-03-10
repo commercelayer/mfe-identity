@@ -1,12 +1,12 @@
-import { isValidElement, type ReactElement, type ReactNode } from 'react'
+import { type ReactElement, type ReactNode, isValidElement } from "react"
 
 export function isFunctionComponent(
-  child: ReactNode
-): child is ReactElement<any, React.FunctionComponent<any>> {
+  child: ReactNode,
+): child is ReactElement<unknown, React.FunctionComponent<unknown>> {
   return (
     isValidElement(child) &&
-    typeof child.type === 'function' &&
-    'displayName' in child.type
+    typeof child.type === "function" &&
+    "displayName" in child.type
   )
 }
 
@@ -27,7 +27,7 @@ export function isFunctionComponent(
 
 export function isSpecificReactComponent(
   child: ReactNode,
-  displayNames: string[]
+  displayNames: string[],
 ): boolean {
   if (child == null) {
     return false

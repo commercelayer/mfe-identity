@@ -1,4 +1,4 @@
-declare module 'App' {
+declare module "App" {
   export interface Settings {
     /**
      * Commerce Layer Oauth applications' unique identifier used to identify the client during the authentication flow.
@@ -60,7 +60,7 @@ declare module 'App' {
 
   type InvalidSettings = Pick<
     Settings,
-    'primaryColor' | 'companyName' | 'logoUrl' | 'faviconUrl'
+    "primaryColor" | "companyName" | "logoUrl" | "faviconUrl"
   > & {
     /**
      * This flag allows TypeScript to discriminate between `Settings` and `InvalidSettings` union type.

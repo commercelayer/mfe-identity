@@ -1,12 +1,12 @@
-import '#styles/globals.css'
-import '#utils/i18n'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
+import "#styles/globals.css"
+import "#utils/i18n"
+import React from "react"
+import ReactDOM from "react-dom/client"
+import App from "./App"
 
 // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 )

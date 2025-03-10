@@ -1,13 +1,13 @@
-import type { Settings } from 'App'
+import type { Settings } from "App"
 
-type LogoProps = Pick<Settings, 'logoUrl' | 'companyName'> & {
+type LogoProps = Pick<Settings, "logoUrl" | "companyName"> & {
   className?: string
 }
 
 export function Logo({
   logoUrl,
   companyName,
-  className = ''
+  className = "",
 }: LogoProps): JSX.Element {
   const logoCss = `max-h-8 max-w-full ${className}`
   const labelCss = `font-extrabold uppercase tracking-wide text-xl text-black ${className}`

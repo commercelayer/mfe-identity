@@ -1,8 +1,8 @@
-import { jwtDecode } from '@commercelayer/js-auth'
+import { jwtDecode } from "@commercelayer/js-auth"
 
 export function isTokenExpired({
   accessToken,
-  compareTo
+  compareTo,
 }: {
   accessToken: string
   compareTo: Date

@@ -1,4 +1,4 @@
-import type { CommerceLayerClient, Organization } from '@commercelayer/sdk'
+import type { CommerceLayerClient, Organization } from "@commercelayer/sdk"
 
 interface GetOrganizationConfig {
   /**
@@ -15,25 +15,25 @@ interface GetOrganizationConfig {
  */
 
 export const getOrganization = async ({
-  client
+  client,
 }: GetOrganizationConfig): Promise<Organization> =>
   await getAsyncOrganization(client)
 
 const getAsyncOrganization = async (
-  client: CommerceLayerClient
+  client: CommerceLayerClient,
 ): Promise<Organization> =>
   await client.organization.retrieve({
     fields: {
       organizations: [
-        'id',
-        'logo_url',
-        'name',
-        'primary_color',
-        'favicon_url',
-        'gtm_id',
-        'gtm_id_test',
-        'support_email',
-        'support_phone'
-      ]
-    }
+        "id",
+        "logo_url",
+        "name",
+        "primary_color",
+        "favicon_url",
+        "gtm_id",
+        "gtm_id_test",
+        "support_email",
+        "support_phone",
+      ],
+    },
   })

@@ -6,11 +6,11 @@ export type AppRoute = keyof typeof appRoutes
 // and `makePath` method to be used to generate the path used in navigation and links
 export const appRoutes = {
   login: {
-    path: '/login',
-    makePath: () => '/login'
+    path: "/login",
+    makePath: () => "/login",
   },
   signUp: {
-    path: '/signup',
-    makePath: () => '/signup'
-  }
+    path: "/signup",
+    makePath: () => "/signup",
+  },
 }

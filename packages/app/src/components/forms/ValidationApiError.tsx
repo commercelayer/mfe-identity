@@ -1,14 +1,16 @@
-import { API_ERROR_FIELD_NAME, setApiFormErrors } from '#utils/setApiFormErrors'
-import { useEffect } from 'react'
-import { useFormContext } from 'react-hook-form'
-import { Alert } from '#components/atoms/Alert'
-import { useValidationFeedback } from './useValidationFeedback'
+import { useEffect } from "react"
+import { useFormContext } from "react-hook-form"
+import { Alert } from "#components/atoms/Alert"
+import { API_ERROR_FIELD_NAME, setApiFormErrors } from "#utils/setApiFormErrors"
+import { useValidationFeedback } from "./useValidationFeedback"
 
 interface ValidationApiErrorProps {
   /**
    * An error object returned from a failed API request.
    * We expect an object that contain an `errors` property with the Core Api error items shape.
    */
+
+  // biome-ignore lint/suspicious/noExplicitAny: SDK API error object is not typed
   apiError: any
   /**
    * Optional map of app field names to API error field names.
@@ -23,7 +25,7 @@ interface ValidationApiErrorProps {
 
 function ValidationApiError({
   apiError,
-  fieldMap
+  fieldMap,
 }: ValidationApiErrorProps): JSX.Element {
   const { setError, getValues } = useFormContext()
 
@@ -33,19 +35,19 @@ function ValidationApiError({
         apiError,
         setError,
         formFields: Object.keys(getValues()),
-        fieldMap
+        fieldMap,
       })
     }
-  }, [apiError, apiError?.errors])
+  }, [apiError, apiError?.errors, setError, getValues, fieldMap])
 
   const { hasError, errorMessage } = useValidationFeedback(API_ERROR_FIELD_NAME)
   if (!hasError) return <></>
   return (
-    <div className='pt-4'>
-      <Alert variant='danger' title={errorMessage ?? ''} />
+    <div className="pt-4">
+      <Alert variant="danger" title={errorMessage ?? ""} />
     </div>
   )
 }
 
-ValidationApiError.displayName = 'ValidationApiError'
+ValidationApiError.displayName = "ValidationApiError"
 export { ValidationApiError }

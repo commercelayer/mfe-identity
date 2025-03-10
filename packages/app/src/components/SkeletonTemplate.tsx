@@ -1,16 +1,16 @@
-import { useDelayShow } from '#hooks/useDelayShow'
-import { isFunctionComponent } from '#utils/children'
-import cn from 'classnames'
+import cn from "classnames"
 import {
   Children,
-  cloneElement,
-  isValidElement,
   type FC,
   type FunctionComponent,
   type ReactNode,
-  type ReactPortal
-} from 'react'
-import { type Simplify } from 'type-fest'
+  type ReactPortal,
+  cloneElement,
+  isValidElement,
+} from "react"
+import type { Simplify } from "type-fest"
+import { useDelayShow } from "#hooks/useDelayShow"
+import { isFunctionComponent } from "#utils/children"
 
 type ReactNodeNoPortal = Exclude<ReactNode, ReactPortal>
 
@@ -32,27 +32,27 @@ type SkeletonTemplateProps<P = Record<string, unknown>> = Simplify<
 function childrenRecursiveMap(
   children: ReactNodeNoPortal,
   options: SkeletonTemplateProps,
-  fn: (child: ReactNodeNoPortal) => ReactNodeNoPortal
+  fn: (child: ReactNodeNoPortal) => ReactNodeNoPortal,
 ): ReactNodeNoPortal {
   if (Children.count(children) === 1) {
     return childRecursiveMap(children, options, fn)
   }
 
   return Children.map(children, (child) =>
-    childRecursiveMap(child, options, fn)
+    childRecursiveMap(child, options, fn),
   )
 }
 
 function childRecursiveMap(
   child: ReactNodeNoPortal,
   options: SkeletonTemplateProps,
-  fn: (child: ReactNodeNoPortal) => ReactNodeNoPortal
+  fn: (child: ReactNodeNoPortal) => ReactNodeNoPortal,
 ): ReactNodeNoPortal {
-  if (isValidElement<any>(child)) {
+  if (isValidElement<React.PropsWithChildren>(child)) {
     if (isSkeletonTemplate(child)) {
       return cloneElement(child, {
         isLoading: child.props.isLoading ?? options.isLoading,
-        delayMs: child.props.delayMs ?? options.delayMs
+        delayMs: child.props.delayMs ?? options.delayMs,
       })
     }
 
@@ -62,9 +62,9 @@ function childRecursiveMap(
           children: childrenRecursiveMap(
             child.props.children as JSX.Element,
             options,
-            fn
-          )
-        })
+            fn,
+          ),
+        }),
       )
     }
   }
@@ -78,7 +78,7 @@ export interface SkeletonTemplateComponent<P = Record<string, unknown>>
 }
 
 export function withSkeletonTemplate<P>(
-  Element: FC<SkeletonTemplateProps<P>>
+  Element: FC<SkeletonTemplateProps<P>>,
 ): SkeletonTemplateComponent<SkeletonTemplateProps<P>> {
   const withSkeletonTemplate: SkeletonTemplateComponent<
     SkeletonTemplateProps<P>
@@ -97,20 +97,24 @@ export function withSkeletonTemplate<P>(
     return element
   }
 
-  withSkeletonTemplate.displayName = 'withSkeletonTemplate'
+  withSkeletonTemplate.displayName = "withSkeletonTemplate"
   withSkeletonTemplate.isSkeletonTemplate = true
 
   return withSkeletonTemplate
 }
 
-export function isSkeletonTemplate(child: ReactNode): boolean {
+export function isSkeletonTemplate(
+  child: ReactNode,
+): child is React.ReactElement<
+  Pick<SkeletonTemplateProps, "delayMs" | "isLoading">
+> {
   if (child == null) {
     return false
   }
 
   return (
     isFunctionComponent(child) &&
-    'isSkeletonTemplate' in child.type &&
+    "isSkeletonTemplate" in child.type &&
     (child.type as SkeletonTemplateComponent).isSkeletonTemplate
   )
 }
@@ -120,7 +124,7 @@ const SkeletonTemplate: SkeletonTemplateComponent<
 > = ({ children, isLoading, delayMs = 500 }) => {
   const [show] = useDelayShow(delayMs)
   const skeletonClass =
-    'select-none !border-gray-50 pointer-events-none animate-pulse !bg-gray-50 rounded text-transparent [&>*]:invisible object-out-of-bounds'
+    "select-none !border-gray-50 pointer-events-none animate-pulse !bg-gray-50 rounded text-transparent [&>*]:invisible object-out-of-bounds"
 
   if (isLoading !== true) {
     return <>{children}</>
@@ -128,28 +132,32 @@ const SkeletonTemplate: SkeletonTemplateComponent<
 
   return (
     <div
-      className='select-none pointer-events-none inline'
+      className="select-none pointer-events-none inline"
       style={{ opacity: show ? undefined : 0 }}
     >
       {childrenRecursiveMap(
         children,
         {
           isLoading,
-          delayMs
+          delayMs,
         },
         (child) => {
           if (child == null) {
             return child
           }
 
-          if (!isValidElement<any>(child)) {
+          if (
+            !isValidElement<React.PropsWithChildren<{ className?: string }>>(
+              child,
+            )
+          ) {
             return <span className={skeletonClass}>{child}</span>
           }
 
           const props = Object.fromEntries(
             Object.entries(child.props as Record<string, unknown>).map(
               ([key, value]) => {
-                if (key !== 'children' && isValidElement(value)) {
+                if (key !== "children" && isValidElement(value)) {
                   const newValue = (
                     <SkeletonTemplate delayMs={0} isLoading>
                       {value}
@@ -160,24 +168,24 @@ const SkeletonTemplate: SkeletonTemplateComponent<
                 }
 
                 return [key, value]
-              }
-            )
+              },
+            ),
           )
 
-          if (child.type === 'input' || child.type === 'button') {
+          if (child.type === "input" || child.type === "button") {
             return cloneElement(child, {
               ...props,
-              className: cn(props.className as string, skeletonClass)
+              className: cn(props.className as string, skeletonClass),
             })
           }
 
           return cloneElement(child, props)
-        }
+        },
       )}
     </div>
   )
 }
 
-SkeletonTemplate.displayName = 'SkeletonTemplate'
+SkeletonTemplate.displayName = "SkeletonTemplate"
 SkeletonTemplate.isSkeletonTemplate = true
 export { SkeletonTemplate }

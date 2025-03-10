@@ -1,4 +1,4 @@
-import { type UseFormSetError } from 'react-hook-form'
+import type { UseFormSetError } from "react-hook-form"
 
 interface ApiError {
   /**
@@ -39,20 +39,21 @@ interface ApiErrorResponse {
 const genericError: ApiErrorResponse = {
   errors: [
     {
-      title: 'Generic error',
-      detail: 'Could not process your request'
-    }
-  ]
+      title: "Generic error",
+      detail: "Could not process your request",
+    },
+  ],
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: SDK API error object is not typed
 function isApiError(error: any): error is ApiErrorResponse {
   try {
     const hasErrorsArray =
-      'errors' in error &&
+      "errors" in error &&
       Array.isArray(error.errors) &&
       error.errors.length > 0
     const errorsHaveApiErrorShape = (error as ApiErrorResponse).errors.every(
-      (err) => 'title' in err && 'detail' in err && 'code' in err
+      (err) => "title" in err && "detail" in err && "code" in err,
     )
     return hasErrorsArray && errorsHaveApiErrorShape
   } catch {
@@ -67,32 +68,34 @@ function isApiError(error: any): error is ApiErrorResponse {
  * Example: "quantity - must be less than or equal to 10" -> "quantity"
  */
 function guessField(item: ApiError): string | undefined {
-  if (item.source?.pointer != null && item.source?.pointer !== '') {
-    const field = item.source?.pointer.split('/').at(-1)
+  if (item.source?.pointer != null && item.source?.pointer !== "") {
+    const field = item.source?.pointer.split("/").at(-1)
     return field
   }
 
-  if (item.detail != null && item.detail !== '') {
-    const field = item.detail.split(' - ').at(0)
+  if (item.detail != null && item.detail !== "") {
+    const field = item.detail.split(" - ").at(0)
     return field
   }
 }
 
-export const API_ERROR_FIELD_NAME = 'root.apiError'
+export const API_ERROR_FIELD_NAME = "root.apiError"
 
 export function setApiFormErrors({
   apiError,
   setError,
   fieldMap,
-  formFields
+  formFields,
 }: {
   /**
    * Error response from API
    */
+  // biome-ignore lint/suspicious/noExplicitAny: SDK API error object is not typed
   apiError: any
   /**
    * setError function from react-hook-form, it comes from same useForm() context
    */
+  // biome-ignore lint/suspicious/noExplicitAny: SDK API error object is not typed
   setError: UseFormSetError<any>
   /**
    * list of from fields
@@ -120,47 +123,42 @@ export function setApiFormErrors({
       // Example: `VALIDATION_ERROR` is returned for field `quantity` but we don't have a field with that name in the form.
       const isFieldInForm = Boolean(field != null && formFields.includes(field))
 
-      if (item.code === 'VALIDATION_ERROR' && field != null && isFieldInForm) {
-        return {
-          ...allErrors,
-          validation: [
-            ...allErrors.validation,
-            {
-              field,
-              message: item.title
-            }
-          ]
-        }
+      if (item.code === "VALIDATION_ERROR" && field != null && isFieldInForm) {
+        allErrors.validation = [
+          ...allErrors.validation,
+          {
+            field,
+            message: item.title,
+          },
+        ]
+      } else {
+        allErrors.others = [...allErrors.others, item.detail]
       }
-
-      return {
-        ...allErrors,
-        others: [...allErrors.others, item.detail]
-      }
+      return allErrors
     },
     {
       validation: [] as Array<{ field: string; message: string }>,
-      others: [] as string[]
-    }
+      others: [] as string[],
+    },
   )
 
   errorByTypes.validation.forEach((error, idx) => {
     setError(
       error.field,
       {
-        type: 'serverValidation',
-        message: error.message
+        type: "serverValidation",
+        message: error.message,
       },
       {
-        shouldFocus: idx === 0
-      }
+        shouldFocus: idx === 0,
+      },
     )
   })
 
   if (errorByTypes.others.length > 0) {
     setError(API_ERROR_FIELD_NAME, {
-      type: 'server',
-      message: errorByTypes.others.join('. ')
+      type: "server",
+      message: errorByTypes.others.join(". "),
     })
   }
 }

@@ -1,9 +1,9 @@
-import cn from 'classnames'
-import { LogoCL } from '@commercelayer/react-utils'
+import { LogoCL } from "@commercelayer/react-utils"
+import cn from "classnames"
 
-import { Footer } from '#components/composite/Footer'
-import { PageHead } from '#components/PageHead'
-import { isEmbedded } from '#utils/isEmbedded'
+import { PageHead } from "#components/PageHead"
+import { Footer } from "#components/composite/Footer"
+import { isEmbedded } from "#utils/isEmbedded"
 
 interface Props {
   /**
@@ -22,26 +22,26 @@ interface Props {
 
 export function PageErrorLayout({ statusCode, message }: Props): JSX.Element {
   const wrapperCss = cn([
-    'relative items-center w-full md:w-[420px] mx-auto px-8 md:px-0',
-    !isEmbedded() && 'h-screen'
+    "relative items-center w-full md:w-[420px] mx-auto px-8 md:px-0",
+    !isEmbedded() && "h-screen",
   ])
 
   return (
     <>
       <PageHead />
-      <div className='container'>
+      <div className="container">
         <div className={wrapperCss}>
           {!isEmbedded() ? (
-            <div className='m-0 mb-[112px] pt-[90px] text-xs text-gray-400'>
-              <LogoCL className='text-black max-h-8 max-w-full' />
+            <div className="m-0 mb-[112px] pt-[90px] text-xs text-gray-400">
+              <LogoCL className="text-black max-h-8 max-w-full" />
             </div>
           ) : null}
-          <div className='py-20 flex flex-1 justify-center'>
-            <div className='flex items-center pb-20'>
-              <div className='p-4 text-xl font-bold border-gray-300 text-gray-800 border-b md:border-r md:border-b-0'>
+          <div className="py-20 flex flex-1 justify-center">
+            <div className="flex items-center pb-20">
+              <div className="p-4 text-xl font-bold border-gray-300 text-gray-800 border-b md:border-r md:border-b-0">
                 {statusCode}
               </div>
-              <div className='p-4 text-sm text-gray-500 leading-none'>
+              <div className="p-4 text-sm text-gray-500 leading-none">
                 {message}
               </div>
             </div>

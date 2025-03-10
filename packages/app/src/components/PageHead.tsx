@@ -1,11 +1,11 @@
-import { type Settings } from 'App'
-import { type FC } from 'react'
-import { Helmet } from 'react-helmet-async'
-import { useTranslation } from 'react-i18next'
+import type { Settings } from "App"
+import type { FC } from "react"
+import { Helmet } from "react-helmet-async"
+import { useTranslation } from "react-i18next"
 
-import { defaultSettings } from '#utils/getSettings'
+import { defaultSettings } from "#utils/getSettings"
 
-type Props = Partial<Pick<Settings, 'faviconUrl'>> & {
+type Props = Partial<Pick<Settings, "faviconUrl">> & {
   /**
    * Page title, if `undefined` default app title will be used.
    */
@@ -14,7 +14,7 @@ type Props = Partial<Pick<Settings, 'faviconUrl'>> & {
 
 export const PageHead: FC<Props> = ({
   title,
-  faviconUrl = defaultSettings.faviconUrl
+  faviconUrl = defaultSettings.faviconUrl,
 }) => {
   const { t } = useTranslation()
 
@@ -22,9 +22,9 @@ export const PageHead: FC<Props> = ({
     <Helmet>
       <title>
         {title ??
-          t('general.title', { companyName: defaultSettings.companyName })}
+          t("general.title", { companyName: defaultSettings.companyName })}
       </title>
-      <link rel='icon' href={faviconUrl} />
+      <link rel="icon" href={faviconUrl} />
     </Helmet>
   )
 }

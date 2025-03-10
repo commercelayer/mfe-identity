@@ -1,4 +1,4 @@
-import { isSpecificReactComponent } from './children'
+import { isSpecificReactComponent } from "./children"
 
 function makeChildWithName(displayName: string): JSX.Element {
   const SampleComponent = (): JSX.Element => <div />
@@ -7,26 +7,26 @@ function makeChildWithName(displayName: string): JSX.Element {
   return <SampleComponent />
 }
 
-describe('isSpecificReactComponent', () => {
-  test('should return `true` for matched named component', () => {
+describe("isSpecificReactComponent", () => {
+  test("should return `true` for matched named component", () => {
     expect(
-      isSpecificReactComponent(makeChildWithName('Button'), ['Button'])
+      isSpecificReactComponent(makeChildWithName("Button"), ["Button"]),
     ).toBe(true)
   })
 
-  test('should return `false` for not matched named component', () => {
+  test("should return `false` for not matched named component", () => {
     expect(
-      isSpecificReactComponent(makeChildWithName('Title'), ['Button'])
+      isSpecificReactComponent(makeChildWithName("Title"), ["Button"]),
     ).toBe(false)
   })
 
-  test('should return `false` for null child', () => {
-    expect(isSpecificReactComponent(null, ['Button'])).toBe(false)
+  test("should return `false` for null child", () => {
+    expect(isSpecificReactComponent(null, ["Button"])).toBe(false)
   })
 
-  test('should return `false` for any other ReactNode element', () => {
+  test("should return `false` for any other ReactNode element", () => {
     expect(
-      isSpecificReactComponent('string is a valid ReactNode', ['Button'])
+      isSpecificReactComponent("string is a valid ReactNode", ["Button"]),
     ).toBe(false)
   })
 })
