@@ -51,6 +51,10 @@ export const SignUpForm = (): JSX.Element => {
       domain: config.domain
     })
 
+    /**
+     * TODO: Do we need to perform any additional action here if both scope and publicScope are set?
+     * If a publicScope is set, the customer is expected to match the (private) scope provided.
+     */
     const createCustomerResponse = await client.customers
       .create({
         email: formData.customerEmail,
