@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from "react"
 
 export const useDelayShow = (delayMs = 500): readonly [boolean] => {
   const [show, setShow] = useState(delayMs === 0)
@@ -16,7 +16,7 @@ export const useDelayShow = (delayMs = 500): readonly [boolean] => {
         clearTimeout(timeoutId.current)
       }
     }
-  }, [delayMs])
+  }, [delayMs, show])
 
   return [show] as const
 }

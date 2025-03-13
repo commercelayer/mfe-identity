@@ -1,4 +1,4 @@
-declare module 'Forms' {
+declare module "Forms" {
   export interface LoginFormValues {
     customerEmail: string
     customerPassword: string

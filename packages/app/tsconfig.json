@@ -2,15 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "types": [
-      "vitest/globals",
-      "@testing-library/jest-dom"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
     "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
@@ -25,30 +18,14 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "#assets/*": [
-        "src/assets/*"
-      ],
-      "#components/*": [
-        "src/components/*"
-      ],
-      "#pages/*": [
-        "src/pages/*"
-      ],
-      "#data/*": [
-        "src/data/*"
-      ],
-      "#hooks/*": [
-        "src/hooks/*"
-      ],
-      "#providers/*": [
-        "src/providers/*"
-      ],
-      "#utils/*": [
-        "src/utils/*"
-      ],
-      "#styles/*": [
-        "src/styles/*"
-      ]
+      "#assets/*": ["src/assets/*"],
+      "#components/*": ["src/components/*"],
+      "#pages/*": ["src/pages/*"],
+      "#data/*": ["src/data/*"],
+      "#hooks/*": ["src/hooks/*"],
+      "#providers/*": ["src/providers/*"],
+      "#utils/*": ["src/utils/*"],
+      "#styles/*": ["src/styles/*"]
     },
     "incremental": true
   },
@@ -59,7 +36,6 @@
     "*.config.mts",
     "*.config.js",
     "*.config.cjs",
-    ".eslintrc.cjs",
     "@typing/**/*.d.ts",
     "public/config*.js"
   ],

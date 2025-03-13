@@ -1,4 +1,4 @@
-import type { Settings } from 'App'
+import type { Settings } from "App"
 
 export interface IdentityProviderState {
   settings: Settings

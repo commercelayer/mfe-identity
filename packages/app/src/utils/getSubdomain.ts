@@ -5,7 +5,7 @@
  * @returns the last level of subdomain found. Example `my-org`
  */
 export const makeSubdomain = (hostname: string): string => {
-  return hostname?.split(':')[0].split('.')[0]
+  return hostname?.split(":")[0].split(".")[0]
 }
 
 /**
@@ -18,7 +18,7 @@ export const makeSubdomain = (hostname: string): string => {
  */
 export const getSubdomain = ({
   hostname,
-  selfHostedSlug
+  selfHostedSlug,
 }: {
   hostname: string
   selfHostedSlug?: string | null

@@ -1,28 +1,28 @@
-import CommerceLayer from '@commercelayer/sdk'
-import type { Settings, InvalidSettings } from 'App'
+import CommerceLayer from "@commercelayer/sdk"
+import type { InvalidSettings, Settings } from "App"
 
-import { getOrganization } from '#utils/getOrganization'
-import { getSubdomain } from '#utils/getSubdomain'
-import { getStoredSalesChannelToken } from '#utils/oauthStorage'
+import { getOrganization } from "#utils/getOrganization"
+import { getSubdomain } from "#utils/getSubdomain"
+import { getStoredSalesChannelToken } from "#utils/oauthStorage"
 
 // default settings are by their nature not valid to show My Account data
 // they will be used as fallback for errors or 404 page
 export const defaultSettings: InvalidSettings = {
-  primaryColor: '#000000',
-  logoUrl: '',
+  primaryColor: "#000000",
+  logoUrl: "",
   faviconUrl:
-    'https://data.commercelayer.app/assets/images/favicons/favicon-32x32.png',
-  companyName: 'Commerce Layer',
+    "https://data.commercelayer.app/assets/images/favicons/favicon-32x32.png",
+  companyName: "Commerce Layer",
   isValid: false,
-  retryable: false
+  retryable: false,
 }
 
 const makeInvalidSettings = (): InvalidSettings => ({
   ...defaultSettings,
-  retryable: false
+  retryable: false,
 })
 
-type GetSettingsProps = Pick<Settings, 'clientId' | 'scope'> & {
+type GetSettingsProps = Pick<Settings, "clientId" | "scope"> & {
   config: CommerceLayerAppConfig
 }
 
@@ -39,23 +39,23 @@ type GetSettingsProps = Pick<Settings, 'clientId' | 'scope'> & {
 export const getSettings = async ({
   clientId,
   scope,
-  config
+  config,
 }: GetSettingsProps): Promise<Settings | InvalidSettings> => {
-  const hostname = window !== undefined ? window.location.hostname : ''
+  const hostname = window !== undefined ? window.location.hostname : ""
   const slug = getSubdomain({
     hostname,
-    selfHostedSlug: config.selfHostedSlug
+    selfHostedSlug: config.selfHostedSlug,
   })
   const domain = config.domain
 
   const storedToken = await Promise.resolve(
     getStoredSalesChannelToken({
-      app: 'identity',
+      app: "identity",
       slug,
       domain,
       clientId,
-      scope
-    })
+      scope,
+    }),
   )
 
   if (storedToken?.error != null) {
@@ -64,14 +64,14 @@ export const getSettings = async ({
 
   const client = CommerceLayer({
     organization: slug,
-    accessToken: storedToken?.access_token ?? '',
-    domain
+    accessToken: storedToken?.access_token ?? "",
+    domain,
   })
 
   const organization = await Promise.resolve(
     getOrganization({
-      client
-    })
+      client,
+    }),
   )
 
   // validating organization
@@ -82,12 +82,12 @@ export const getSettings = async ({
   return {
     clientId,
     scope,
-    accessToken: storedToken?.access_token ?? '',
+    accessToken: storedToken?.access_token ?? "",
     isValid: true,
     companySlug: slug,
     companyName: organization?.name ?? defaultSettings.companyName,
     primaryColor: organization?.primary_color ?? defaultSettings.primaryColor,
-    logoUrl: organization?.logo_url ?? '',
-    faviconUrl: organization?.favicon_url ?? defaultSettings.faviconUrl
+    logoUrl: organization?.logo_url ?? "",
+    faviconUrl: organization?.favicon_url ?? defaultSettings.faviconUrl,
   }
 }

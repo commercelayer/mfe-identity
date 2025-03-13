@@ -5,9 +5,9 @@
     "dev": "pnpm -r dev",
     "build": "pnpm -r build",
     "preview": "pnpm -r preview",
-    "lint": "pnpm -r lint",
-    "lint:fix": "pnpm -r lint:fix",
-    "test": "pnpm -r test",
+    "lint": "pnpm biome check",
+    "lint:fix": "pnpm biome check --write",
+    "test": "pnpm biome check && pnpm -r test",
     "test:watch": "pnpm -r test:watch",
     "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
     "dep:minor": "pnpm dep:major -t minor",
@@ -31,6 +31,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "lerna": "^8.1.9",
     "npm-check-updates": "^17.1.14"
   },

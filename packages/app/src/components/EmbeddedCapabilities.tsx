@@ -1,16 +1,16 @@
-import { type FC, useEffect, useLayoutEffect } from 'react'
-import { Helmet } from 'react-helmet-async'
+import { type FC, useEffect, useLayoutEffect } from "react"
+import { Helmet } from "react-helmet-async"
 
-import { isEmbedded } from '#utils/isEmbedded'
+import { isEmbedded } from "#utils/isEmbedded"
 
 function sendEventClose(e: KeyboardEvent): void {
-  if (e.key === 'Escape') {
-    window.parentIFrame?.sendMessage({ type: 'close' }, '*')
+  if (e.key === "Escape") {
+    window.parentIFrame?.sendMessage({ type: "close" }, "*")
   }
 }
 
 function sendEventBlur(): void {
-  window.parentIFrame?.sendMessage({ type: 'blur' }, '*')
+  window.parentIFrame?.sendMessage({ type: "blur" }, "*")
 }
 
 const IframeResizerInit: FC = () => {
@@ -22,14 +22,14 @@ const IframeResizerInit: FC = () => {
         return
       }
 
-      window.addEventListener('keydown', sendEventClose)
-      window.addEventListener('blur', sendEventBlur)
+      window.addEventListener("keydown", sendEventClose)
+      window.addEventListener("blur", sendEventBlur)
       return () => {
-        window.removeEventListener('keydown', sendEventClose)
-        window.removeEventListener('blur', sendEventBlur)
+        window.removeEventListener("keydown", sendEventClose)
+        window.removeEventListener("blur", sendEventBlur)
       }
     },
-    [embedded]
+    [embedded],
   )
 
   useLayoutEffect(
@@ -40,11 +40,11 @@ const IframeResizerInit: FC = () => {
 
       window.iFrameResizer = {
         onMessage: ({ type }) => {
-          console.log('onMessage', type)
-        }
+          console.log("onMessage", type)
+        },
       }
     },
-    [embedded]
+    [embedded],
   )
 
   if (!embedded) {
@@ -54,14 +54,14 @@ const IframeResizerInit: FC = () => {
   return (
     <Helmet>
       <script
-        src='https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.contentWindow.js'
-        data-testid='iframe-resizer-script'
-        type='text/javascript'
+        src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.contentWindow.js"
+        data-testid="iframe-resizer-script"
+        type="text/javascript"
       />
     </Helmet>
   )
 }
 
 export const EmbeddedCapabilities = {
-  IframeResizerInit
+  IframeResizerInit,
 }

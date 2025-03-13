@@ -1,5 +1,5 @@
-import { jwtDecode, jwtIsSalesChannel } from '@commercelayer/js-auth'
-import { getSubdomain } from './getSubdomain'
+import { jwtDecode, jwtIsSalesChannel } from "@commercelayer/js-auth"
+import { getSubdomain } from "./getSubdomain"
 
 const isProduction = (forceProductionEnv?: boolean): boolean =>
   forceProductionEnv === true ? true : import.meta.env.PROD
@@ -19,7 +19,7 @@ export const isValidHost = ({
   hostname,
   accessToken,
   forceProductionEnv,
-  selfHostedSlug
+  selfHostedSlug,
 }: {
   hostname: string
   accessToken: string

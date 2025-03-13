@@ -1,19 +1,19 @@
-import { IFrameObject as IframeResizerObject } from 'iframe-resizer'
+import type { IFrameObject as IframeResizerObject } from "iframe-resizer"
 
-type IframeEvent = 'blur' | 'close'
-type IframeReceivedEvent = 'update'
+type IframeEvent = "blur" | "close"
+type IframeReceivedEvent = "update"
 
 interface IframeMessagePayload {
   type: IframeEvent
   payload?: object
 }
 
-type IFrameObject = Omit<IframeResizerObject, 'sendMessage'> & {
+type IFrameObject = Omit<IframeResizerObject, "sendMessage"> & {
   sendMessage: (message: IframeMessagePayload, targetOrigin: string) => void
 }
 
 export declare global {
-  declare module '*.module.css'
+  declare module "*.module.css"
 
   interface Window {
     parentIFrame?: IFrameObject

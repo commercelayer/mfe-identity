@@ -1,12 +1,12 @@
-import { isEmbedded } from '#utils/isEmbedded'
-import { getParamFromUrl } from '#utils/getParamFromUrl'
+import { getParamFromUrl } from "#utils/getParamFromUrl"
+import { isEmbedded } from "#utils/isEmbedded"
 
-import type { Settings } from 'App'
+import type { Settings } from "App"
 
 interface RedirectToReturnUrlConfig {
-  scope: Settings['scope']
-  accessToken: Settings['customerAccessToken']
-  expires: Settings['customerAccessTokenExpires']
+  scope: Settings["scope"]
+  accessToken: Settings["customerAccessToken"]
+  expires: Settings["customerAccessTokenExpires"]
 }
 
 /**
@@ -18,16 +18,16 @@ interface RedirectToReturnUrlConfig {
 export const redirectToReturnUrl = ({
   scope,
   accessToken,
-  expires
+  expires,
 }: RedirectToReturnUrlConfig): void => {
-  const returnUrl = getParamFromUrl('returnUrl')
+  const returnUrl = getParamFromUrl("returnUrl")
   if (returnUrl != null && window !== undefined) {
     const topWindow = isEmbedded() ? window.parent : window
     const url = new URL(returnUrl)
-    url.searchParams.append('accessToken', accessToken ?? '')
-    url.searchParams.append('scope', scope)
+    url.searchParams.append("accessToken", accessToken ?? "")
+    url.searchParams.append("scope", scope)
     if (expires != null) {
-      url.searchParams.append('expires', expires)
+      url.searchParams.append("expires", expires)
     }
     topWindow.location.href = url.href
   }

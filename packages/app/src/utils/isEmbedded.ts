@@ -3,14 +3,14 @@
  * @returns a boolean flag that will be `true` in case app is embedded.
  */
 export const isEmbedded = (): boolean => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     // in case of SSR we don't need this
     return false
   }
 
   // we can force the embedded version by adding `embed=true` in query string
-  const hasUrlParam = new URLSearchParams(window.location.search).get('embed')
-  if (hasUrlParam === 'true') {
+  const hasUrlParam = new URLSearchParams(window.location.search).get("embed")
+  if (hasUrlParam === "true") {
     return true
   }
 
