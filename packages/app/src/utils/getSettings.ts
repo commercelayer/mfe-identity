@@ -1,6 +1,7 @@
 import CommerceLayer from "@commercelayer/sdk"
 import type { InvalidSettings, Settings } from "App"
 
+import { isEmpty } from "lodash"
 import { getOrganization } from "#utils/getOrganization"
 import { getSubdomain } from "#utils/getSubdomain"
 import { getStoredSalesChannelToken } from "#utils/oauthStorage"
@@ -24,6 +25,7 @@ const makeInvalidSettings = (): InvalidSettings => ({
 
 type GetSettingsProps = Pick<Settings, "clientId" | "scope"> & {
   config: CommerceLayerAppConfig
+  publicScope?: Settings["publicScope"]
 }
 
 /**
@@ -31,6 +33,7 @@ type GetSettingsProps = Pick<Settings, "clientId" | "scope"> & {
  *
  * @param clientId - Commerce Layer application's clientId.
  * @param scope - Commerce Layer access token scope (market, stock location).
+ * @param publicScope - Commerce Layer access token scope suitable for public organization data in case main `scope` param is related to a private scope.
  * @param config - Commerce Layer app configuration available from global window object.
  * Read more at {@link https://docs.commercelayer.io/developers/authentication/client-credentials#sales-channel}, {@link https://docs.commercelayer.io/core/authentication/password}
  *
@@ -39,6 +42,7 @@ type GetSettingsProps = Pick<Settings, "clientId" | "scope"> & {
 export const getSettings = async ({
   clientId,
   scope,
+  publicScope,
   config,
 }: GetSettingsProps): Promise<Settings | InvalidSettings> => {
   const hostname = window !== undefined ? window.location.hostname : ""
@@ -54,7 +58,7 @@ export const getSettings = async ({
       slug,
       domain,
       clientId,
-      scope,
+      scope: !isEmpty(publicScope) && publicScope != null ? publicScope : scope,
     }),
   )
 
@@ -82,6 +86,7 @@ export const getSettings = async ({
   return {
     clientId,
     scope,
+    publicScope,
     accessToken: storedToken?.access_token ?? "",
     isValid: true,
     companySlug: slug,

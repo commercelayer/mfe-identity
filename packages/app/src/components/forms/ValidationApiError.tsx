@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 import { Alert } from "#components/atoms/Alert"
@@ -30,7 +31,7 @@ function ValidationApiError({
   const { setError, getValues } = useFormContext()
 
   useEffect(() => {
-    if (apiError != null) {
+    if (apiError != null && !isEmpty(apiError?.errors)) {
       setApiFormErrors({
         apiError,
         setError,

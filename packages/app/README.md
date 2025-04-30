@@ -37,7 +37,7 @@ window.clAppConfig = {
 
 4. Create a [sales channel](https://docs.commercelayer.io/core/applications#sales-channel) application inside your organization and take note of its client ID.
 
-5. Setup and/or identify a [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) containing a market [e.g. `market:1234`] as required by the sales channel [authentication](https://docs.commercelayer.io/core/authentication/client-credentials#sales-channel).
+5. Setup and/or identify a [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) containing a market [e.g. `market:id:a2sb3re4`] as required by the sales channel [authentication](https://docs.commercelayer.io/core/authentication/client-credentials#sales-channel).
 
 6. Define a valid return URL that will be reached upon a successful login and/or sign-up procedure.
 
@@ -46,7 +46,7 @@ window.clAppConfig = {
 ### Example
 
 ```http
-https://identity.yourbrand.com?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/
+https://identity.yourbrand.com?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:id:a2sb3re4&returnUrl=https://shop.yourbrand.com/
 ```
 
 ## Hosted version
@@ -58,7 +58,7 @@ You can use the hosted version of the Identity application with the following UR
 ### Example
 
 ```http
-https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/
+https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:id:a2sb3re4&returnUrl=https://shop.yourbrand.com/
 ```
 
 ## Custom reset password flow
@@ -68,7 +68,7 @@ In addition to the previously defined GET parameters required for correctly gene
 ### Example
 
 ```http
-https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:1234&returnUrl=https://shop.yourbrand.com/&resetPasswordUrl=https://www.yourbrand.com/customer/reset-password
+https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:id:a2sb3re4&returnUrl=https://shop.yourbrand.com/&resetPasswordUrl=https://www.yourbrand.com/customer/reset-password
 ```
 
 ## Contributors guide
