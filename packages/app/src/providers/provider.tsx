@@ -55,13 +55,14 @@ export function IdentityProvider({
 
   const clientId = getParamFromUrl("clientId") ?? ""
   const scope = getParamFromUrl("scope") ?? ""
+  const publicScope = getParamFromUrl("publicScope") ?? undefined
   const returnUrl = getParamFromUrl("returnUrl") ?? ""
 
   useEffect(() => {
     dispatch({ type: "identity/onLoad" })
 
     if (clientId != null && scope != null) {
-      getSettings({ clientId, scope, config })
+      getSettings({ clientId, scope, publicScope, config })
         .then((settings) => {
           if (settings.isValid) {
             dispatch({ type: "identity/loaded", payload: settings })
@@ -73,7 +74,7 @@ export function IdentityProvider({
           dispatch({ type: "identity/onError" })
         })
     }
-  }, [clientId, scope, config])
+  }, [clientId, scope, config, publicScope])
 
   if (clientId.length === 0 || scope.length === 0 || returnUrl.length === 0) {
     return (

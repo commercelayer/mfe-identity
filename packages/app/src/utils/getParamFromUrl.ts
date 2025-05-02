@@ -1,6 +1,7 @@
 type UrlParam =
   | "clientId"
   | "scope"
+  | "publicScope"
   | "returnUrl"
   | "resetPasswordUrl"
   | "customerEmail"

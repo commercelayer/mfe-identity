@@ -7,10 +7,20 @@ declare module "App" {
     clientId: string
     /**
      * String specified during the authentication flow to restrict the scope of obtained access token to a market and/or to a stock location.
-     * Example: `market:1234` or `stock_location:4567` or `market:1234 stock_location:4567`
+     * Example: `market:id:a2sb3re4` or `stock_location:id:c4s5m6e7` or `market:id:a2sb3re4 stock_location:id:c4s5m6e7`
+     *
+     * A scope could be eventually related to a private market (restricted to a customer group).
+     * If the provided scope is meant to be private, the `publicScope` param should be set as well
+     * to provide a suitable public market scope used to gather generic organization information.
+     *
      * Read more at {@link https://docs.commercelayer.io/core/authentication#authorization-scopes}
      */
     scope: string
+    /**
+     * Additional scope used to obtain an access token valid for public organization data in case the `scope` param is a private scope.
+     * Read more at {@link https://docs.commercelayer.io/core/authentication#authorization-scopes}
+     */
+    publicScope?: string
     /**
      * Access Token for a sales channel API credentials to be used to authenticate all Commerce Layer API requests.
      * Read more at {@link https://docs.commercelayer.io/core/authentication/client-credentials#sales-channel}, {@link https://docs.commercelayer.io/core/authentication/client-credentials}

@@ -77,7 +77,11 @@ interface GetStoredSalesChannelTokenConfig {
   scope: string
 }
 
-// TODO: Define if storageKey needs a naming differentiation for sales channel tokens and customer tokens
+/**
+ * Retrieve and store a Sales Channel `accessToken` used by the app to obtain organization settings and perform suitable requests.
+ * @param config - Configuration object containing parameters needed by the Sales Channel authentication procedure.
+ * @returns an access token data set, if available, or `null`.
+ */
 export const getStoredSalesChannelToken = async ({
   app,
   slug,

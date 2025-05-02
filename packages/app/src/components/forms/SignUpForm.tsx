@@ -11,6 +11,7 @@ import { Input } from "#components/atoms/Input"
 import { appRoutes } from "#data/routes"
 import { useIdentityContext } from "#providers/provider"
 import { getParamFromUrl } from "#utils/getParamFromUrl"
+import { redirectToLoginUrl } from "#utils/redirectToLoginUrl"
 import { redirectToReturnUrl } from "#utils/redirectToReturnUrl"
 
 import type { SignUpFormValues } from "Forms"
@@ -76,12 +77,27 @@ export const SignUpForm = (): JSX.Element => {
               accessToken: tokenData.accessToken,
               expires: tokenData.expires.toISOString(),
             })
+          } else {
+            redirectToLoginUrl({
+              loginUrl: `${window.location.protocol}//${window.location.host}${router.base}${appRoutes.login.makePath()}`,
+              clientId: settings.clientId,
+              scope: settings.scope,
+              publicScope: settings.publicScope,
+              returnUrl: getParamFromUrl("returnUrl") ?? "",
+              resetPasswordUrl: getParamFromUrl("resetPasswordUrl") ?? "",
+              customerEmail: formData.customerEmail ?? "",
+            })
           }
         })
         .catch(() => {
-          form.setError("root", {
-            type: "custom",
-            message: "Invalid credentials",
+          redirectToLoginUrl({
+            loginUrl: `${window.location.protocol}//${window.location.host}${router.base}${appRoutes.login.makePath()}`,
+            clientId: settings.clientId,
+            scope: settings.scope,
+            publicScope: settings.publicScope,
+            returnUrl: getParamFromUrl("returnUrl") ?? "",
+            resetPasswordUrl: getParamFromUrl("resetPasswordUrl") ?? "",
+            customerEmail: formData.customerEmail ?? "",
           })
         })
     }
