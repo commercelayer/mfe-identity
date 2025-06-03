@@ -1,7 +1,7 @@
-import { LogoCL } from "@commercelayer/react-utils"
 import cn from "classnames"
 
 import { PageHead } from "#components/PageHead"
+import { LogoCL } from "#components/atoms/LogoCL"
 import { Footer } from "#components/composite/Footer"
 import { isEmbedded } from "#utils/isEmbedded"
 
