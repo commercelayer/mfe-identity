@@ -1,5 +1,5 @@
-import { LogoCL } from "@commercelayer/react-utils"
 import { A } from "#components/atoms/A"
+import { LogoCL } from "#components/atoms/LogoCL"
 
 export const Footer: React.FC = () => {
   return (

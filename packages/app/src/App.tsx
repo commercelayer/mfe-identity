@@ -1,8 +1,8 @@
-import { GlobalStylesProvider } from "@commercelayer/react-utils"
 import { HelmetProvider } from "react-helmet-async"
 import { Redirect, Route, Router, Switch } from "wouter"
 
 import { EmbeddedCapabilities } from "#components/EmbeddedCapabilities"
+import { InjectCssCustomProperties } from "#components/InjectCssCustomProperties"
 import { PageErrorLayout } from "#components/layouts/PageErrorLayout"
 import { appRoutes } from "#data/routes"
 import LoginPage from "#pages/LoginPage"
@@ -20,7 +20,8 @@ function App(): JSX.Element {
       <EmbeddedCapabilities.IframeResizerInit />
       <IdentityProvider config={window.clAppConfig}>
         {({ settings }) => (
-          <GlobalStylesProvider primaryColor={settings.primaryColor}>
+          <>
+            <InjectCssCustomProperties primaryColor={settings.primaryColor} />
             <Router base={basePath}>
               <Switch>
                 <Route path="/">
@@ -37,7 +38,7 @@ function App(): JSX.Element {
                 </Route>
               </Switch>
             </Router>
-          </GlobalStylesProvider>
+          </>
         )}
       </IdentityProvider>
     </HelmetProvider>
