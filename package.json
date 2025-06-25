@@ -37,8 +37,10 @@
   },
   "resolutions": {
     "@babel/traverse": "^7.23.2",
+    "@babel/runtime": "^7.26.10",
     "axios": "^1.8.2",
     "braces": "^3.0.3",
+    "brace-expansion": "^1.1.12",
     "ejs": "^3.1.10",
     "follow-redirects": "^1.15.6",
     "micromatch": "^4.0.8",
