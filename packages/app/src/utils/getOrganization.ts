@@ -32,6 +32,7 @@ const getAsyncOrganization = async (
         "favicon_url",
         "gtm_id",
         "gtm_id_test",
+        "slug",
         "support_email",
         "support_phone",
       ],
