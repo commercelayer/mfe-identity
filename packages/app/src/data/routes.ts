@@ -13,4 +13,8 @@ export const appRoutes = {
     path: "/signup",
     makePath: () => "/signup",
   },
+  resetPassword: {
+    path: "/reset-password",
+    makePath: () => "/reset-password",
+  },
 }

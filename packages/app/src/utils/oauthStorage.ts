@@ -13,6 +13,7 @@ interface StoredOauthResponse {
   error_description?: string
   client_id?: string
   expires?: number
+  slug?: string
 }
 
 interface GetStoredTokenKeyConfig {
@@ -108,6 +109,7 @@ export const getStoredSalesChannelToken = async ({
         scope,
         token_type: auth.tokenType,
         expires: decodedJWT.payload.exp,
+        slug: slug,
       }
       const storageKey = getStoredTokenKey({ app, slug, scope })
       localStorage.setItem(storageKey, JSON.stringify(tokenData))

@@ -5,6 +5,8 @@ type UrlParam =
   | "returnUrl"
   | "resetPasswordUrl"
   | "customerEmail"
+  | "customerPasswordResetId"
+  | "resetPasswordToken"
 
 /**
  * @returns the value of specified query string parameter or `undefined` if it's not present.

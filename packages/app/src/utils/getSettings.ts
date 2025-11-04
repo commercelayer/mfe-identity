@@ -1,6 +1,5 @@
 import CommerceLayer from "@commercelayer/sdk"
 import type { InvalidSettings, Settings } from "App"
-
 import { isEmpty } from "lodash"
 import { getOrganization } from "#utils/getOrganization"
 import { getSubdomain } from "#utils/getSubdomain"
@@ -67,7 +66,7 @@ export const getSettings = async ({
   }
 
   const client = CommerceLayer({
-    organization: slug,
+    organization: storedToken?.slug ?? "",
     accessToken: storedToken?.access_token ?? "",
     domain,
   })
@@ -89,7 +88,7 @@ export const getSettings = async ({
     publicScope,
     accessToken: storedToken?.access_token ?? "",
     isValid: true,
-    companySlug: slug,
+    companySlug: organization?.slug ?? slug,
     companyName: organization?.name ?? defaultSettings.companyName,
     primaryColor: organization?.primary_color ?? defaultSettings.primaryColor,
     logoUrl: organization?.logo_url ?? "",
