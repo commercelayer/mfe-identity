@@ -32,22 +32,9 @@
   ],
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "lerna": "^8.2.4",
-    "npm-check-updates": "^18.3.0"
+    "lerna": "^9.0.3",
+    "npm-check-updates": "^18.3.1"
   },
   "resolutions": {
-    "@babel/traverse": "^7.23.2",
-    "@babel/runtime": "^7.26.10",
-    "axios": "^1.12.0",
-    "braces": "^3.0.3",
-    "brace-expansion": "^1.1.12",
-    "ejs": "^3.1.10",
-    "follow-redirects": "^1.15.6",
-    "form-data": "^4.0.4",
-    "micromatch": "^4.0.8",
-    "semver": "^7.5.2",
-    "socks": "^2.7.3",
-    "tmp": "^0.2.4",
-    "word-wrap": "^1.2.4"
   }
 }
