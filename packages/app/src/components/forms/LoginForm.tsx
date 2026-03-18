@@ -1,8 +1,8 @@
 import { authenticate } from "@commercelayer/js-auth"
-import { yupResolver } from "@hookform/resolvers/yup"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { FormProvider, useForm } from "react-hook-form"
 import { useRouter } from "wouter"
-import * as yup from "yup"
+import { z } from "zod"
 
 import { A } from "#components/atoms/A"
 import { Alert } from "#components/atoms/Alert"
@@ -17,12 +17,12 @@ import { redirectToReturnUrl } from "#utils/redirectToReturnUrl"
 import type { LoginFormValues } from "Forms"
 import type { UseFormProps, UseFormReturn } from "react-hook-form"
 
-const validationSchema = yup.object().shape({
-  customerEmail: yup
+const validationSchema = z.object({
+  customerEmail: z
     .string()
-    .email("Email is invalid")
-    .required("Email is required"),
-  customerPassword: yup.string().required("Password is required"),
+    .min(1, "Email is required")
+    .email("Email is invalid"),
+  customerPassword: z.string().min(1, "Password is required"),
 })
 
 export const LoginForm = (): JSX.Element => {
@@ -34,7 +34,7 @@ export const LoginForm = (): JSX.Element => {
 
   const form: UseFormReturn<LoginFormValues, UseFormProps> =
     useForm<LoginFormValues>({
-      resolver: yupResolver(validationSchema),
+      resolver: zodResolver(validationSchema),
       defaultValues: { customerEmail: customerEmail ?? "" },
     })
 

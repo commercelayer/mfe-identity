@@ -42,7 +42,6 @@
     "@types/react-dom": "^18.3.7",
     "@types/react-helmet": "^6.1.11",
     "@types/testing-library__jest-dom": "^6.0.0",
-    "@types/yup": "^0.32.0",
     "@vitejs/plugin-react": "^4.7.0",
     "autoprefixer": "^10.4.27",
     "classnames": "^2.5.1",
@@ -56,7 +55,6 @@
     "react-i18next": "^15.7.4",
     "type-fest": "^4.41.0",
     "wouter": "^3.9.0",
-    "yup": "^1.7.1",
     "zod": "3.25.76"
   },
   "devDependencies": {
