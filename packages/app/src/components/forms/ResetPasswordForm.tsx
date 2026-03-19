@@ -1,7 +1,7 @@
 import CommerceLayer, { CommerceLayerStatic } from "@commercelayer/sdk"
-import { yupResolver } from "@hookform/resolvers/yup"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { FormProvider, useForm } from "react-hook-form"
-import * as yup from "yup"
+import { z } from "zod"
 
 import { Button } from "#components/atoms/Button"
 import { Input } from "#components/atoms/Input"
@@ -10,15 +10,26 @@ import { useIdentityContext } from "#providers/provider"
 import { useState } from "react"
 import { ValidationApiError } from "./ValidationApiError"
 
-const validationSchema = yup.object().shape({
-  password: yup.string().required("Password is required"),
-  confirmPassword: yup
-    .string()
-    .required("Confirm password is required")
-    .oneOf([yup.ref("password"), ""], "Passwords must match"),
-})
+const validationSchema = z
+  .object({
+    password: z.string().min(1, "Password is required"),
+    confirmPassword: z.string().min(1, "Confirm password is required"),
+  })
+  .superRefine((data, ctx) => {
+    if (
+      data.password.length > 0 &&
+      data.confirmPassword.length > 0 &&
+      data.confirmPassword !== data.password
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["confirmPassword"],
+        message: "Passwords must match",
+      })
+    }
+  })
 
-type ResetPasswordFormValues = yup.InferType<typeof validationSchema>
+type ResetPasswordFormValues = z.infer<typeof validationSchema>
 
 interface ResetPasswordFormProps {
   customerPasswordResetId: string
@@ -35,7 +46,7 @@ export const ResetPasswordForm = ({
   const [apiError, setApiError] = useState({})
 
   const form = useForm<ResetPasswordFormValues>({
-    resolver: yupResolver(validationSchema),
+    resolver: zodResolver(validationSchema),
     defaultValues: { password: "", confirmPassword: "" },
   })
 

@@ -1,9 +1,9 @@
 import { authenticate } from "@commercelayer/js-auth"
 import CommerceLayer from "@commercelayer/sdk"
-import { yupResolver } from "@hookform/resolvers/yup"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { FormProvider, useForm } from "react-hook-form"
 import { useRouter } from "wouter"
-import * as yup from "yup"
+import { z } from "zod"
 
 import { A } from "#components/atoms/A"
 import { Button } from "#components/atoms/Button"
@@ -19,17 +19,28 @@ import { useState } from "react"
 import type { UseFormProps, UseFormReturn } from "react-hook-form"
 import { ValidationApiError } from "./ValidationApiError"
 
-const validationSchema = yup.object().shape({
-  customerEmail: yup
-    .string()
-    .email("Email is invalid")
-    .required("Email is required"),
-  customerPassword: yup.string().required("Password is required"),
-  customerConfirmPassword: yup
-    .string()
-    .required("Confirm password is required")
-    .oneOf([yup.ref("customerPassword"), ""], "Passwords must match"),
-})
+const validationSchema = z
+  .object({
+    customerEmail: z
+      .string()
+      .min(1, "Email is required")
+      .email("Email is invalid"),
+    customerPassword: z.string().min(1, "Password is required"),
+    customerConfirmPassword: z.string().min(1, "Confirm password is required"),
+  })
+  .superRefine((data, ctx) => {
+    if (
+      data.customerPassword.length > 0 &&
+      data.customerConfirmPassword.length > 0 &&
+      data.customerConfirmPassword !== data.customerPassword
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["customerConfirmPassword"],
+        message: "Passwords must match",
+      })
+    }
+  })
 
 export const SignUpForm = (): JSX.Element => {
   const { settings, config } = useIdentityContext()
@@ -39,7 +50,7 @@ export const SignUpForm = (): JSX.Element => {
 
   const form: UseFormReturn<SignUpFormValues, UseFormProps> =
     useForm<SignUpFormValues>({
-      resolver: yupResolver(validationSchema),
+      resolver: zodResolver(validationSchema),
       defaultValues: { customerEmail: customerEmail ?? "" },
     })
 
