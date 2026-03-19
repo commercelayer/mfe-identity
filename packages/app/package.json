@@ -24,6 +24,10 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
     "prepare": "touch ./public/config.local.js"
   },
   "dependencies": {
@@ -58,6 +62,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "dotenv": "^16.6.1",
     "jsdom": "^26.1.0",
     "postcss": "^8.5.8",

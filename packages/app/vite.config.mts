@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       setupFiles: ["./react-testing-library.config.js"],
       silent: true,
+      include: ["./src/**/*.{test,spec}.{ts,tsx}"],
     },
   }
 })

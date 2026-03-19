@@ -11,6 +11,7 @@ The Commerce Layer Identity micro frontend (React) provides you with an applicat
 ## Table of contents
 
 - [Getting started](#getting-started)
+- [Local E2E tests (Playwright)](#local-e2e-tests-playwright)
 - [Hosted version](#hosted-version)
 - [Private markets](#private-markets)
 - [Custom reset password flow](#custom-reset-password-flow)
@@ -31,7 +32,7 @@ The Commerce Layer Identity micro frontend (React) provides you with an applicat
 window.clAppConfig = {
   domain: "commercelayer.io",
   selfHostedSlug: "<your-org-slug>",
-}
+};
 ```
 
 3. Deploy the forked repository to your preferred hosting service.
@@ -48,6 +49,26 @@ window.clAppConfig = {
 
 ```text
 https://identity.yourbrand.com?clientId=eyJhbGciOiJIUzUxMiJ9&scope=market:code:worldwide&returnUrl=https://shop.yourbrand.com/
+```
+
+## Local E2E tests (Playwright)
+
+The E2E suite reads GET query parameters from environment variables and verifies the login app bootstrap flow.
+
+Required variables in `.env.local`:
+
+```text
+E2E_BASE_URL=http://localhost:5173/identity/login
+E2E_CLIENTID=<your-client-id>
+E2E_SCOPE=<your-scope>
+E2E_RETURN_URL=<your-return-url>
+```
+
+Run Playwright locally:
+
+```sh
+pnpm --filter ./packages/app exec playwright install chromium
+pnpm test:e2e
 ```
 
 ## Hosted version
@@ -67,6 +88,7 @@ https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope
 When you associate a [customer group](https://docs.commercelayer.io/core/api-reference/customer_groups) with a market, that market becomes private and can be accessed only by customers belonging to the group. You can use private markets to handle scenarios where you need dedicated price lists, custom shipping methods, or other specific features available for a restricted pool of customers, such as managing B2B deals, B2C loyalty programs, private sales, and more.
 
 To enable this kind of use cases, the `mfe-identity` application expects to have both required `scope` and optional `publicScope` parameters defined:
+
 - `scope` - the market to be used for the login process (e.g. a private market).
 - `publicScope` - the default scope used by the app to obtain the organization settings needed to customize the UI (name, logo, colors, etc.).
 
@@ -78,7 +100,7 @@ https://yourbrand.commercelayer.app/identity?clientId=eyJhbGciOiJIUzUxMiJ9&scope
 
 ## Custom reset password flow
 
-In addition to the previously defined GET parameters required for correctly generating the hosted app link, you can optionally add the `resetPasswordUrl` one to enable a custom reset password link visible on the login form page. If that parameter is set a *Forgot password?* link will be shown on the right below the *Password* field.
+In addition to the previously defined GET parameters required for correctly generating the hosted app link, you can optionally add the `resetPasswordUrl` one to enable a custom reset password link visible on the login form page. If that parameter is set a _Forgot password?_ link will be shown on the right below the _Password_ field.
 
 ### Example
 
