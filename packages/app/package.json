@@ -1,7 +1,7 @@
 {
   "name": "mfe-identity",
   "private": true,
-  "version": "1.6.2",
+  "version": "1.7.0",
   "engines": {
     "node": ">=20",
     "pnpm": ">=9"
@@ -76,13 +76,12 @@
     "dotenv": "^16.6.1",
     "jsdom": "^26.1.0",
     "postcss": "^8.5.8",
-    "typescript": "^5.9.3",
     "type-fest": "^4.41.0",
+    "typescript": "^5.9.3",
     "vite": "^7.3.2",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.1.2"
   },
-  
   "msw": {
     "workerDirectory": "public"
   }
