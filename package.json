@@ -1,46 +1,45 @@
 {
+  "name": "mfe-identity",
   "private": true,
-  "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "dev": "pnpm -r dev",
-    "build": "pnpm -r build",
-    "preview": "pnpm -r preview",
-    "lint": "pnpm biome check",
-    "lint:fix": "pnpm biome check --write",
-    "test": "pnpm biome check && pnpm -r test",
-    "test:watch": "pnpm -r test:watch",
-    "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
-    "dep:minor": "pnpm dep:major -t minor",
-    "prepare": "husky",
-    "clean": "pnpx rimraf --glob **/node_modules **/pnpm-lock.yaml"
-  },
-  "keywords": [],
-  "author": {
-    "name": "Pier Francesco Ferrari",
-    "email": "pierfrancesco@commercelayer.io"
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=10"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/commercelayer/mfe-identity.git"
   },
+  "author": {
+    "name": "Pier Francesco Ferrari",
+    "email": "pierfrancesco@commercelayer.io"
+  },
   "license": "MIT",
-  "engines": {
-    "node": ">=20",
-    "pnpm": ">=9"
+  "bugs": {
+    "url": "https://github.com/commercelayer/mfe-identity/issues"
+  },
+  "homepage": "https://github.com/commercelayer/mfe-identity#readme",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "pnpm -r dev",
+    "build": "pnpm -r build",
+    "preview": "pnpm -r preview",
+    "check": "pnpm -r check",
+    "check:fix": "pnpm -r check:fix",
+    "test": "pnpm -r test",
+    "test:watch": "pnpm -r test:watch",
+    "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
+    "dep:minor": "pnpm dlx npm-check-updates -t semver --packageFile '**/package.json' -u",
+    "prepare": "husky",
+    "clean": "pnpx rimraf --glob **/node_modules **/pnpm-lock.yaml"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^2.4.10",
     "husky": "^9.1.7",
-    "lerna": "^9.0.6",
-    "lint-staged": "^16.3.2",
-    "npm-check-updates": "^18.3.1"
-  },
-  "resolutions": {
-    "axios": "^1.13.5",
-    "minimatch": "^10.2.3",
-    "rollup": "^4.59.0"
+    "lerna": "^9.0.7",
+    "lint-staged": "^16.4.0",
+    "npm-check-updates": "^20.0.0"
   }
 }
