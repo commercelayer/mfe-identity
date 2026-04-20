@@ -4,7 +4,7 @@
   "version": "1.7.1",
   "engines": {
     "node": ">=20",
-    "pnpm": ">=9"
+    "pnpm": ">=10"
   },
   "description": "A Commerce Layer Single Page Application to provide login and signup.",
   "repository": {
