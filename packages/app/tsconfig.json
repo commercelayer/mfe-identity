@@ -33,6 +33,7 @@
     "global.d.ts",
     "src",
     "*.config.ts",
+    "*.config.ci.ts",
     "*.config.mts",
     "*.config.js",
     "*.config.cjs",

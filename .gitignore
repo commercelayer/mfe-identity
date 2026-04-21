@@ -110,3 +110,8 @@ dist
 
 # App
 packages/*/public/config.local.js
+
+# Playwright
+packages/*/playwright-report/
+packages/*/test-results/
+packages/*/playwright/.cache/
