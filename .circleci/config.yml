@@ -28,6 +28,37 @@ jobs:
       - run:
           name: Test 
           command: pnpm test
+  e2e-test:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.58.2-noble
+    resource_class: medium+
+    environment:
+      CI: "true"
+      PORT: 5173
+    steps:
+      - checkout
+      - run:
+          name: Setup
+          command: |
+            npm install -g pnpm
+            pnpm install
+      - run:
+          name: E2E Setup
+          command: |
+            cd packages/app && pnpm playwright install chromium
+      - run:
+          name: Build app
+          command: |
+            pnpm build
+      - run:
+          name: E2E Test
+          command: |
+            mkdir packages/app/test-results
+            PORT=5173 pnpm start &
+            cd packages/app && pnpm playwright test --config=playwright.config.ci.ts
+      - store_artifacts:
+          path: packages/app/test-results
+          destination: test-results-first
   build:
     <<: *image
     environment:
@@ -46,10 +77,16 @@ jobs:
           to: "s3://$S3_ASSETS_BUCKET/team/fe-static-apps/$PUBLIC_PROJECT_PATH/<<pipeline.git.tag>>"
 
 workflows:
-
   run-tests:
     jobs:
       - test:
+          context: commercelayer
+          filters:
+            tags:
+              ignore: /v.*/
+      - e2e-test:
+          requires:
+            - test
           context: commercelayer
           filters:
             tags:

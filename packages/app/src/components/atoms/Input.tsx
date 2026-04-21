@@ -24,10 +24,11 @@ export const Input = ({
   ])
   return (
     <div className="field !mb-8">
-      <InputLabel label={label} forElement={props.id} />
+      <InputLabel label={label} forElement={props.id || name} />
       <input
         {...form?.register(name)}
         {...props}
+        id={props.id || name}
         className={inputCss}
         type={type}
       />
