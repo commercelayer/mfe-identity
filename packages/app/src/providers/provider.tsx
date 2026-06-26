@@ -1,24 +1,20 @@
-import { createContext, useContext, useEffect, useReducer } from "react"
-
-import { PageErrorLayout } from "#components/layouts/PageErrorLayout"
-
 import type { ChildrenElement } from "App"
-import type {
-  IdentityProviderState,
-  IdentityProviderValue,
-} from "#providers/types"
-
-import { reducer } from "#providers/reducer"
-
-import { getParamFromUrl } from "#utils/getParamFromUrl"
-import { getSettings } from "#utils/getSettings"
-
+import { createContext, useContext, useEffect, useReducer } from "react"
+import { useLocation } from "wouter"
 import { DefaultSkeleton as DefaultSkeletonFC } from "#components/DefaultSkeleton"
-
+import { PageErrorLayout } from "#components/layouts/PageErrorLayout"
 import {
   SkeletonTemplate,
   withSkeletonTemplate,
 } from "#components/SkeletonTemplate"
+import { appRoutes } from "#data/routes"
+import { reducer } from "#providers/reducer"
+import type {
+  IdentityProviderState,
+  IdentityProviderValue,
+} from "#providers/types"
+import { getParamFromUrl } from "#utils/getParamFromUrl"
+import { getSettings } from "#utils/getSettings"
 
 interface IdentityProviderProps {
   /**
@@ -53,6 +49,13 @@ export function IdentityProvider({
     isLoading: true,
   } as IdentityProviderState)
 
+  // Calculate current path and check if it matches any of the app routes to determine if it's an app URL
+  const [location] = useLocation()
+  const currentPath = location.replace("/identity", "")
+  const isAppUrl = Object.values(appRoutes).some(({ path }) =>
+    currentPath.startsWith(path),
+  )
+
   const clientId = getParamFromUrl("clientId") ?? ""
   const scope = getParamFromUrl("scope") ?? ""
   const publicScope = getParamFromUrl("publicScope") ?? undefined
@@ -61,7 +64,7 @@ export function IdentityProvider({
   useEffect(() => {
     dispatch({ type: "identity/onLoad" })
 
-    if (clientId != null && scope != null) {
+    if (isAppUrl && clientId != null && scope != null) {
       getSettings({ clientId, scope, publicScope, config })
         .then((settings) => {
           if (settings.isValid) {
@@ -74,7 +77,12 @@ export function IdentityProvider({
           dispatch({ type: "identity/onError" })
         })
     }
-  }, [clientId, scope, config, publicScope])
+  }, [clientId, scope, config, publicScope, isAppUrl])
+
+  // Render 404 error if the current path does not match any of the app routes
+  if (!isAppUrl) {
+    return <PageErrorLayout statusCode={404} message="Page not found" />
+  }
 
   if (clientId.length === 0 || scope.length === 0 || returnUrl.length === 0) {
     return (

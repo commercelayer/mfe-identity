@@ -3,7 +3,6 @@ import { Redirect, Route, Router, Switch } from "wouter"
 
 import { EmbeddedCapabilities } from "#components/EmbeddedCapabilities"
 import { InjectCssCustomProperties } from "#components/InjectCssCustomProperties"
-import { PageErrorLayout } from "#components/layouts/PageErrorLayout"
 import { appRoutes } from "#data/routes"
 import LoginPage from "#pages/LoginPage"
 import ResetPasswordPage from "#pages/ResetPassword"
@@ -36,9 +35,6 @@ function App(): JSX.Element {
                 </Route>
                 <Route path={appRoutes.resetPassword.path}>
                   <ResetPasswordPage />
-                </Route>
-                <Route>
-                  <PageErrorLayout statusCode={404} message="Page not found" />
                 </Route>
               </Switch>
             </Router>
