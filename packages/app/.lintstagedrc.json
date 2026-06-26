@@ -1,6 +1,6 @@
 {
   "*.{js,mjs,jsx,ts,mts,tsx}": [
-    "pnpm lint:fix",
+    "pnpm check:fix",
     "bash -c \"pnpm test && pnpm build\""
   ]
 }
