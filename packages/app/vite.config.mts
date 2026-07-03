@@ -24,6 +24,11 @@ export default defineConfig(({ mode }) => {
     test: {
       globals: true,
       environment: "jsdom",
+      // Node 25+ ships a native (file-backed) `localStorage` global that throws
+      // unless `--localstorage-file` is set, shadowing the one provided by jsdom.
+      // Disable Node's experimental Web Storage so jsdom owns localStorage.
+      // https://nodejs.org/api/cli.html#--experimental-webstorage
+      execArgv: ["--no-experimental-webstorage"],
       setupFiles: ["./react-testing-library.config.js"],
       silent: true,
       include: ["./src/**/*.{test,spec}.{ts,tsx}"],

@@ -2,8 +2,7 @@
   "name": "mfe-identity",
   "private": true,
   "engines": {
-    "node": ">=20",
-    "pnpm": ">=10"
+    "node": ">=22.22"
   },
   "repository": {
     "type": "git",
@@ -36,6 +35,7 @@
     "prepare": "husky",
     "clean": "pnpx rimraf --glob **/node_modules **/pnpm-lock.yaml"
   },
+  "packageManager": "pnpm@11.9.0",
   "workspaces": [
     "packages/*"
   ],
