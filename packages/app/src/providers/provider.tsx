@@ -15,6 +15,7 @@ import type {
 } from "#providers/types"
 import { getParamFromUrl } from "#utils/getParamFromUrl"
 import { getSettings } from "#utils/getSettings"
+import { isAbsoluteUrl } from "#utils/isAbsoluteUrl"
 
 interface IdentityProviderProps {
   /**
@@ -87,6 +88,15 @@ export function IdentityProvider({
   if (clientId.length === 0 || scope.length === 0 || returnUrl.length === 0) {
     return (
       <PageErrorLayout statusCode={500} message="Missing required parameter." />
+    )
+  }
+
+  if (!isAbsoluteUrl(returnUrl)) {
+    return (
+      <PageErrorLayout
+        statusCode={500}
+        message="Invalid returnUrl: it must be an absolute URL."
+      />
     )
   }
 

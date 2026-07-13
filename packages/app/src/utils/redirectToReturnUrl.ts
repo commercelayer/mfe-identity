@@ -22,16 +22,7 @@ export const redirectToReturnUrl = ({
   const returnUrl = getParamFromUrl("returnUrl")
   if (returnUrl != null && window !== undefined) {
     const topWindow = isEmbedded() ? window.parent : window
-    let url: URL
-    try {
-      url = new URL(returnUrl)
-    } catch {
-      const base =
-        document.referrer !== ""
-          ? document.referrer
-          : `${window.location.origin}/${import.meta.env.PUBLIC_PROJECT_PATH}/`
-      url = new URL(returnUrl, base)
-    }
+    const url = new URL(returnUrl)
     url.searchParams.append("accessToken", accessToken ?? "")
     url.searchParams.append("scope", scope)
     if (expires != null) {

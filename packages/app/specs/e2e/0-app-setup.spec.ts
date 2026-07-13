@@ -30,6 +30,16 @@ test.describe("app setup", () => {
     await expect(page.getByText("Missing required parameter.")).toBeVisible()
   })
 
+  test("shows error when returnUrl is not an absolute URL", async ({
+    page,
+  }) => {
+    await page.goto(buildLoginUrl({ returnUrl: "/dashboard" }))
+
+    await expect(
+      page.getByText("Invalid returnUrl: it must be an absolute URL."),
+    ).toBeVisible()
+  })
+
   test("supports encoded returnUrl query values", async ({ page }) => {
     await page.goto(
       buildLoginUrl({
