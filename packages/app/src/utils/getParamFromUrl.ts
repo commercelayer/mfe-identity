@@ -19,11 +19,6 @@ export const getParamFromUrl = (param: UrlParam): string | null | undefined => {
     if (param === "customerEmail") {
       return params.get(param)?.replace(" ", "+")
     }
-    if (param === "returnUrl") {
-      return params.get(param)?.slice(0, 1) === "/"
-        ? params.get(param)?.slice(1)
-        : params.get(param)
-    }
     return params.get(param)
   }
 }

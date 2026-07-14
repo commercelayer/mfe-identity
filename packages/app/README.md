@@ -41,7 +41,7 @@ window.clAppConfig = {
 
 5. Define a valid [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) as required by the sales channel [authentication](https://docs.commercelayer.io/core/authentication/client-credentials#sales-channel). It will be used to restrict the dataset of your application to a market, a stock location or a set of them.
 
-6. Define a valid return URL that will be reached upon a successful login and/or sign-up procedure.
+6. Define a valid return URL that will be reached upon a successful login and/or sign-up procedure. It must be an absolute URL, including scheme (`http://` or `https://`) and host (e.g. `https://shop.yourbrand.com/`) — a relative path (e.g. `/checkout`) is not accepted and results in an error.
 
 7. Open the identity app using the URL format: `<your-deployed-identity-url>?clientId=<your-client-id>&scope=<your-scope>&returnUrl=<your-return-url>`.
 
