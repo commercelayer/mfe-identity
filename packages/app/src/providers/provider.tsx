@@ -56,6 +56,9 @@ export function IdentityProvider({
   const isAppUrl = Object.values(appRoutes).some(({ path }) =>
     currentPath.startsWith(path),
   )
+  const isPasswordResetUrl = currentPath.startsWith(
+    appRoutes.resetPassword.path,
+  )
 
   const clientId = getParamFromUrl("clientId") ?? ""
   const scope = getParamFromUrl("scope") ?? ""
@@ -91,7 +94,7 @@ export function IdentityProvider({
     )
   }
 
-  if (!isAbsoluteUrl(returnUrl)) {
+  if (!isPasswordResetUrl && !isAbsoluteUrl(returnUrl)) {
     return (
       <PageErrorLayout
         statusCode={500}
