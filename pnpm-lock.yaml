@@ -27,11 +27,11 @@ importers:
   packages/app:
     dependencies:
       '@commercelayer/js-auth':
-        specifier: 6.7.2
-        version: 6.7.2
+        specifier: ^8.0.1
+        version: 8.0.1
       '@commercelayer/sdk':
-        specifier: ^6.58.0
-        version: 6.58.0
+        specifier: ^8.0.2
+        version: 8.0.2
       '@headlessui/react':
         specifier: ^2.2.10
         version: 2.2.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -107,7 +107,7 @@ importers:
         version: 6.1.11
       '@vitejs/plugin-react':
         specifier: ^4.7.0
-        version: 4.7.0(vite@7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0))
+        version: 4.7.0(supports-color@7.2.0)(vite@7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0))
       autoprefixer:
         specifier: ^10.5.4
         version: 10.5.4(postcss@8.5.26)
@@ -137,7 +137,7 @@ importers:
         version: 7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0)
       vite-tsconfig-paths:
         specifier: ^5.1.4
-        version: 5.1.4(typescript@5.9.3)(vite@7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0))
+        version: 5.1.4(supports-color@7.2.0)(typescript@5.9.3)(vite@7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0))
       vitest:
         specifier: ^4.1.11
         version: 4.1.11(@types/node@24.12.2)(jsdom@26.1.0)(vite@7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0))
@@ -298,12 +298,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@commercelayer/js-auth@6.7.2':
-    resolution: {integrity: sha512-kk4VqN2iEOreXFq76YqTP83KhBs09Z5Ez9nZNlikXWf5DXzkrOfShqqEwq8ezHjSOlqs4xVyxgQzsEdPP35CeQ==}
-    engines: {node: '>=18.0.0'}
+  '@commercelayer/js-auth@8.0.1':
+    resolution: {integrity: sha512-5lt18iBdvvSsjIgLXvfkdEWGyW/f92ulTFu8y8MzkUSdBQS5wjXyHRexpZeDd4/UTn9jBp4znjqPiHOPi9g+FQ==}
+    engines: {node: '>=20.0.0'}
 
-  '@commercelayer/sdk@6.58.0':
-    resolution: {integrity: sha512-AoTMeIXim3/JNbuffvMtE4XY0eGn7qVOxdTFpVvuQrz5LVSimJYEFL/VMzqMap4vukHsZdYq4p5X+ZzXXP/Jbg==}
+  '@commercelayer/sdk@8.0.2':
+    resolution: {integrity: sha512-OdKFC4qDUvQDeNpYRi+wChQFqktc74sFaQxK8NpaEeGx8mkepribmP+pOI0d7Xy1GdeExv5D5es9ZxRenLY0vA==}
     engines: {node: '>=20'}
 
   '@conventional-changelog/git-client@3.1.2':
@@ -3576,16 +3576,16 @@ snapshots:
 
   '@babel/compat-data@7.29.7': {}
 
-  '@babel/core@7.29.7':
+  '@babel/core@7.29.7(supports-color@7.2.0)':
     dependencies:
       '@babel/code-frame': 7.29.7
       '@babel/generator': 7.29.8
       '@babel/helper-compilation-targets': 7.29.7
-      '@babel/helper-module-transforms': 7.29.7(@babel/core@7.29.7)
+      '@babel/helper-module-transforms': 7.29.7(@babel/core@7.29.7(supports-color@7.2.0))
       '@babel/helpers': 7.29.7
       '@babel/parser': 7.29.8
       '@babel/template': 7.29.7
-      '@babel/traverse': 7.29.8
+      '@babel/traverse': 7.29.8(supports-color@7.2.0)
       '@babel/types': 7.29.8
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
@@ -3616,17 +3616,17 @@ snapshots:
 
   '@babel/helper-module-imports@7.29.7':
     dependencies:
-      '@babel/traverse': 7.29.8
+      '@babel/traverse': 7.29.8(supports-color@7.2.0)
       '@babel/types': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/helper-module-transforms@7.29.7(@babel/core@7.29.7)':
+  '@babel/helper-module-transforms@7.29.7(@babel/core@7.29.7(supports-color@7.2.0))':
     dependencies:
-      '@babel/core': 7.29.7
+      '@babel/core': 7.29.7(supports-color@7.2.0)
       '@babel/helper-module-imports': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
-      '@babel/traverse': 7.29.8
+      '@babel/traverse': 7.29.8(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -3647,14 +3647,14 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.8
 
-  '@babel/plugin-transform-react-jsx-self@7.29.7(@babel/core@7.29.7)':
+  '@babel/plugin-transform-react-jsx-self@7.29.7(@babel/core@7.29.7(supports-color@7.2.0))':
     dependencies:
-      '@babel/core': 7.29.7
+      '@babel/core': 7.29.7(supports-color@7.2.0)
       '@babel/helper-plugin-utils': 7.29.7
 
-  '@babel/plugin-transform-react-jsx-source@7.29.7(@babel/core@7.29.7)':
+  '@babel/plugin-transform-react-jsx-source@7.29.7(@babel/core@7.29.7(supports-color@7.2.0))':
     dependencies:
-      '@babel/core': 7.29.7
+      '@babel/core': 7.29.7(supports-color@7.2.0)
       '@babel/helper-plugin-utils': 7.29.7
 
   '@babel/runtime@7.29.7': {}
@@ -3665,7 +3665,7 @@ snapshots:
       '@babel/parser': 7.29.8
       '@babel/types': 7.29.8
 
-  '@babel/traverse@7.29.8':
+  '@babel/traverse@7.29.8(supports-color@7.2.0)':
     dependencies:
       '@babel/code-frame': 7.29.7
       '@babel/generator': 7.29.8
@@ -3717,9 +3717,9 @@ snapshots:
   '@biomejs/cli-win32-x64@2.5.11':
     optional: true
 
-  '@commercelayer/js-auth@6.7.2': {}
+  '@commercelayer/js-auth@8.0.1': {}
 
-  '@commercelayer/sdk@6.58.0': {}
+  '@commercelayer/sdk@8.0.2': {}
 
   '@conventional-changelog/git-client@3.1.2(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.2)':
     dependencies:
@@ -4598,11 +4598,11 @@ snapshots:
       '@types/prop-types': 15.7.15
       csstype: 3.2.3
 
-  '@vitejs/plugin-react@4.7.0(vite@7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0))':
+  '@vitejs/plugin-react@4.7.0(supports-color@7.2.0)(vite@7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0))':
     dependencies:
-      '@babel/core': 7.29.7
-      '@babel/plugin-transform-react-jsx-self': 7.29.7(@babel/core@7.29.7)
-      '@babel/plugin-transform-react-jsx-source': 7.29.7(@babel/core@7.29.7)
+      '@babel/core': 7.29.7(supports-color@7.2.0)
+      '@babel/plugin-transform-react-jsx-self': 7.29.7(@babel/core@7.29.7(supports-color@7.2.0))
+      '@babel/plugin-transform-react-jsx-source': 7.29.7(@babel/core@7.29.7(supports-color@7.2.0))
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
@@ -6781,7 +6781,7 @@ snapshots:
 
   validate-npm-package-name@6.0.2: {}
 
-  vite-tsconfig-paths@5.1.4(typescript@5.9.3)(vite@7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0)):
+  vite-tsconfig-paths@5.1.4(supports-color@7.2.0)(typescript@5.9.3)(vite@7.3.6(@types/node@24.12.2)(jiti@1.21.7)(yaml@2.9.0)):
     dependencies:
       debug: 4.4.3(supports-color@7.2.0)
       globrex: 0.1.2

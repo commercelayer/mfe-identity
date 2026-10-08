@@ -14,6 +14,7 @@ export const Input = ({
   name = "",
   label = "",
   type,
+  id = name,
   ...props
 }: Props): JSX.Element => {
   const form = useFormContext()
@@ -24,10 +25,11 @@ export const Input = ({
   ])
   return (
     <div className="field !mb-8">
-      <InputLabel label={label} forElement={props.id} />
+      <InputLabel label={label} forElement={id} />
       <input
         {...form?.register(name)}
         {...props}
+        id={id}
         className={inputCss}
         type={type}
       />
