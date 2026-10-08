@@ -1,12 +1,13 @@
 import cn from "classnames"
 import {
   Children,
+  cloneElement,
   type FC,
   type FunctionComponent,
+  isValidElement,
+  type JSX,
   type ReactNode,
   type ReactPortal,
-  cloneElement,
-  isValidElement,
 } from "react"
 import type { Simplify } from "type-fest"
 import { useDelayShow } from "#hooks/useDelayShow"
@@ -84,7 +85,12 @@ export function withSkeletonTemplate<P>(
     SkeletonTemplateProps<P>
   > = (props) => {
     const { isLoading, delayMs } = props
-    const element = Element({ ...props, isLoading, delayMs })
+    // React 19 `FC` may return a Promise (async components), never the case here
+    const element = Element({
+      ...props,
+      isLoading,
+      delayMs,
+    }) as ReactNodeNoPortal
 
     if (element != null) {
       return (
@@ -124,7 +130,7 @@ const SkeletonTemplate: SkeletonTemplateComponent<
 > = ({ children, isLoading, delayMs = 500 }) => {
   const [show] = useDelayShow(delayMs)
   const skeletonClass =
-    "select-none !border-gray-50 pointer-events-none animate-pulse !bg-gray-50 rounded text-transparent [&>*]:invisible object-out-of-bounds"
+    "select-none border-gray-50! pointer-events-none animate-pulse bg-gray-50! rounded-sm text-transparent *:invisible object-out-of-bounds"
 
   if (isLoading !== true) {
     return <>{children}</>
@@ -159,7 +165,7 @@ const SkeletonTemplate: SkeletonTemplateComponent<
               ([key, value]) => {
                 if (key !== "children" && isValidElement(value)) {
                   const newValue = (
-                    <SkeletonTemplate delayMs={0} isLoading>
+                    <SkeletonTemplate key={key} delayMs={0} isLoading>
                       {value}
                     </SkeletonTemplate>
                   )
@@ -188,4 +194,5 @@ const SkeletonTemplate: SkeletonTemplateComponent<
 
 SkeletonTemplate.displayName = "SkeletonTemplate"
 SkeletonTemplate.isSkeletonTemplate = true
+
 export { SkeletonTemplate }

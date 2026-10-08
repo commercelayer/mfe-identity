@@ -45,7 +45,6 @@ const genericError: ApiErrorResponse = {
   ],
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: SDK API error object is not typed
 function isApiError(error: any): error is ApiErrorResponse {
   try {
     const hasErrorsArray =
@@ -90,12 +89,10 @@ export function setApiFormErrors({
   /**
    * Error response from API
    */
-  // biome-ignore lint/suspicious/noExplicitAny: SDK API error object is not typed
   apiError: any
   /**
    * setError function from react-hook-form, it comes from same useForm() context
    */
-  // biome-ignore lint/suspicious/noExplicitAny: SDK API error object is not typed
   setError: UseFormSetError<any>
   /**
    * list of from fields

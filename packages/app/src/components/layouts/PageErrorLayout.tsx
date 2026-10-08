@@ -1,8 +1,8 @@
 import cn from "classnames"
-
-import { PageHead } from "#components/PageHead"
+import type { JSX } from "react"
 import { LogoCL } from "#components/atoms/LogoCL"
 import { Footer } from "#components/composite/Footer"
+import { PageHead } from "#components/PageHead"
 import { isEmbedded } from "#utils/isEmbedded"
 
 interface Props {

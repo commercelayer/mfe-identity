@@ -2,7 +2,7 @@ import type { SignUpFormValues } from "Forms"
 import { authenticate } from "@commercelayer/js-auth"
 import { CommerceLayer } from "@commercelayer/sdk"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import { type JSX, useState } from "react"
 import type { UseFormProps, UseFormReturn } from "react-hook-form"
 import { FormProvider, useForm } from "react-hook-form"
 import { useRouter } from "wouter"
@@ -34,7 +34,7 @@ const validationSchema = z
       data.customerConfirmPassword !== data.customerPassword
     ) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         path: ["customerConfirmPassword"],
         message: "Passwords must match",
       })

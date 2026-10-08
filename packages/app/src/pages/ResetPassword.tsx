@@ -1,5 +1,5 @@
 import { isEmpty } from "lodash"
-import { useState } from "react"
+import { type JSX, useState } from "react"
 import { Alert } from "#components/atoms/Alert"
 import { PageHeading } from "#components/atoms/PageHeading"
 import { ResetPasswordForm } from "#components/forms/ResetPasswordForm"

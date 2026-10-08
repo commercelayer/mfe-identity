@@ -1,9 +1,11 @@
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  readonly PUBLIC_PROJECT_PATH?: string
+  readonly NODE_ENV?: string
+  readonly ALLOW_LOCAL_PACKAGES: boolean
+}
+
 interface ImportMeta {
-  env: {
-    PUBLIC_PROJECT_PATH?: string
-    NODE_ENV?: string
-    DEV: boolean
-    PROD: boolean
-    ALLOW_LOCAL_PACKAGES: boolean
-  }
+  readonly env: ImportMetaEnv
 }

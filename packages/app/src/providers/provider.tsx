@@ -1,5 +1,11 @@
 import type { ChildrenElement } from "App"
-import { createContext, useContext, useEffect, useReducer } from "react"
+import {
+  createContext,
+  type JSX,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react"
 import { useLocation } from "wouter"
 import { DefaultSkeleton as DefaultSkeletonFC } from "#components/DefaultSkeleton"
 import { PageErrorLayout } from "#components/layouts/PageErrorLayout"

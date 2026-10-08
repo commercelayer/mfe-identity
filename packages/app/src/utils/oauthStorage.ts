@@ -50,7 +50,7 @@ interface IsTokenExpiredConfig {
 }
 
 const isTokenExpired = ({ expires = 0 }: IsTokenExpiredConfig): boolean => {
-  return Math.trunc(new Date().getTime() / 1000) > expires
+  return Math.trunc(Date.now() / 1000) > expires
 }
 
 interface IsValidStoreTokenDataConfig {
