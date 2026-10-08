@@ -1,22 +1,21 @@
+import type { SignUpFormValues } from "Forms"
 import { authenticate } from "@commercelayer/js-auth"
-import CommerceLayer from "@commercelayer/sdk"
+import { CommerceLayer } from "@commercelayer/sdk"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
+import type { UseFormProps, UseFormReturn } from "react-hook-form"
 import { FormProvider, useForm } from "react-hook-form"
 import { useRouter } from "wouter"
 import { z } from "zod"
-
 import { A } from "#components/atoms/A"
 import { Button } from "#components/atoms/Button"
 import { Input } from "#components/atoms/Input"
+import { apiVersion } from "#data/api"
 import { appRoutes } from "#data/routes"
 import { useIdentityContext } from "#providers/provider"
 import { getParamFromUrl } from "#utils/getParamFromUrl"
 import { redirectToLoginUrl } from "#utils/redirectToLoginUrl"
 import { redirectToReturnUrl } from "#utils/redirectToReturnUrl"
-
-import type { SignUpFormValues } from "Forms"
-import { useState } from "react"
-import type { UseFormProps, UseFormReturn } from "react-hook-form"
 import { ValidationApiError } from "./ValidationApiError"
 
 const validationSchema = z
@@ -61,6 +60,7 @@ export const SignUpForm = (): JSX.Element => {
       organization: settings.companySlug,
       accessToken: settings.accessToken,
       domain: config.domain,
+      apiVersion,
     })
 
     const createCustomerResponse = await client.customers

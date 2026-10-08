@@ -1,6 +1,7 @@
-import CommerceLayer from "@commercelayer/sdk"
 import type { InvalidSettings, Settings } from "App"
+import { CommerceLayer } from "@commercelayer/sdk"
 import { isEmpty } from "lodash"
+import { apiVersion } from "#data/api"
 import { getOrganization } from "#utils/getOrganization"
 import { getSubdomain } from "#utils/getSubdomain"
 import { getStoredSalesChannelToken } from "#utils/oauthStorage"
@@ -69,6 +70,7 @@ export const getSettings = async ({
     organization: storedToken?.slug ?? "",
     accessToken: storedToken?.access_token ?? "",
     domain,
+    apiVersion,
   })
 
   const organization = await Promise.resolve(

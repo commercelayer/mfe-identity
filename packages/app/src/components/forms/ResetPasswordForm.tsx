@@ -1,13 +1,12 @@
 import CommerceLayer, { CommerceLayerStatic } from "@commercelayer/sdk"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { z } from "zod"
-
 import { Button } from "#components/atoms/Button"
 import { Input } from "#components/atoms/Input"
+import { apiVersion } from "#data/api"
 import { useIdentityContext } from "#providers/provider"
-
-import { useState } from "react"
 import { ValidationApiError } from "./ValidationApiError"
 
 const validationSchema = z
@@ -57,6 +56,7 @@ export const ResetPasswordForm = ({
       organization: settings.companySlug,
       accessToken: settings.accessToken,
       domain: config.domain,
+      apiVersion,
     })
 
     try {

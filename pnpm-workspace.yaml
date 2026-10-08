@@ -5,3 +5,8 @@ packages:
 allowBuilds:
   esbuild: true
   nx: true
+
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - '@commercelayer/app-elements'
+  - '@commercelayer/sdk'

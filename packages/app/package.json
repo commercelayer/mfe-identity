@@ -45,8 +45,8 @@
     "prepare": "touch ./public/config.local.js"
   },
   "dependencies": {
-    "@commercelayer/js-auth": "6.7.2",
-    "@commercelayer/sdk": "^6.58.0",
+    "@commercelayer/js-auth": "^8.0.1",
+    "@commercelayer/sdk": "^8.0.2",
     "@headlessui/react": "^2.2.10",
     "@hookform/resolvers": "^5.9.1",
     "@phosphor-icons/react": "v2.1.10",
