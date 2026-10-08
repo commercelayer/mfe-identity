@@ -1,3 +1,4 @@
+import type { JSX } from "react"
 import { PageHeading } from "#components/atoms/PageHeading"
 import { SignUpForm } from "#components/forms/SignUpForm"
 import { LayoutDefault } from "#components/layouts/LayoutDefault"

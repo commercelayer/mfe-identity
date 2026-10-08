@@ -1,5 +1,6 @@
 import { CheckCircle, XCircle } from "@phosphor-icons/react"
 import cn from "classnames"
+import type { JSX } from "react"
 
 type AlertVariant = "success" | "danger"
 

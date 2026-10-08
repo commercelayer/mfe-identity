@@ -1,4 +1,5 @@
 import type { Settings } from "App"
+import type { JSX } from "react"
 
 type LogoProps = Pick<Settings, "logoUrl" | "companyName"> & {
   className?: string

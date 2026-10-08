@@ -1,6 +1,5 @@
-import { isEmbedded } from "#utils/isEmbedded"
-
 import type { Settings } from "App"
+import { isEmbedded } from "#utils/isEmbedded"
 
 interface RedirectToLoginUrlConfig {
   loginUrl: string

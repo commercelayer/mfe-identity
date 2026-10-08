@@ -1,14 +1,12 @@
+import type { ChildrenElement } from "App"
 import cn from "classnames"
+import type { JSX } from "react"
 import { useTranslation } from "react-i18next"
-
-import { PageHead } from "#components/PageHead"
 import { Footer } from "#components/composite/Footer"
 import { Header } from "#components/composite/Header"
+import { PageHead } from "#components/PageHead"
 import { useIdentityContext } from "#providers/provider"
-
 import { isEmbedded } from "#utils/isEmbedded"
-
-import type { ChildrenElement } from "App"
 
 interface Props {
   children: ChildrenElement

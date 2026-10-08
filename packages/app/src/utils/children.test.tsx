@@ -1,3 +1,4 @@
+import type { JSX } from "react"
 import { isSpecificReactComponent } from "./children"
 
 function makeChildWithName(displayName: string): JSX.Element {

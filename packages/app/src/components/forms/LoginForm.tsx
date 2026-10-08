@@ -1,21 +1,19 @@
+import type { LoginFormValues } from "Forms"
 import { authenticate } from "@commercelayer/js-auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import type { JSX } from "react"
+import type { UseFormProps, UseFormReturn } from "react-hook-form"
 import { FormProvider, useForm } from "react-hook-form"
 import { useRouter } from "wouter"
 import { z } from "zod"
-
 import { A } from "#components/atoms/A"
 import { Alert } from "#components/atoms/Alert"
 import { Button } from "#components/atoms/Button"
 import { Input } from "#components/atoms/Input"
 import { appRoutes } from "#data/routes"
 import { useIdentityContext } from "#providers/provider"
-
 import { getParamFromUrl } from "#utils/getParamFromUrl"
 import { redirectToReturnUrl } from "#utils/redirectToReturnUrl"
-
-import type { LoginFormValues } from "Forms"
-import type { UseFormProps, UseFormReturn } from "react-hook-form"
 
 const validationSchema = z.object({
   customerEmail: z

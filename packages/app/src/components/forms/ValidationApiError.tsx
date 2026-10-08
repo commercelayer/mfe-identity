@@ -1,5 +1,5 @@
 import { isEmpty } from "lodash"
-import { useEffect } from "react"
+import { type JSX, useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 import { Alert } from "#components/atoms/Alert"
 import { API_ERROR_FIELD_NAME, setApiFormErrors } from "#utils/setApiFormErrors"
@@ -11,7 +11,6 @@ interface ValidationApiErrorProps {
    * We expect an object that contain an `errors` property with the Core Api error items shape.
    */
 
-  // biome-ignore lint/suspicious/noExplicitAny: SDK API error object is not typed
   apiError: any
   /**
    * Optional map of app field names to API error field names.
@@ -27,7 +26,7 @@ interface ValidationApiErrorProps {
 function ValidationApiError({
   apiError,
   fieldMap,
-}: ValidationApiErrorProps): JSX.Element {
+}: ValidationApiErrorProps): JSX.Element | null {
   const { setError, getValues } = useFormContext()
 
   useEffect(() => {
@@ -42,7 +41,7 @@ function ValidationApiError({
   }, [apiError, apiError?.errors, setError, getValues, fieldMap])
 
   const { hasError, errorMessage } = useValidationFeedback(API_ERROR_FIELD_NAME)
-  if (!hasError) return <></>
+  if (!hasError) return null
   return (
     <div className="pt-4">
       <Alert variant="danger" title={errorMessage ?? ""} />
@@ -51,4 +50,5 @@ function ValidationApiError({
 }
 
 ValidationApiError.displayName = "ValidationApiError"
+
 export { ValidationApiError }

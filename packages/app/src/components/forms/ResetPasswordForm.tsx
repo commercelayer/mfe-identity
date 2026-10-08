@@ -1,6 +1,6 @@
 import CommerceLayer, { CommerceLayerStatic } from "@commercelayer/sdk"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import { type JSX, useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "#components/atoms/Button"
@@ -21,7 +21,7 @@ const validationSchema = z
       data.confirmPassword !== data.password
     ) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         path: ["confirmPassword"],
         message: "Passwords must match",
       })
